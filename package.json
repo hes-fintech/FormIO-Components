@@ -1,0 +1,25 @@
+{
+  "name": "formio-components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hes-fintech/FormIO-Components.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hes-fintech/FormIO-Components/issues"
+  },
+  "homepage": "https://github.com/hes-fintech/FormIO-Components#readme",
+  "dependencies": {
+    "antd": "^4.20.5",
+    "formiojs": "^4.14.7",
+    "react-formio": "^4.3.0",
+    "react-pdf": "^5.7.2"
+  }
+}
