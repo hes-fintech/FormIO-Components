@@ -1,7 +1,7 @@
 import baseEditForm from 'formiojs/components/_classes/component/Component.form';
-import { pdfViewerDisplay } from './pdfViewer/pdfViewer.edit.display';
+import { pdfViewerDisplay } from 'src/formio/components/pdfViewer/pdfViewer.edit.display';
 
-export const settingsForm = (...extend) => {
+export const settingsForm = (...extend: any) => {
     return baseEditForm(
         [
             {

@@ -1,4 +1,4 @@
-export default iframeEditDisplay = [
+export const iframeEditDisplay = [
     {
         key: 'placeholder',
         ignore: true,

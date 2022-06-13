@@ -11,24 +11,41 @@ import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
+import { ReactComponent } from 'react-formio/lib/components';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { settingsForm } from './pdfViewer/pdfViewer.settingsForm';
+import { settingsForm } from './pdfViewer.settingsForm';
 
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdfjs.2.12.313.worker.js';
+type InformationComponentType = {
+    src: string;
+    withPagination?: boolean;
+    withDownload?: boolean;
+    withZoom?: boolean;
+};
+
+type ContextType = {
+    i18n: i18next.i18n;
+    component: InformationComponentType;
+    data: any;
+    _: LoDashStatic;
+};
+
+type PDFViewerComponentProps = {
+    context: ContextType;
+    onChange: () => void;
+};
 
 const INITIAL_NUM_PAGES = 0;
 const INITIAL_PAGE_NUMBER = 1;
 const INITIAL_SCALE = 100;
 
-const PDFViewerComponent = (props) => {
+const PDFViewerComponent = (props: PDFViewerComponentProps) => {
     const { context } = props;
     const { withPagination, withDownload, withZoom } = context.component;
     const [numPages, setNumPages] = useState(INITIAL_NUM_PAGES);
     const [pageNumber, setPageNumber] = useState(INITIAL_PAGE_NUMBER);
     const [scale, setScale] = useState(INITIAL_SCALE);
 
-    const onDocumentLoadSuccess = ({ numPages }) => {
+    const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages);
     };
 
@@ -64,42 +81,41 @@ const PDFViewerComponent = (props) => {
                 <div className="formio-pdf-viewer_page-container">
                     {withPagination && (
                         <>
-                            <Button type="text" onClick={setPrevPage}>
+                            <button type="button" onClick={setPrevPage}>
                                 <LeftOutlined />
-                            </Button>
+                            </button>
                             <div className="formio-pdf-viewer_page-numbers">
                                 Page {pageNumber} of {numPages}
                             </div>
-                            <Button type="text" onClick={setNextPage}>
+                            <button type="button" onClick={setNextPage}>
                                 <RightOutlined />
-                            </Button>
+                            </button>
                         </>
                     )}
                 </div>
                 <div className="formio-pdf-viewer_btn-group">
                     {withDownload && (
                         <div className="formio-pdf-viewer_download-container">
-                            <Button
-                                type="text"
+                            <a
                                 href={getTemplateString(context)}
                                 download
                                 className="formio-pdf-viewer_download-btn"
                             >
                                 <DownloadOutlined />
-                            </Button>
+                            </a>
                         </div>
                     )}
                     {withZoom && (
                         <div className="formio-pdf-viewer_zoom-container">
-                            <Button type="text" onClick={zoomOut}>
+                            <button type="button" onClick={zoomOut}>
                                 <ZoomOutOutlined />
-                            </Button>
+                            </button>
                             <div className="formio-pdf-viewer_page-numbers">
                                 {scale}%
                             </div>
-                            <Button type="text" onClick={zoomIn}>
+                            <button type="button" onClick={zoomIn}>
                                 <ZoomInOutlined />
-                            </Button>
+                            </button>
                         </div>
                     )}
                 </div>
@@ -135,7 +151,7 @@ export class pdfViewer extends ReactComponent {
         return `${this.component.customClass}`;
     }
 
-    attachReact(element) {
+    attachReact(element: HTMLElement) {
         const context = {
             i18n: this.i18next,
             component: this.component,
@@ -153,18 +169,18 @@ export class pdfViewer extends ReactComponent {
         );
     }
 
-    detachReact(element) {
+    detachReact(element: HTMLElement) {
         if (element) {
             ReactDOM.unmountComponentAtNode(element);
         }
     }
 }
 
-const getTemplateString = (context) => {
+const getTemplateString = (context: ContextType) => {
     const compiled = context._.template(
         context.component.src,
         // eslint-disable-next-line no-param-reassign
-        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g),
+        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g as any),
     );
 
     return compiled(context);

@@ -1,8 +1,8 @@
-import {baseEditForm} from 'formiojs/components/_classes/component';
+import baseEditForm from 'formiojs/components/_classes/component/Component.form';
 
-import iframeEditDisplay from './Iframe.edit.display';
+import { iframeEditDisplay } from './Iframe.edit.display';
 
-export default settingsForm = (...extend) => {
+export const settingsForm = (...extend) => {
     return baseEditForm(
         [
             {

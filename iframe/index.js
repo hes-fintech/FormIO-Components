@@ -1,11 +1,13 @@
-import { Utils } from 'formiojs';
+import { Utils, Formio } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import React from 'react';
+/* @ts-ignore */
 import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
+/* @ts-ignore */
+import { Formio } from '@formio/react';
 
-import { settingsForm } from './Iframe.settingsForm';
+import settingsForm from './Iframe.settingsForm';
 
 class IframeComponent extends React.PureComponent {
     render() {
@@ -21,7 +23,7 @@ class IframeComponent extends React.PureComponent {
     }
 }
 
-export class iframe extends ReactComponent {
+class iframe extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Iframe',
@@ -71,5 +73,7 @@ const getTemplateString = (context) => {
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g),
     );
 
-    return compiled(context);
+    return context.component.src;
 };
+
+export default iframe
