@@ -1,5 +1,5 @@
 {
-  "name": "@hes/formio-components",
+  "name": "hes-formio-components",
   "version": "1.0.0",
   "description": "hes formio components",
   "main": "./build/index.js",
