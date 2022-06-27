@@ -27,7 +27,7 @@ const banner = `
 module.exports = {
   mode: "production",
   devtool: 'source-map',
-  entry: './src/lib/index.ts',
+  entry: './src/index.ts',
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
@@ -48,24 +48,22 @@ module.exports = {
 //       })
 //     ],
 //   },
-  module: {
-    rules: [
-      {
-        test: /\.(m|j|t)s$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader'
+  
+module: {
+  rules: [
+    {
+      test: /\.tsx?$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
+          plugins: ['@babel/proposal-class-properties']
         }
-      },
-    //   {
-    //     test: /\.(sa|sc|c)ss$/,
-    //     use: [
-    //       MiniCssExtractPlugin.loader,
-    //       { loader: "css-loader", options: { sourceMap: true } },
-    //     ],
-    //   }
-    ]
-  },
+      }
+    },
+  ]
+},
 //   plugins: [
 //     new PrettierPlugin(),
 //     new MiniCssExtractPlugin({
@@ -74,6 +72,9 @@ module.exports = {
 //     new webpack.BannerPlugin(banner)
 //   ],
   resolve: {
-    extensions: ['.ts', '.js', '.json']
+    // alias: {
+    //   '@': path.resolve(__dirname, 'src'),
+    // },
+    extensions: ['.tsx', '.ts', '.js', '.json']
   }
 };
