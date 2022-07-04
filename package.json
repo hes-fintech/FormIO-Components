@@ -5,6 +5,7 @@
   "main": "./build/index.js",
   "dependencies": {
     "@babel/preset-typescript": "^7.17.12",
+    "antd": "^4.21.4",
     "gensync": "^1.0.0-beta.2"
   },
   "devDependencies": {
@@ -32,12 +33,14 @@
     "html-webpack-plugin": "^5.5.0",
     "jest": "^28.1.1",
     "mini-css-extract-plugin": "^2.6.0",
+    "node-sass": "^7.0.1",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "prettier": "^2.7.0",
     "prettier-webpack-plugin": "^1.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-formio": "^4.3.0",
+    "sass-loader": "^13.0.2",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.3",
     "ts-loader": "^9.3.1",
