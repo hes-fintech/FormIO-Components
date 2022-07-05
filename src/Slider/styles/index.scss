@@ -1,0 +1,64 @@
+.formio-slider-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #dadee2;
+    height: 55px;
+
+    border-radius: 8px;
+    padding: 10px 13px;
+    margin-bottom: 27px;
+    align-items: center;
+    position: relative;
+    .formio-slider-input {
+        font-size: 21px;
+        line-height: 165%;
+        /* or 35px */
+    
+        text-align: right;
+    
+        color: #0d0f1c;
+        flex: 1;
+        margin-left: 10px;
+    
+        .ant-input-number-input {
+            text-align: right;
+            font-weight: 600;
+        }
+    }
+    .formio-slider-slider {
+        width: calc(100% - 16px);
+        position: absolute;
+    
+        left: 0px;
+        bottom: -18px;
+    
+        .ant-slider-rail {
+            height: 0px;
+            background-color: transparent;
+        }
+    
+        .ant-slider-track {
+            height: 3px;
+            background-color: #0a65ed;
+        }
+    
+        .ant-slider-handle {
+            width: 18px;
+            height: 18px;
+            margin-top: -8px;
+            background-color: #0a65ed;
+            border-color: #0a65ed;
+            box-shadow: 0px 4px 10px rgba(10, 101, 237, 0.38);
+        }
+    
+        &:hover {
+            .ant-slider-track {
+                background-color: #0a65ed;
+            }
+    
+            .ant-slider-handle {
+                border-color: #0a65ed !important;
+            }
+        }
+    }
+}
