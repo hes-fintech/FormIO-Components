@@ -17,6 +17,7 @@ type ContextType = {
     i18n: i18next.i18n;
     component: InformationComponentType;
     data: any;
+    row: any;
     _: LoDashStatic;
 };
 
@@ -66,9 +67,9 @@ export class iframe extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            row: (this as any).data,
             _: Utils._,
         };
-
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <IframeComponent context={context} onChange={(this as any).updateValue} />,
