@@ -9,6 +9,6 @@ export declare class sliderComponent extends ReactComponent {
     static schema(): any;
     static editForm: (...extend: any) => any;
     get className(): string;
-    attachReact(element: HTMLElement): any;
+    attachReact(element: HTMLElement): void;
     detachReact(element: HTMLElement): void;
 }
