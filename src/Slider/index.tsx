@@ -109,7 +109,7 @@ export class sliderComponent extends ReactComponent {
             setValue: (this as any).updateValue,
             _: Utils._,
         };
-        this.component.refreshOn = "change"
+        (this as any).component.refreshOn = "change"
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
