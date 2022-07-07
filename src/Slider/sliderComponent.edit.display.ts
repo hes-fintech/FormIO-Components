@@ -51,8 +51,20 @@ export const sliderComponentDisplay = [
     {
         type: 'textfield',
         input: false,
-        label: 'Help text',
-        key: 'helpText',
+        label: 'Prefix',
+        key: 'prefix',
+    },
+    {
+        type: 'textfield',
+        input: false,
+        label: 'Suffix',
+        key: 'suffix',
+    },
+    {
+        type: 'textfield',
+        input: false,
+        label: 'Min',
+        key: 'minTerm',
         validate: {
             required: true,
         },
@@ -60,8 +72,8 @@ export const sliderComponentDisplay = [
     {
         type: 'textfield',
         input: false,
-        label: 'Min term months',
-        key: 'minTermMonths',
+        label: 'Max',
+        key: 'maxTerm',
         validate: {
             required: true,
         },
@@ -69,8 +81,18 @@ export const sliderComponentDisplay = [
     {
         type: 'textfield',
         input: false,
-        label: 'Max term months',
-        key: 'maxTermMonths',
+        label: 'Initial value',
+        key: 'initialValue',
+        validate: {
+            required: true,
+        },
+    },
+    {
+        type: 'textfield',
+        input: false,
+        label: 'Slider step',
+        key: 'sliderStep',
+        defaultValue: 1,
         validate: {
             required: true,
         },

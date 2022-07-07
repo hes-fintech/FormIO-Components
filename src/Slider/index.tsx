@@ -11,15 +11,19 @@ import './styles/index.scss';
 type InformationComponentType = {
     sliderTitle: string;
     inputId: string;
-    helpText?: string;
-    minTermMonths: number;
-    maxTermMonths: number;
+    suffix?: string;
+    prefix?: string;
+    sliderStep: number;
+    minTerm: number;
+    maxTerm: number;
+    initialValue: number;
 };
 
 type ContextType = {
     i18n: i18next.i18n;
     component: InformationComponentType;
     data: any;
+    setValue: (value: any) => void;
     _: LoDashStatic;
 };
 
@@ -28,19 +32,20 @@ type SliderComponentProps = {
     onChange: () => void;
 };
 
-const INITIAL_TERM_MONTHS = 0;
-
 const SliderComponent = (props: SliderComponentProps) => {
     const { context } = props;
     const {
         sliderTitle,
         inputId,
-        helpText,
-        minTermMonths = 0,
-        maxTermMonths = 0,
+        suffix,
+        prefix,
+        sliderStep = 1,
+        minTerm,
+        maxTerm = 0,
+        initialValue = 0
     } = context.component;
 
-    const [termMonths, setTermMonths] = useState(INITIAL_TERM_MONTHS);
+    const [terms, setTerm] = useState(Number(getTemplateString(context, initialValue) || initialValue));
 
     return (
         <div className="formio-slider-container">
@@ -50,22 +55,25 @@ const SliderComponent = (props: SliderComponentProps) => {
                 bordered={false}
                 controls={false}
                 id={inputId}
-                value={termMonths}
-                formatter={(value) => `${value} ${helpText || ''}`}
-                parser={(value) => Number.parseInt(value || '0')}
-                onChange={(value) => {
-                    setTermMonths(value);
+                value={terms}
+                formatter={(value: any) => `${prefix || ''} ${value} ${suffix || ''}`}
+                parser={(value: any) => Number.parseInt(value || '0')}
+                onChange={(value: any) => {
+                    setTerm(value);
+                    context.setValue(value);
                 }}
-                min={Number(minTermMonths)}
-                max={Number(maxTermMonths)}
+                min={Number(getTemplateString(context, minTerm) || minTerm)}
+                max={Number(getTemplateString(context, maxTerm) || maxTerm)}
             />
             <Slider
                 className="formio-slider-slider"
-                min={Number(minTermMonths)}
-                max={Number(maxTermMonths)}
-                value={termMonths}
+                min={Number(getTemplateString(context, minTerm) || minTerm)}
+                max={Number(getTemplateString(context, maxTerm) || maxTerm)}
+                value={terms}
+                step={Number(getTemplateString(context, sliderStep) || sliderStep)}
                 onChange={(value: number) => {
-                    setTermMonths(value);
+                    setTerm(value);
+                    context.setValue(value);
                 }}
             />
         </div>
@@ -98,9 +106,10 @@ export class sliderComponent extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            setValue: (this as any).updateValue,
             _: Utils._,
         };
-
+        this.component.refreshOn = "change"
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
@@ -114,3 +123,13 @@ export class sliderComponent extends ReactComponent {
         }
     }
 }
+
+const getTemplateString = (context: ContextType, value: any) => {
+    const compiled = context._.template(
+        value,
+        // eslint-disable-next-line no-param-reassign
+        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
+    );
+
+    return compiled(context);
+};
