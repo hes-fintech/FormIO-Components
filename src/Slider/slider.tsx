@@ -52,7 +52,7 @@ const SliderComponent = (props: SliderComponentProps) => {
             <InputNumber
                 className="formio-slider-input"
                 bordered={false}
-                // controls={false}
+                controls={false}
                 id={inputId}
                 value={sliderValue}
                 formatter={(value: any) => `${prefix || ''} ${value} ${suffix || ''}`}
