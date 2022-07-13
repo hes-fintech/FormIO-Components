@@ -6,6 +6,11 @@ export declare const sliderComponentDisplay: ({
     label?: undefined;
     validate?: undefined;
     defaultValue?: undefined;
+    weight?: undefined;
+    tooltip?: undefined;
+    dataSrc?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -16,6 +21,11 @@ export declare const sliderComponentDisplay: ({
     };
     ignore?: undefined;
     defaultValue?: undefined;
+    weight?: undefined;
+    tooltip?: undefined;
+    dataSrc?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -24,6 +34,11 @@ export declare const sliderComponentDisplay: ({
     ignore?: undefined;
     validate?: undefined;
     defaultValue?: undefined;
+    weight?: undefined;
+    tooltip?: undefined;
+    dataSrc?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -34,4 +49,27 @@ export declare const sliderComponentDisplay: ({
         required: boolean;
     };
     ignore?: undefined;
+    weight?: undefined;
+    tooltip?: undefined;
+    dataSrc?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
+} | {
+    type: string;
+    input: boolean;
+    key: string;
+    label: string;
+    weight: number;
+    tooltip: string;
+    dataSrc: string;
+    valueProperty: string;
+    data: {
+        custom(context: any): {
+            label: string;
+            value: string;
+        }[];
+    };
+    ignore?: undefined;
+    validate?: undefined;
+    defaultValue?: undefined;
 })[];

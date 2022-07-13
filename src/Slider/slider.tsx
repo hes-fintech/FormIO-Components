@@ -2,7 +2,7 @@ import { InputNumber, Slider } from 'antd';
 import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ReactComponent } from 'react-formio';
 import { settingsForm } from './sliderComponent.settingsForm';
@@ -14,8 +14,8 @@ type InformationComponentType = {
     suffix?: string;
     prefix?: string;
     sliderStep: number;
-    minTerm: number;
-    maxTerm: number;
+    min: number;
+    max: number;
     initialValue: number;
 };
 
@@ -40,12 +40,20 @@ const SliderComponent = (props: SliderComponentProps) => {
         suffix,
         prefix,
         sliderStep = 1,
-        minTerm,
-        maxTerm = 0,
-        initialValue = 0
+        min,
+        max,
+        initialValue
     } = context.component;
 
-    const [terms, setTerm] = useState(Number(getTemplateString(context, initialValue) || initialValue));
+    const isFirstRender = useFirstRender();
+
+    const [sliderValue, setSliderValue] = useState(Number(getTemplateString(context, initialValue) || initialValue));
+
+    useEffect(() => {
+        if (isFirstRender) {
+            context.setValue(Number(getTemplateString(context, max)));
+        }
+    }, [context.data]);
 
     return (
         <div className="formio-slider-container">
@@ -55,24 +63,26 @@ const SliderComponent = (props: SliderComponentProps) => {
                 bordered={false}
                 controls={false}
                 id={inputId}
-                value={terms}
+                value={sliderValue}
                 formatter={(value: any) => `${prefix || ''} ${value} ${suffix || ''}`}
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
-                    setTerm(value);
+                    setSliderValue(value);
                     context.setValue(value);
                 }}
-                min={Number(getTemplateString(context, minTerm) || minTerm)}
-                max={Number(getTemplateString(context, maxTerm) || maxTerm)}
+                min={Number(getTemplateString(context, min) || min)}
+                max={Number(getTemplateString(context, max) || max)}
             />
             <Slider
                 className="formio-slider-slider"
-                min={Number(getTemplateString(context, minTerm) || minTerm)}
-                max={Number(getTemplateString(context, maxTerm) || maxTerm)}
-                value={terms}
+                min={Number(getTemplateString(context, min) || min)}
+                max={Number(getTemplateString(context, max) || max)}
+                value={sliderValue}
                 step={Number(getTemplateString(context, sliderStep) || sliderStep)}
                 onChange={(value: number) => {
-                    setTerm(value);
+                    setSliderValue(value);
+                }}
+                onAfterChange={(value: number) => {
                     context.setValue(value);
                 }}
             />
@@ -83,7 +93,7 @@ const SliderComponent = (props: SliderComponentProps) => {
 export class sliderComponent extends ReactComponent {
     static get builderInfo() {
         return {
-            title: 'SliderComponent',
+            title: 'Slider Component',
             group: 'Data',
             schema: sliderComponent.schema(),
         };
@@ -106,10 +116,11 @@ export class sliderComponent extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            row: (this as any).data,
             setValue: (this as any).updateValue,
             _: Utils._,
         };
-        (this as any).component.refreshOn = "change"
+        (this as any).component.refreshOn = "change";
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
@@ -130,6 +141,12 @@ const getTemplateString = (context: ContextType, value: any) => {
         // eslint-disable-next-line no-param-reassign
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
-
     return compiled(context);
+};
+
+const useFirstRender = () => {
+    const ref = useRef(true);
+    const firstRender = ref.current;
+    ref.current = false;
+    return firstRender;
 };
