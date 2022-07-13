@@ -14,8 +14,8 @@ type InformationComponentType = {
     suffix?: string;
     prefix?: string;
     sliderStep: number;
-    minTerm: number;
-    maxTerm: number;
+    min: number;
+    max: number;
     initialValue: number;
 };
 
@@ -40,39 +40,40 @@ const SliderComponent = (props: SliderComponentProps) => {
         suffix,
         prefix,
         sliderStep = 1,
-        minTerm,
-        maxTerm = 0,
+        min,
+        max = 0,
         initialValue = 0
     } = context.component;
 
-    const [terms, setTerm] = useState(Number(getTemplateString(context, initialValue) || initialValue));
-
+    const [sliderValue, setSliderValue] = useState(Number(getTemplateString(context, initialValue) || initialValue));
     return (
         <div className="formio-slider-container">
             <span>{sliderTitle}</span>
             <InputNumber
                 className="formio-slider-input"
                 bordered={false}
-                controls={false}
+                // controls={false}
                 id={inputId}
-                value={terms}
+                value={sliderValue}
                 formatter={(value: any) => `${prefix || ''} ${value} ${suffix || ''}`}
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
-                    setTerm(value);
+                    setSliderValue(value);
                     context.setValue(value);
                 }}
-                min={Number(getTemplateString(context, minTerm) || minTerm)}
-                max={Number(getTemplateString(context, maxTerm) || maxTerm)}
+                min={Number(getTemplateString(context, min) || min)}
+                max={Number(getTemplateString(context, max) || max)}
             />
             <Slider
                 className="formio-slider-slider"
-                min={Number(getTemplateString(context, minTerm) || minTerm)}
-                max={Number(getTemplateString(context, maxTerm) || maxTerm)}
-                value={terms}
+                min={Number(getTemplateString(context, min) || min)}
+                max={Number(getTemplateString(context, max) || max)}
+                value={sliderValue}
                 step={Number(getTemplateString(context, sliderStep) || sliderStep)}
                 onChange={(value: number) => {
-                    setTerm(value);
+                    setSliderValue(value);
+                }}
+                onAfterChange={(value: number) => {
                     context.setValue(value);
                 }}
             />
@@ -83,7 +84,7 @@ const SliderComponent = (props: SliderComponentProps) => {
 export class sliderComponent extends ReactComponent {
     static get builderInfo() {
         return {
-            title: 'SliderComponent',
+            title: 'Slider Component',
             group: 'Data',
             schema: sliderComponent.schema(),
         };
@@ -109,7 +110,7 @@ export class sliderComponent extends ReactComponent {
             setValue: (this as any).updateValue,
             _: Utils._,
         };
-        (this as any).component.refreshOn = "change"
+        (this as any).component.refreshOn = "change";
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
@@ -130,6 +131,5 @@ const getTemplateString = (context: ContextType, value: any) => {
         // eslint-disable-next-line no-param-reassign
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
-
     return compiled(context);
 };
