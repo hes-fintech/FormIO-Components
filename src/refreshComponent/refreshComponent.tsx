@@ -44,7 +44,7 @@ const RefreshComponent = (props: RefreshComponentProps) => {
 export class refreshComponent extends ReactComponent {
     static get builderInfo() {
         return {
-            title: 'Refresh Component',
+            title: 'Fetch Component',
             group: 'Data',
             icon: 'refresh',
             schema: refreshComponent.schema(),
