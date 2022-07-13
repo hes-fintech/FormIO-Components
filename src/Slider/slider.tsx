@@ -2,7 +2,7 @@ import { InputNumber, Slider } from 'antd';
 import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ReactComponent } from 'react-formio';
 import { settingsForm } from './sliderComponent.settingsForm';
@@ -41,11 +41,20 @@ const SliderComponent = (props: SliderComponentProps) => {
         prefix,
         sliderStep = 1,
         min,
-        max = 0,
-        initialValue = 0
+        max,
+        initialValue
     } = context.component;
 
+    const isFirstRender = useFirstRender();
+
     const [sliderValue, setSliderValue] = useState(Number(getTemplateString(context, initialValue) || initialValue));
+
+    useEffect(() => {
+        if (isFirstRender) {
+            context.setValue(Number(getTemplateString(context, max)));
+        }
+    }, [context.data]);
+
     return (
         <div className="formio-slider-container">
             <span>{sliderTitle}</span>
@@ -107,6 +116,7 @@ export class sliderComponent extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            row: (this as any).data,
             setValue: (this as any).updateValue,
             _: Utils._,
         };
@@ -132,4 +142,11 @@ const getTemplateString = (context: ContextType, value: any) => {
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
     return compiled(context);
+};
+
+const useFirstRender = () => {
+    const ref = useRef(true);
+    const firstRender = ref.current;
+    ref.current = false;
+    return firstRender;
 };
