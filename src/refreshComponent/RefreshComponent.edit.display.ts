@@ -67,7 +67,7 @@ export const refreshComponentEditDisplay = [
     {
       type: 'select',
       input: true,
-      weight: 0,
+      weight: 1,
       key: 'requestType',
       defaultValue: 'GET',
       label: 'Type of request',
@@ -83,7 +83,7 @@ export const refreshComponentEditDisplay = [
         input: false,
         label: 'URL',
         key: 'url',
-        weight: 1,
+        weight: 2,
         validate: {
             required: true,
         },
@@ -93,7 +93,7 @@ export const refreshComponentEditDisplay = [
       input: true,
       label: 'POST Body',
       key: 'requestBody',
-      weight: 2,
+      weight: 3,
       components: [
         {
           label: 'Key',
@@ -108,5 +108,16 @@ export const refreshComponentEditDisplay = [
           type: 'textfield',
         },
       ],
+      conditional: {
+        json: { '===': [{ var: 'data.requestType' }, 'POST'] },
+      },
+    },
+    {
+        type: 'textfield',
+        input: false,
+        label: 'Delay of request',
+        key: 'requestDelay',
+        defaultValue: 0,
+        weight: 4,
     },
   ];
