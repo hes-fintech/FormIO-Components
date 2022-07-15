@@ -2,7 +2,8 @@ import { InputNumber, Slider } from 'antd';
 import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ReactComponent } from 'react-formio';
 import { settingsForm } from './sliderComponent.settingsForm';
@@ -24,6 +25,7 @@ type ContextType = {
     component: InformationComponentType;
     data: any;
     setValue: (value: any) => void;
+    isBuilderMode: boolean;
     _: LoDashStatic;
 };
 
@@ -45,14 +47,16 @@ const SliderComponent = (props: SliderComponentProps) => {
         initialValue
     } = context.component;
 
-    const isFirstRender = useFirstRender();
+    const minValue = context.isBuilderMode ? 0 : Number(getTemplateString(context, min));
+    const maxValue = context.isBuilderMode ? 0 : Number(getTemplateString(context, max));
+    const initialDataValue = context.isBuilderMode ? 0 : Number(getTemplateString(context, initialValue));
 
-    const [sliderValue, setSliderValue] = useState(Number(getTemplateString(context, initialValue) || initialValue));
+    const [sliderValue, setSliderValue] = useState(initialDataValue);
 
     useEffect(() => {
-        if (isFirstRender) {
-            context.setValue(Number(getTemplateString(context, max)));
-        }
+        if (!context.isBuilderMode) {
+            context.setValue(initialDataValue);
+        };
     }, [context.data]);
 
     return (
@@ -70,15 +74,15 @@ const SliderComponent = (props: SliderComponentProps) => {
                     setSliderValue(value);
                     context.setValue(value);
                 }}
-                min={Number(getTemplateString(context, min) || min)}
-                max={Number(getTemplateString(context, max) || max)}
+                min={minValue}
+                max={maxValue}
             />
             <Slider
                 className="formio-slider-slider"
-                min={Number(getTemplateString(context, min) || min)}
-                max={Number(getTemplateString(context, max) || max)}
+                min={minValue}
+                max={maxValue}
                 value={sliderValue}
-                step={Number(getTemplateString(context, sliderStep) || sliderStep)}
+                step={Number(getTemplateString(context, sliderStep))}
                 onChange={(value: number) => {
                     setSliderValue(value);
                 }}
@@ -115,12 +119,12 @@ export class sliderComponent extends ReactComponent {
         const context = {
             i18n: (this as any).i18next,
             component: (this as any).component,
-            data: (this as any).data,
-            row: (this as any).data,
+            data: (this as any).data as any,
+            row: (this as any).data as any,
             setValue: (this as any).updateValue,
+            isBuilderMode: Boolean((this as any).builderMode) || Boolean((this as any).options.preview),
             _: Utils._,
         };
-        (this as any).component.refreshOn = "change";
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
@@ -136,17 +140,10 @@ export class sliderComponent extends ReactComponent {
 }
 
 const getTemplateString = (context: ContextType, value: any) => {
-    const compiled = context._.template(
-        value,
-        // eslint-disable-next-line no-param-reassign
-        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
+    _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
+    const compiled = _.template(
+        value
     );
+    
     return compiled(context);
-};
-
-const useFirstRender = () => {
-    const ref = useRef(true);
-    const firstRender = ref.current;
-    ref.current = false;
-    return firstRender;
 };

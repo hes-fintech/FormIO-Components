@@ -12,6 +12,7 @@ export declare const refreshComponentEditDisplay: ({
     defaultValue?: undefined;
     validate?: undefined;
     components?: undefined;
+    conditional?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -32,6 +33,7 @@ export declare const refreshComponentEditDisplay: ({
     defaultValue?: undefined;
     validate?: undefined;
     components?: undefined;
+    conditional?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -51,6 +53,7 @@ export declare const refreshComponentEditDisplay: ({
     valueProperty?: undefined;
     validate?: undefined;
     components?: undefined;
+    conditional?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -67,6 +70,7 @@ export declare const refreshComponentEditDisplay: ({
     data?: undefined;
     defaultValue?: undefined;
     components?: undefined;
+    conditional?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -79,6 +83,13 @@ export declare const refreshComponentEditDisplay: ({
         input: boolean;
         type: string;
     }[];
+    conditional: {
+        json: {
+            '===': (string | {
+                var: string;
+            })[];
+        };
+    };
     ignore?: undefined;
     tooltip?: undefined;
     dataSrc?: undefined;
@@ -86,4 +97,19 @@ export declare const refreshComponentEditDisplay: ({
     data?: undefined;
     defaultValue?: undefined;
     validate?: undefined;
+} | {
+    type: string;
+    input: boolean;
+    label: string;
+    key: string;
+    defaultValue: number;
+    weight: number;
+    ignore?: undefined;
+    tooltip?: undefined;
+    dataSrc?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
+    validate?: undefined;
+    components?: undefined;
+    conditional?: undefined;
 })[];

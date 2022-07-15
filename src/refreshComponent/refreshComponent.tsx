@@ -1,6 +1,7 @@
 import { Utils, Form } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
+import _ from 'lodash';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { ReactComponent } from 'react-formio';
@@ -16,6 +17,8 @@ type InformationComponentType = {
     url: string;
     requestType: 'GET' | 'POST';
     requestBody: RequestBodyItem[];
+    firstRenderRequest: boolean;
+    requestDelay: number;
 };
 
 type ContextType = {
@@ -23,6 +26,7 @@ type ContextType = {
     component: InformationComponentType;
     data: any;
     setValue: (arg: any) => void;
+    isBuilderMode: boolean;
     _: LoDashStatic;
 };
 
@@ -32,12 +36,29 @@ type RefreshComponentProps = {
 };
 
 const RefreshComponent = (props: RefreshComponentProps) => {
+    const { context } = props;
+    const getDataDebounced = _.debounce(getData, context.component.requestDelay);
+
     useEffect(() => {
-        getData(props.context);
+        if (!context.isBuilderMode) {
+            getDataDebounced(props.context);
+        };
     }, []);
     
     return (
-        <div/>
+        <div>
+            {
+                context.isBuilderMode && (
+                    <>
+                        <p>
+                            <b>"{context.component.requestType}"{' '}</b>
+                            request, to url:{' '}
+                            <b>"{context.component.url}"</b>
+                        </p>
+                    </>
+                )
+            }
+        </div>
     );
 }
 
@@ -68,9 +89,11 @@ export class refreshComponent extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            row: (this as any).data,
             setValue: (value: any) => {
                 (this as any).updateValue(value);
             },
+            isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
         // eslint-disable-next-line react/no-render-return-value
@@ -93,6 +116,7 @@ const getTemplateStringContext = (context: ContextType) => {
         // eslint-disable-next-line no-param-reassign
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
+    
     return compiled(context);
 };
 
@@ -102,6 +126,7 @@ const getTemplateString = (context: ContextType, value: string) => {
         // eslint-disable-next-line no-param-reassign
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
+    
     return compiled(context);
 };
 
@@ -129,7 +154,7 @@ const getRequestBody = (context: ContextType) => {
     return context?.component?.requestBody?.reduce((initial, current: RequestBodyItem) => {
         return {
             ...initial,
-            [current.key]: +getTemplateString(context, current.value),
+            [current.key]: getTemplateString(context, current.value),
         };
     }, {});
 };
