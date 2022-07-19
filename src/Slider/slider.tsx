@@ -87,7 +87,7 @@ const SliderComponent = (props: SliderComponentProps) => {
                     setSliderValue(value);
                 }}
                 onAfterChange={(value: number) => {
-                    context.setValue(value);
+                    context.setValue(value.toString());
                 }}
             />
         </div>
