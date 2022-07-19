@@ -50,11 +50,13 @@ const SliderComponent = (props: SliderComponentProps) => {
     const minValue = context.isBuilderMode ? null : Number(getTemplateString(context, min));
     const maxValue = context.isBuilderMode ? null : Number(getTemplateString(context, max));
     const initialDataValue = context.isBuilderMode ? null : Number(getTemplateString(context, initialValue));
+    const prefixValue = getTemplateString(context, prefix);
+    const suffixValue = getTemplateString(context, suffix);
 
     const [sliderValue, setSliderValue] = useState(initialDataValue);
 
     useEffect(() => {
-        if (!context.isBuilderMode) {
+        if (!context.isBuilderMode && initialDataValue) {
             context.setValue(initialDataValue);
         };
     }, [context.data]);
@@ -68,7 +70,7 @@ const SliderComponent = (props: SliderComponentProps) => {
                 controls={false}
                 id={inputId}
                 value={sliderValue as number}
-                formatter={(value: any) => `${context.i18n.t(prefix || '') || ''} ${value} ${context.i18n.t(suffix || '') || ''}`}
+                formatter={(value: any) => `${context.i18n.t(prefixValue || '') || ''} ${value} ${context.i18n.t(suffixValue || '') || ''}`}
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
                     setSliderValue(value);
