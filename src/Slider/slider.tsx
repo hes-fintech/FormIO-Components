@@ -47,9 +47,9 @@ const SliderComponent = (props: SliderComponentProps) => {
         initialValue
     } = context.component;
 
-    const minValue = context.isBuilderMode ? 0 : Number(getTemplateString(context, min));
-    const maxValue = context.isBuilderMode ? 0 : Number(getTemplateString(context, max));
-    const initialDataValue = context.isBuilderMode ? 0 : Number(getTemplateString(context, initialValue));
+    const minValue = context.isBuilderMode ? null : Number(getTemplateString(context, min));
+    const maxValue = context.isBuilderMode ? null : Number(getTemplateString(context, max));
+    const initialDataValue = context.isBuilderMode ? null : Number(getTemplateString(context, initialValue));
 
     const [sliderValue, setSliderValue] = useState(initialDataValue);
 
@@ -61,27 +61,27 @@ const SliderComponent = (props: SliderComponentProps) => {
 
     return (
         <div className="formio-slider-container">
-            <span>{sliderTitle}</span>
+            <span>{context.i18n.t(sliderTitle)}</span>
             <InputNumber
                 className="formio-slider-input"
                 bordered={false}
                 controls={false}
                 id={inputId}
-                value={sliderValue}
-                formatter={(value: any) => `${prefix || ''} ${value} ${suffix || ''}`}
+                value={sliderValue as number}
+                formatter={(value: any) => `${context.i18n.t(prefix || '') || ''} ${value} ${context.i18n.t(suffix || '') || ''}`}
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
                     setSliderValue(value);
-                    context.setValue(value);
+                    context.setValue(value.toString());
                 }}
-                min={minValue}
-                max={maxValue}
+                min={minValue as number}
+                max={maxValue as number}
             />
             <Slider
                 className="formio-slider-slider"
-                min={minValue}
-                max={maxValue}
-                value={sliderValue}
+                min={minValue as number}
+                max={maxValue as number}
+                value={sliderValue as number}
                 step={Number(getTemplateString(context, sliderStep))}
                 onChange={(value: number) => {
                     setSliderValue(value);
