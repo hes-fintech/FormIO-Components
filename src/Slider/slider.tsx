@@ -47,17 +47,27 @@ const SliderComponent = (props: SliderComponentProps) => {
         initialValue
     } = context.component;
 
-    const minValue = context.isBuilderMode ? null : Number(getTemplateString(context, min));
-    const maxValue = context.isBuilderMode ? null : Number(getTemplateString(context, max));
-    const initialDataValue = context.isBuilderMode ? null : Number(getTemplateString(context, initialValue));
+    const numberWithCommas = (x: number) => {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     const prefixValue = getTemplateString(context, prefix);
     const suffixValue = getTemplateString(context, suffix);
 
-    const [sliderValue, setSliderValue] = useState(initialDataValue);
+    const [sliderValue, setSliderValue] = useState(0);
+    const [minValue, setMinInitialValue] = useState(0);
+    const [maxValue, setMaxInitialValue] = useState(0);
+
+    const setValues = _.debounce(() => {
+        context.setValue(Number(getTemplateString(context, initialValue)));
+        setMinInitialValue(Number(getTemplateString(context, min)) as number);
+        setMaxInitialValue(Number(getTemplateString(context, max)) as number);
+        setSliderValue(Number(getTemplateString(context, initialValue)));
+    }, 0);
 
     useEffect(() => {
-        if (!context.isBuilderMode && initialDataValue) {
-            context.setValue(initialDataValue);
+        if (!context.isBuilderMode && sliderValue) {
+            setValues();
         };
     }, [context.data]);
 
@@ -70,7 +80,7 @@ const SliderComponent = (props: SliderComponentProps) => {
                 controls={false}
                 id={inputId}
                 value={sliderValue as number}
-                formatter={(value: any) => `${context.i18n.t(prefixValue || '') || ''} ${value} ${context.i18n.t(suffixValue || '') || ''}`}
+                formatter={(value: any) => `${context.i18n.t(prefixValue || '') || ''} ${numberWithCommas(value)} ${context.i18n.t(suffixValue || '') || ''}`}
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
                     setSliderValue(value);
