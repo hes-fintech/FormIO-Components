@@ -9,6 +9,6 @@ export declare class refreshComponent extends ReactComponent {
     static schema(): any;
     static editForm: (...extend: any) => any;
     get className(): string;
-    attachReact(element: HTMLElement): void;
+    attachReact(element: HTMLElement): any;
     detachReact(element: HTMLElement): void;
 }

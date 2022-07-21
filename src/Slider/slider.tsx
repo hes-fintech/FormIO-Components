@@ -66,14 +66,14 @@ const SliderComponent = (props: SliderComponentProps) => {
     }, 0);
 
     useEffect(() => {
-        if (!context.isBuilderMode && sliderValue) {
+        if (!context.isBuilderMode) {
             setValues();
         };
     }, [context.data]);
 
     return (
         <div className="formio-slider-container">
-            <span>{context.i18n.t(sliderTitle)}</span>
+            <span>{context.i18n.t(sliderTitle) as string}</span>
             <InputNumber
                 className="formio-slider-input"
                 bordered={false}
@@ -84,7 +84,7 @@ const SliderComponent = (props: SliderComponentProps) => {
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
                     setSliderValue(value);
-                    context.setValue(value.toString());
+                    context.setValue(value);
                 }}
                 min={minValue as number}
                 max={maxValue as number}
@@ -99,7 +99,7 @@ const SliderComponent = (props: SliderComponentProps) => {
                     setSliderValue(value);
                 }}
                 onAfterChange={(value: number) => {
-                    context.setValue(value.toString());
+                    context.setValue(value);
                 }}
             />
         </div>
