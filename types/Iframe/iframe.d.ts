@@ -8,6 +8,6 @@ export declare class iframe extends ReactComponent {
     static schema(): any;
     static editForm: (...extend: any) => any;
     get className(): string;
-    attachReact(element: any): void;
+    attachReact(element: any): any;
     detachReact(element: any): void;
 }
