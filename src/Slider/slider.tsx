@@ -58,7 +58,8 @@ const SliderComponent = (props: SliderComponentProps) => {
     const [minValue, setMinInitialValue] = useState(0);
     const [maxValue, setMaxInitialValue] = useState(0);
 
-    const setValues = _.debounce(() => {
+    const setValues = window.setTimeout(() => {
+        console.log('123')
         context.setValue(Number(getTemplateString(context, initialValue)));
         setMinInitialValue(Number(getTemplateString(context, min)) as number);
         setMaxInitialValue(Number(getTemplateString(context, max)) as number);
@@ -66,9 +67,16 @@ const SliderComponent = (props: SliderComponentProps) => {
     }, 0);
 
     useEffect(() => {
-        if (!context.isBuilderMode) {
-            setValues();
-        };
+        // if (!context.isBuilderMode) {
+            // setValues();
+        // };
+        window.setTimeout(() => {
+            console.log('123')
+            context.setValue(Number(getTemplateString(context, initialValue)));
+            setMinInitialValue(Number(getTemplateString(context, min)) as number);
+            setMaxInitialValue(Number(getTemplateString(context, max)) as number);
+            setSliderValue(Number(getTemplateString(context, initialValue)));
+        }, 0);
     }, [context.data]);
 
     return (

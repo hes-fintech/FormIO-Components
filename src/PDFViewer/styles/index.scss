@@ -1,0 +1,21 @@
+.formio-pdf-viewer {
+    &_toolbar,
+    &_page-container,
+    &_btn-group,
+    &_zoom-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .ant-btn-text {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2px;
+    }
+    &_download-container {
+        .ant-btn-text {
+            margin-bottom: 0;
+            padding-bottom: 2px;
+        }
+    }
+}
