@@ -127,7 +127,7 @@ const getTemplateString = (context: ContextType, value: string) => {
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
     
-    return compiled(context);
+    return value ? +compiled(context) : null;
 };
 
 const getData = (context: ContextType) => {
