@@ -3,6 +3,7 @@ export declare class iframe extends ReactComponent {
     static get builderInfo(): {
         title: string;
         group: string;
+        icon: string;
         schema: any;
     };
     static schema(): any;

@@ -4,9 +4,20 @@ export declare const pdfViewerDisplay: ({
     type?: undefined;
     weight?: undefined;
     input?: undefined;
-    label?: undefined;
     tooltip?: undefined;
+    label?: undefined;
     validate?: undefined;
+    defaultValue?: undefined;
+} | {
+    type: string;
+    weight: number;
+    input: boolean;
+    tooltip: string;
+    label: string;
+    key: string;
+    ignore?: undefined;
+    validate?: undefined;
+    defaultValue?: undefined;
 } | {
     type: string;
     weight: number;
@@ -18,11 +29,13 @@ export declare const pdfViewerDisplay: ({
         required: boolean;
     };
     ignore?: undefined;
+    defaultValue?: undefined;
 } | {
     type: string;
     weight: number;
     label: string;
     key: string;
+    defaultValue: boolean;
     ignore?: undefined;
     input?: undefined;
     tooltip?: undefined;

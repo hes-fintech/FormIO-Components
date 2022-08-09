@@ -42,6 +42,15 @@ export const pdfViewerDisplay = [
     {
         type: 'textfield',
         weight: 0,
+        input: true,
+        tooltip:
+            'you can use it for name component in dev mode',
+        label: 'Label for dev mode',
+        key: 'devLabel',
+    },
+    {
+        type: 'textfield',
+        weight: 1,
         input: false,
         label: 'Src',
         tooltip:
@@ -53,20 +62,23 @@ export const pdfViewerDisplay = [
     },
     {
         type: 'checkbox',
-        weight: 1,
+        weight: 2,
         label: 'Enable pagination',
         key: 'withPagination',
-    },
-    {
-        type: 'checkbox',
-        weight: 2,
-        label: 'Enable file download',
-        key: 'withDownload',
+        defaultValue: true,
     },
     {
         type: 'checkbox',
         weight: 3,
+        label: 'Enable file download',
+        key: 'withDownload',
+        defaultValue: true,
+    },
+    {
+        type: 'checkbox',
+        weight: 4,
         label: 'Enable zoom',
         key: 'withZoom',
+        defaultValue: true,
     },
 ];
