@@ -111,6 +111,7 @@ export class sliderComponent extends ReactComponent {
         return {
             title: 'Slider Component',
             group: 'Data',
+            icon: 'slider',
             schema: sliderComponent.schema(),
         };
     }

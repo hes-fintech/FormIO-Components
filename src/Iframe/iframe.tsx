@@ -46,6 +46,7 @@ export class iframe extends ReactComponent {
         return {
             title: 'Iframe',
             group: 'Data',
+            icon: 'film',
             schema: iframe.schema(),
         };
     }

@@ -8,8 +8,8 @@ import { ReactComponent } from 'react-formio';
 
 import { settingsForm } from './Refresh.settingsForm';
 
-type RequestBodyItem = { 
-    key: string, 
+type RequestBodyItem = {
+    key: string,
     value: string
 };
 
@@ -44,20 +44,22 @@ const RefreshComponent = (props: RefreshComponentProps) => {
             getDataDebounced(props.context);
         };
     }, []);
-    
+
     return (
         <div>
-            {
-                context.isBuilderMode && (
-                    <>
-                        <p>
-                            <b>"{context.component.requestType}"{' '}</b>
-                            request, to url:{' '}
-                            <b>"{context.component.url}"</b>
-                        </p>
-                    </>
-                )
-            }
+            {context.isBuilderMode && (
+                <label className="col-form-label">
+                    {context.component.url ? `"${context.component.requestType}" request, to url: "${context.component.url}"` : "Request component"}
+                </label>
+            )}
+            <div className={`${context.isBuilderMode ? "drag-container" : ""}`}>
+                {context.isBuilderMode && (
+                    <p>
+                        <b>"{context.component.requestType}" </b>
+                        request, to url: <b>"{context.component.url}"</b>
+                    </p>
+                )}
+            </div>
         </div>
     );
 }
@@ -116,31 +118,29 @@ const getTemplateStringContext = (context: ContextType) => {
         // eslint-disable-next-line no-param-reassign
         (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
-    
+
     return compiled(context);
 };
 
 const getTemplateString = (context: ContextType, value: string) => {
-    const compiled = context._.template(
-        value,
-        // eslint-disable-next-line no-param-reassign
-        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
-    );
-    
-    return value ? +compiled(context) : null;
+    const compiledValue = getNestedValue(context, value?.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}")));
+
+    return getValueWithType(compiledValue);
 };
 
 const getData = (context: ContextType) => {
     const requestBody = getRequestBody(context);
+    const requestUrlParams = `?${new URLSearchParams(requestBody)}`;
     const requestType = context.component?.requestType;
     const postRequestOptions = {
         headers: {
-          'Content-Type': 'application/json;charset=utf-8'
+            'Content-Type': 'application/json;charset=utf-8'
         },
         body: JSON.stringify(requestBody),
     };
     const requestOptions = requestType === 'POST' ? postRequestOptions : {};
-    fetch(getTemplateStringContext(context), {
+    const requestUrl = requestType === 'GET' ? requestUrlParams : "";
+    fetch(`${getTemplateStringContext(context)}${requestUrl}`, {
         method: requestType,
         ...requestOptions,
     }).then((response) => {
@@ -157,4 +157,22 @@ const getRequestBody = (context: ContextType) => {
             [current.key]: getTemplateString(context, current.value),
         };
     }, {});
+};
+
+const getValueWithType = (value: any) => {
+    if (typeof (value) === "object") {
+        return value;
+    } else {
+        if (isNaN(+value)) {
+            return value ? value : null;
+        } else {
+            return value ? +value : null;
+        };
+    };
+};
+
+const getNestedValue = (obj: any, key: string) => {
+    return key.split(".").reduce((result, key) => {
+        return result?.[key]
+    }, obj);
 };

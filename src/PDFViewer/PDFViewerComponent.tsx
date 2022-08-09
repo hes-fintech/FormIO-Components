@@ -23,11 +23,13 @@ type InformationComponentType = {
     withPagination?: boolean;
     withDownload?: boolean;
     withZoom?: boolean;
+    devLabel: string;
 };
 
 type ContextType = {
     i18n: i18next.i18n;
     component: InformationComponentType;
+    isBuilderMode: boolean;
     data: any;
     _: LoDashStatic;
 };
@@ -79,58 +81,65 @@ const PDFViewerComponent = (props: PDFViewerComponentProps) => {
     };
 
     return (
-        <div className="formio-pdf-viewer">
-            <div className="formio-pdf-viewer_toolbar">
-                <div className="formio-pdf-viewer_page-container">
-                    {withPagination && (
-                        <>
-                            <Button type="text" onClick={setPrevPage}>
-                                <LeftOutlined />
-                            </Button>
-                            <div className="formio-pdf-viewer_page-numbers">
-                                Page {pageNumber} of {numPages}
+        <>
+            {context.isBuilderMode && (
+                <label className="col-form-label">
+                    {context.component.devLabel}
+                </label>
+            )}
+            <div className={`${context.isBuilderMode ? "drag-container" : ""} formio-pdf-viewer`}>
+                <div className="formio-pdf-viewer_toolbar">
+                    <div className="formio-pdf-viewer_page-container">
+                        {withPagination && (
+                            <>
+                                <Button type="text" onClick={setPrevPage}>
+                                    <LeftOutlined />
+                                </Button>
+                                <div className="formio-pdf-viewer_page-numbers">
+                                    Page {pageNumber} of {numPages}
+                                </div>
+                                <Button type="text" onClick={setNextPage}>
+                                    <RightOutlined />
+                                </Button>
+                            </>
+                        )}
+                    </div>
+                    <div className="formio-pdf-viewer_btn-group">
+                        {withDownload && (
+                            <div className="formio-pdf-viewer_download-container">
+                                <Button
+                                    type="text"
+                                    href={getTemplateString(context)}
+                                    download
+                                    className="formio-pdf-viewer_download-btn"
+                                >
+                                    <DownloadOutlined />
+                                </Button>
                             </div>
-                            <Button type="text" onClick={setNextPage}>
-                                <RightOutlined />
-                            </Button>
-                        </>
-                    )}
-                </div>
-                <div className="formio-pdf-viewer_btn-group">
-                    {withDownload && (
-                        <div className="formio-pdf-viewer_download-container">
-                            <Button
-                                type="text"
-                                href={getTemplateString(context)}
-                                download
-                                className="formio-pdf-viewer_download-btn"
-                            >
-                                <DownloadOutlined />
-                            </Button>
-                        </div>
-                    )}
-                    {withZoom && (
-                        <div className="formio-pdf-viewer_zoom-container">
-                            <Button type="text" onClick={zoomOut}>
-                                <ZoomOutOutlined />
-                            </Button>
-                            <div className="formio-pdf-viewer_page-numbers">
-                                {scale}%
+                        )}
+                        {withZoom && (
+                            <div className="formio-pdf-viewer_zoom-container">
+                                <Button type="text" onClick={zoomOut}>
+                                    <ZoomOutOutlined />
+                                </Button>
+                                <div className="formio-pdf-viewer_page-numbers">
+                                    {scale}%
+                                </div>
+                                <Button type="text" onClick={zoomIn}>
+                                    <ZoomInOutlined />
+                                </Button>
                             </div>
-                            <Button type="text" onClick={zoomIn}>
-                                <ZoomInOutlined />
-                            </Button>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
+                <Document
+                    file={getTemplateString(context)}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                >
+                    <Page pageNumber={pageNumber} scale={scale / 100} />
+                </Document>
             </div>
-            <Document
-                file={getTemplateString(context)}
-                onLoadSuccess={onDocumentLoadSuccess}
-            >
-                <Page pageNumber={pageNumber} scale={scale / 100} />
-            </Document>
-        </div>
+        </>
     );
 };
 
@@ -161,6 +170,7 @@ export class pdfViewer extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
 
