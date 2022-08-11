@@ -31,6 +31,7 @@ type ContextType = {
     component: InformationComponentType;
     isBuilderMode: boolean;
     data: any;
+    row: any;
     _: LoDashStatic;
 };
 
@@ -87,7 +88,12 @@ const PDFViewerComponent = (props: PDFViewerComponentProps) => {
                     {context.component.devLabel}
                 </label>
             )}
-            <div className={`${context.isBuilderMode ? "drag-container" : ""} formio-pdf-viewer`}>
+            <div className={`${context.isBuilderMode ? "drag-container padding-10" : ""} formio-pdf-viewer`}>
+                {(context.isBuilderMode && context.component.src) && (
+                    <div>
+                       File from {context.component.src}
+                    </div>
+                )}
                 <div className="formio-pdf-viewer_toolbar">
                     <div className="formio-pdf-viewer_page-container">
                         {withPagination && (
@@ -170,6 +176,7 @@ export class pdfViewer extends ReactComponent {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
+            row: (this as any).data,
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
