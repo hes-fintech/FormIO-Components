@@ -172,7 +172,8 @@ const getValueWithType = (value: any) => {
 };
 
 const getNestedValue = (obj: any, key: string) => {
-    return key.split(".").reduce((result, key) => {
+    const splitCondition = key.includes("?") ? "?." : ".";
+    return key.split(splitCondition).reduce((result, key) => {
         return result?.[key]
     }, obj);
 };
