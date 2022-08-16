@@ -1,0 +1,48 @@
+.dropzone-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dadee2;
+    border-radius: 8px;
+    height: 125px;
+    color: #828b94;
+    margin-bottom: 7px;
+
+    .dropzone-text-container {
+        white-space: nowrap;
+
+        .browse-btn {
+            color: #0a65ed;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+    }
+}
+
+.preview-file-container {
+    border: 1px solid #dadee2;
+    border-radius: 8px;
+    box-shadow: 1px 4px 28px -28px rgba(0, 0, 0, 0.34);
+    position: relative;
+    padding: 5px 5px 9px;
+
+    .remove-btn {
+        position: absolute;
+        right: -2px;
+        top: -10px;
+        cursor: pointer;
+        font-size: 17px;
+        z-index: 10;
+    }
+
+    .viewer-wrapper {
+        .react-pdf__Document {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}

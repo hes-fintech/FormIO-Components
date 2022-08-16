@@ -1,5 +1,4 @@
 import { ReactComponent } from 'react-formio';
-import './styles/docx.scss';
 import './styles/index.scss';
 export declare class fileComponent extends ReactComponent {
     static get builderInfo(): {

@@ -199,10 +199,12 @@ export class pdfViewer extends ReactComponent {
 }
 
 const getTemplateString = (context: ContextType) => {
-    const compiled = context._.template(
-        context.component.src,
-        // eslint-disable-next-line no-param-reassign
-        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
-    );
-    return compiled(context);
+    return context.component.src ? getNestedValue(context, context.component.src.substring(context.component.src.lastIndexOf("{{") + 2, context.component.src.lastIndexOf("}}"))) : "";
+};
+
+const getNestedValue = (obj: any, key: string) => {
+    const splitCondition = key.includes("?") ? "?." : ".";
+    return key.split(splitCondition).reduce((result, key) => {
+        return result?.[key]
+    }, obj);
 };

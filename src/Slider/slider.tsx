@@ -153,10 +153,15 @@ export class sliderComponent extends ReactComponent {
 }
 
 const getTemplateString = (context: ContextType, value: any) => {
-    _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
-    const compiled = _.template(
-        value
-    );
-    
-    return compiled(context);
+    if (value.toString().includes('{{')) {
+        return getNestedValue(context, value.toString()?.substring(value.toString()?.lastIndexOf("{{") + 2, value.toString()?.lastIndexOf("}}")));
+    };
+    return value
+};
+
+const getNestedValue = (obj: any, key: string) => {
+    const splitCondition = key.includes("?") ? "?." : ".";
+    return key.split(splitCondition).reduce((result, key) => {
+        return result?.[key]
+    }, obj);
 };
