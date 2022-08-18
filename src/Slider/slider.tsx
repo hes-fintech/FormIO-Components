@@ -51,8 +51,8 @@ const SliderComponent = (props: SliderComponentProps) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    const prefixValue = getTemplateString(context, prefix);
-    const suffixValue = getTemplateString(context, suffix);
+    const prefixValue = getTemplateStringLocalization(context, prefix);
+    const suffixValue = getTemplateStringLocalization(context, suffix);
 
     const [sliderValue, setSliderValue] = useState(0);
     const [minValue, setMinInitialValue] = useState(0);
@@ -164,4 +164,13 @@ const getNestedValue = (obj: any, key: string) => {
     return key.split(splitCondition).reduce((result, key) => {
         return result?.[key]
     }, obj);
+};
+
+const getTemplateStringLocalization = (context: ContextType, value: any) => {
+    _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
+    const compiled = _.template(
+        value
+    );
+    
+    return compiled(context);
 };
