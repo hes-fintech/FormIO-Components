@@ -16,7 +16,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { settingsForm } from './PDFViewer.settingsForm';
 import './styles/index.scss'
 
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 type InformationComponentType = {
     src: string;
@@ -180,6 +180,7 @@ export class pdfViewer extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
+        (this as any).component.refreshOn = 'data'
 
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
@@ -196,10 +197,11 @@ export class pdfViewer extends ReactComponent {
             ReactDOM.unmountComponentAtNode(element);
         }
     }
-}
+};
 
 const getTemplateString = (context: ContextType) => {
-    return context.component.src ? getNestedValue(context, context.component.src.substring(context.component.src.lastIndexOf("{{") + 2, context.component.src.lastIndexOf("}}"))) : "";
+    const src = context.component.src ? getNestedValue(context, context.component.src.substring(context.component.src.lastIndexOf("{{") + 2, context.component.src.lastIndexOf("}}"))) : "";
+    return context.component.src?.replace(/\{{(.+?)\}}/g, `${src}`);
 };
 
 const getNestedValue = (obj: any, key: string) => {
