@@ -51,8 +51,8 @@ const SliderComponent = (props: SliderComponentProps) => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    const prefixValue = getTemplateStringLocalization(context, prefix);
-    const suffixValue = getTemplateStringLocalization(context, suffix);
+    const prefixValue = getTemplateString(context, prefix);
+    const suffixValue = getTemplateString(context, suffix);
 
     const [sliderValue, setSliderValue] = useState(0);
     const [minValue, setMinInitialValue] = useState(0);
@@ -150,11 +150,12 @@ export class sliderComponent extends ReactComponent {
             ReactDOM.unmountComponentAtNode(element);
         }
     }
-}
+};
 
 const getTemplateString = (context: ContextType, value: any) => {
     if (value.toString().includes('{{')) {
-        return getNestedValue(context, value.toString()?.substring(value.toString()?.lastIndexOf("{{") + 2, value.toString()?.lastIndexOf("}}")));
+        const src = value ? getNestedValue(context, value.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}"))) : "";
+        return value?.replace(/\{{(.+?)\}}/g, `${src}`);
     };
     return value
 };
@@ -164,13 +165,4 @@ const getNestedValue = (obj: any, key: string) => {
     return key.split(splitCondition).reduce((result, key) => {
         return result?.[key]
     }, obj);
-};
-
-const getTemplateStringLocalization = (context: ContextType, value: any) => {
-    _.templateSettings.interpolate = /{{([\s\S]+?)}}/g;
-    const compiled = _.template(
-        value
-    );
-    
-    return compiled(context);
 };
