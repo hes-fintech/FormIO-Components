@@ -28,6 +28,7 @@ type ContextType = {
     setValue: (arg: any) => void;
     isBuilderMode: boolean;
     _: LoDashStatic;
+    updateDataGrid: () => void;
 };
 
 type RefreshComponentProps = {
@@ -86,6 +87,13 @@ export class refreshComponent extends ReactComponent {
         return `${(this as any).component.customClass}`;
     }
 
+    updateDataGrid = () => {
+        const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
+        dataGrids?.forEach(async (dataGrid) => {
+            await dataGrid.createRows()
+        });
+    }
+
     attachReact(element: HTMLElement) {
         const context = {
             i18n: (this as any).i18next,
@@ -97,6 +105,7 @@ export class refreshComponent extends ReactComponent {
             },
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
+            updateDataGrid: this.updateDataGrid.bind(this),
         };
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
@@ -147,6 +156,8 @@ const getData = (context: ContextType) => {
         return response.json();
     }).then((jsonResponse) => {
         context.setValue(jsonResponse);
+    }).then(() => {
+        context.updateDataGrid();
     });
 };
 
