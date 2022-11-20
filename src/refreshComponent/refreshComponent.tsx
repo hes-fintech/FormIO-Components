@@ -90,7 +90,7 @@ export class refreshComponent extends ReactComponent {
     updateDataGrid = () => {
         const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
         dataGrids?.forEach(async (dataGrid) => {
-            await dataGrid.createRows()
+            await dataGrid.rebuild();
         });
     }
 
