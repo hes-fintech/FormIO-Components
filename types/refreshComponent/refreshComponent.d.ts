@@ -9,7 +9,9 @@ export declare class refreshComponent extends ReactComponent {
     static schema(): any;
     static editForm: (...extend: any) => any;
     get className(): string;
+    currentComponentData: never[];
     updateDataGrid: () => void;
+    shouldSkipValidation(): boolean;
     attachReact(element: HTMLElement): any;
     detachReact(element: HTMLElement): void;
 }
