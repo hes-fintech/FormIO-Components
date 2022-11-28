@@ -1,4 +1,5 @@
-import { Utils, Form } from 'formiojs';
+// @ts-nocheck
+import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import _ from 'lodash';
@@ -29,40 +30,52 @@ type ContextType = {
     isBuilderMode: boolean;
     _: LoDashStatic;
     updateDataGrid: () => void;
+    setCurrentComponentData: (data: any) => void;
+    currentComponentData: any[];
 };
 
 type RefreshComponentProps = {
     context: ContextType;
-    onChange: () => void;
 };
 
 const RefreshComponent = (props: RefreshComponentProps) => {
     const { context } = props;
     const getDataDebounced = _.debounce(getData, context.component.requestDelay);
 
+    const getData1 = () => {
+        if (context?.component?.refreshOn === 'data') {
+            getDataDebounced(props.context);
+            return;
+        } else if(context?.component?.refreshOn && !context?.data?.[context?.component?.refreshOn]) {
+            return
+        } else if (context?.component?.refreshOn && context?.data?.[context?.component?.refreshOn] && !context?.currentComponentData?.length) {
+            getDataDebounced(props.context);
+        }
+    };
+
     useEffect(() => {
         if (!context.isBuilderMode) {
-            getDataDebounced(props.context);
+            getData1();
         };
     }, []);
 
-    return (
-        <div>
-            {context.isBuilderMode && (
-                <label className="col-form-label">
-                    {context.component.url ? `"${context.component.requestType}" request, to url: "${context.component.url}"` : "Request component"}
-                </label>
-            )}
-            <div className={`${context.isBuilderMode ? "drag-container" : ""}`}>
+        return (
+            <div>
                 {context.isBuilderMode && (
-                    <p>
-                        <b>"{context.component.requestType}" </b>
-                        request, to url: <b>"{context.component.url}"</b>
-                    </p>
+                    <label className="col-form-label">
+                        {context.component.url ? `"${context.component.requestType}" request, to url: "${context.component.url}"` : "Request component"}
+                    </label>
                 )}
+                <div className={`${context.isBuilderMode ? "drag-container" : ""}`}>
+                    {context.isBuilderMode && (
+                        <p>
+                            <b>"{context.component.requestType}" </b>
+                            request, to url: <b>"{context.component.url}"</b>
+                        </p>
+                    )}
+                </div>
             </div>
-        </div>
-    );
+        );
 }
 
 export class refreshComponent extends ReactComponent {
@@ -87,11 +100,20 @@ export class refreshComponent extends ReactComponent {
         return `${(this as any).component.customClass}`;
     }
 
+    currentComponentData = [];
+
     updateDataGrid = () => {
         const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
-        dataGrids?.forEach(async (dataGrid) => {
+        const filteredDataGrids = dataGrids.filter(dataGrid => {
+           return ['data', (this as any).component.key].includes(dataGrid.component.redrawOn);
+        })
+        filteredDataGrids?.forEach(async (dataGrid) => {
             await dataGrid.rebuild();
         });
+    }
+
+    shouldSkipValidation() {
+        return true
     }
 
     attachReact(element: HTMLElement) {
@@ -106,16 +128,27 @@ export class refreshComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
             updateDataGrid: this.updateDataGrid.bind(this),
+            setCurrentComponentData: (data: any) => {
+                if(Array.isArray(data)) {
+                    this.currentComponentData = [...this.currentComponentData, ...data];
+                } else {
+                    this.currentComponentData = [...this.currentComponentData, data];
+                }
+            },
+            currentComponentData: this.currentComponentData,
         };
-        // eslint-disable-next-line react/no-render-return-value
+
         return ReactDOM.render(
-            <RefreshComponent context={context} onChange={(this as any).updateValue} />,
+            <RefreshComponent context={context} />,
             element,
         );
     }
 
     detachReact(element: HTMLElement) {
         if (element) {
+            if(this.data?.[this.component?.refreshOn] && this.currentComponentData.length) {
+                this.currentComponentData = [];
+            }
             ReactDOM.unmountComponentAtNode(element);
         }
     }
@@ -140,6 +173,7 @@ const getTemplateString = (context: ContextType, value: string) => {
 const getData = (context: ContextType) => {
     const requestBody = getRequestBody(context);
     const requestUrlParams = `?${new URLSearchParams(requestBody)}`;
+    const hasRequestQueryParams = Object.values(requestBody).filter((req) => req !== null).length > 0;
     const requestType = context.component?.requestType;
     const postRequestOptions = {
         headers: {
@@ -148,13 +182,14 @@ const getData = (context: ContextType) => {
         body: JSON.stringify(requestBody),
     };
     const requestOptions = requestType === 'POST' ? postRequestOptions : {};
-    const requestUrl = requestType === 'GET' ? requestUrlParams : "";
+    const requestUrl = (requestType === 'GET' && hasRequestQueryParams) ? requestUrlParams : "";
     fetch(`${getTemplateStringContext(context)}${requestUrl}`, {
         method: requestType,
         ...requestOptions,
     }).then((response) => {
         return response.json();
     }).then((jsonResponse) => {
+        context.setCurrentComponentData(jsonResponse);
         context.setValue(jsonResponse);
     }).then(() => {
         context.updateDataGrid();
