@@ -23,6 +23,9 @@ type InformationComponentType = {
 };
 
 type ContextType = {
+    instance: any;
+    componentKey: string;
+    instanceCurrentForm: any;
     i18n: i18next.i18n;
     component: InformationComponentType;
     data: any;
@@ -30,6 +33,7 @@ type ContextType = {
     isBuilderMode: boolean;
     _: LoDashStatic;
     updateDataGrid: () => void;
+    redraw: () => void;
     setCurrentComponentData: (data: any) => void;
     currentComponentData: any[];
 };
@@ -42,20 +46,9 @@ const RefreshComponent = (props: RefreshComponentProps) => {
     const { context } = props;
     const getDataDebounced = _.debounce(getData, context.component.requestDelay);
 
-    const getData1 = () => {
-        if (context?.component?.refreshOn === 'data') {
-            getDataDebounced(props.context);
-            return;
-        } else if(context?.component?.refreshOn && !context?.data?.[context?.component?.refreshOn]) {
-            return
-        } else if (context?.component?.refreshOn && context?.data?.[context?.component?.refreshOn] && !context?.currentComponentData?.length) {
-            getDataDebounced(props.context);
-        }
-    };
-
     useEffect(() => {
         if (!context.isBuilderMode) {
-            getData1();
+            getDataDebounced(props.context);
         };
     }, []);
 
@@ -104,20 +97,20 @@ export class refreshComponent extends ReactComponent {
 
     updateDataGrid = () => {
         const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
-        const filteredDataGrids = dataGrids.filter(dataGrid => {
-           return ['data', (this as any).component.key].includes(dataGrid.component.redrawOn);
-        })
-        filteredDataGrids?.forEach(async (dataGrid) => {
+        dataGrids?.forEach(async (dataGrid) => {
             await dataGrid.rebuild();
         });
     }
 
     shouldSkipValidation() {
-        return true
+        return true;
     }
 
     attachReact(element: HTMLElement) {
         const context = {
+            instance: this,
+            instanceCurrentForm: this.currentForm,
+            componentKey: (this as any).component.key,
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
@@ -135,6 +128,7 @@ export class refreshComponent extends ReactComponent {
                     this.currentComponentData = [...this.currentComponentData, data];
                 }
             },
+            redraw: this.redraw.bind(this),
             currentComponentData: this.currentComponentData,
         };
 
@@ -146,9 +140,6 @@ export class refreshComponent extends ReactComponent {
 
     detachReact(element: HTMLElement) {
         if (element) {
-            if(this.data?.[this.component?.refreshOn] && this.currentComponentData.length) {
-                this.currentComponentData = [];
-            }
             ReactDOM.unmountComponentAtNode(element);
         }
     }
@@ -170,7 +161,14 @@ const getTemplateString = (context: ContextType, value: string) => {
     return getValueWithType(compiledValue);
 };
 
+const fetchedRequests = new Map();
+
+const alreadyFetched = (key, request) => {
+    return fetchedRequests.get(key) === request;
+};
+
 const getData = (context: ContextType) => {
+
     const requestBody = getRequestBody(context);
     const requestUrlParams = `?${new URLSearchParams(requestBody)}`;
     const hasRequestQueryParams = Object.values(requestBody).filter((req) => req !== null).length > 0;
@@ -182,18 +180,26 @@ const getData = (context: ContextType) => {
         body: JSON.stringify(requestBody),
     };
     const requestOptions = requestType === 'POST' ? postRequestOptions : {};
-    const requestUrl = (requestType === 'GET' && hasRequestQueryParams) ? requestUrlParams : "";
-    fetch(`${getTemplateStringContext(context)}${requestUrl}`, {
-        method: requestType,
-        ...requestOptions,
-    }).then((response) => {
-        return response.json();
-    }).then((jsonResponse) => {
-        context.setCurrentComponentData(jsonResponse);
-        context.setValue(jsonResponse);
-    }).then(() => {
-        context.updateDataGrid();
-    });
+    const requestParams = (requestType === 'GET' && hasRequestQueryParams) ? requestUrlParams : "";
+
+    const requestUrl = `${getTemplateStringContext(context)}${requestParams}`
+
+    if(!alreadyFetched(context.componentKey, requestUrl) && context?.instanceCurrentForm?.submissionSet && _.isEmpty(context?.[context?.componentKey])) {
+
+        fetch(requestUrl, {
+            method: requestType,
+            ...requestOptions,
+        }).then((response) => {
+            return response.json();
+        }).then((jsonResponse) => {
+            context.setCurrentComponentData(jsonResponse);
+            context.setValue(jsonResponse);
+        }).then(() => {
+            context.updateDataGrid();
+        });
+
+        fetchedRequests.set(context.componentKey, requestUrl)
+    }
 };
 
 const getRequestBody = (context: ContextType) => {
