@@ -131,7 +131,12 @@ export class refreshComponent extends ReactComponent {
             redraw: this.redraw.bind(this),
             currentComponentData: this.currentComponentData,
         };
+        
+        if(currentFormName.has('form') && currentFormName.get('form') !== this?.currentForm?.form?.name) {
+            fetchedRequests.clear();
+        }
 
+        currentFormName.set('form', this?.currentForm?.form?.name)
         return ReactDOM.render(
             <RefreshComponent context={context} />,
             element,
@@ -163,6 +168,8 @@ const getTemplateString = (context: ContextType, value: string) => {
 
 const fetchedRequests = new Map();
 
+const currentFormName = new Map();
+
 const alreadyFetched = (key, request) => {
     return fetchedRequests.get(key) === request;
 };
@@ -184,7 +191,7 @@ const getData = (context: ContextType) => {
 
     const requestUrl = `${getTemplateStringContext(context)}${requestParams}`
 
-    if(!alreadyFetched(context.componentKey, requestUrl) && context?.instanceCurrentForm?.submissionSet && _.isEmpty(context?.[context?.componentKey])) {
+    if(!alreadyFetched(context.componentKey, requestUrl) && context?.instanceCurrentForm?.submissionSet  || requestType === 'POST') {
 
         fetch(requestUrl, {
             method: requestType,
