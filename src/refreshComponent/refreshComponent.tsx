@@ -33,6 +33,7 @@ type ContextType = {
     isBuilderMode: boolean;
     _: LoDashStatic;
     updateDataGrid: () => void;
+    addDataGridLoaders: () => void;
     redraw: () => void;
     setCurrentComponentData: (data: any) => void;
     currentComponentData: any[];
@@ -102,6 +103,22 @@ export class refreshComponent extends ReactComponent {
         });
     }
 
+    addDataGridLoaders = () => {
+        const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
+        const filteredDataGrids = dataGrids.filter(dataGrid => {
+            return [(this as any).component.key].includes(dataGrid.component.redrawOn);
+         })
+         filteredDataGrids?.forEach(async (dataGrid) => {
+            const element = document.getElementById(dataGrid?.id);
+            if(element)
+            element.innerHTML = `
+                <div class="grid-loader-wrapper">
+                    <div class="grid-loader"></div>
+                </div>
+            `;
+        });
+    }
+
     shouldSkipValidation() {
         return true;
     }
@@ -121,6 +138,7 @@ export class refreshComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
             updateDataGrid: this.updateDataGrid.bind(this),
+            addDataGridLoaders: this.addDataGridLoaders.bind(this),
             setCurrentComponentData: (data: any) => {
                 if(Array.isArray(data)) {
                     this.currentComponentData = [...this.currentComponentData, ...data];
@@ -192,7 +210,7 @@ const getData = (context: ContextType) => {
     const requestUrl = `${getTemplateStringContext(context)}${requestParams}`
 
     if(!alreadyFetched(context.componentKey, requestUrl) && context?.instanceCurrentForm?.submissionSet  || requestType === 'POST') {
-
+        context.addDataGridLoaders();
         fetch(requestUrl, {
             method: requestType,
             ...requestOptions,
