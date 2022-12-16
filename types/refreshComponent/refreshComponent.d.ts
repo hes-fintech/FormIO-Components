@@ -11,6 +11,7 @@ export declare class refreshComponent extends ReactComponent {
     get className(): string;
     currentComponentData: never[];
     updateDataGrid: () => void;
+    addDataGridLoaders: () => void;
     shouldSkipValidation(): boolean;
     attachReact(element: HTMLElement): any;
     detachReact(element: HTMLElement): void;
