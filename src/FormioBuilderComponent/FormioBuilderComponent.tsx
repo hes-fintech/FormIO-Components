@@ -30,10 +30,10 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     const { context } = props;
     const playerContainerFinds = (Utils as any).findComponents(context?.instance?.parent?.components, { key: 'formContainer' })
     const playerContainer = playerContainerFinds[0];
-    const playerComponents = playerContainer.components;
-    console.log(playerContainer, 'playerContainer')
+    
     return (
-        <FormBuilder
+        <>
+        {context.isBuilderMode && (<FormBuilder
             onSaveComponent={(currentComponent, componentInstance, scheme) => {
                 playerContainer.destroy();
                 playerContainer.addComponent({
@@ -44,7 +44,6 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                     "input": true,
                     "components": scheme.components,
                 })
-                console.log(playerContainer, 'data')
                 playerContainer.redraw()
             }}
             form={{ display: 'form' }}
@@ -113,7 +112,8 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                   ]
               }
             }}
-        />
+        />)}
+        </>
     );
 }
 
@@ -159,7 +159,6 @@ export class formioBuilderComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
-        console.log(this, 'playerContainer1')
         
         return ReactDOM.render(
             <FormioBuilderComponent context={context} />,
