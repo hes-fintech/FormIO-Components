@@ -5,13 +5,13 @@ import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactComponent, FormBuilder } from 'react-formio';
-
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 
 type InformationComponentType = any;
 
 type ContextType = {
     instance: any;
+    instanceCurrentForm: any;
     componentKey: string;
     i18n: i18next.i18n;
     component: InformationComponentType;
@@ -28,11 +28,24 @@ type FormioBuilderComponentProps = {
 
 const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     const { context } = props;
-
+    const playerContainerFinds = (Utils as any).findComponents(context?.instance?.parent?.components, { key: 'formContainer' })
+    const playerContainer = playerContainerFinds[0];
+    const playerComponents = playerContainer.components;
+    console.log(playerContainer, 'playerContainer')
     return (
         <FormBuilder
-            onChange={(schema) => {
-                context.setValue(schema)
+            onSaveComponent={(currentComponent, componentInstance, scheme) => {
+                playerContainer.destroy();
+                playerContainer.addComponent({
+                    "label": "Container",
+                    "tableView": false,
+                    "key": "container",
+                    "type": "container",
+                    "input": true,
+                    "components": scheme.components,
+                })
+                console.log(playerContainer, 'data')
+                playerContainer.redraw()
             }}
             form={{ display: 'form' }}
             options={{
@@ -134,6 +147,7 @@ export class formioBuilderComponent extends ReactComponent {
     attachReact(element: HTMLElement) {
         const context = {
             instance: this,
+            instanceCurrentForm: (this as any).currentForm,
             componentKey: (this as any).component.key,
             i18n: (this as any).i18next,
             component: (this as any).component,
@@ -145,6 +159,7 @@ export class formioBuilderComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
+        console.log(this, 'playerContainer1')
         
         return ReactDOM.render(
             <FormioBuilderComponent context={context} />,
