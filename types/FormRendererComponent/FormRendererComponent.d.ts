@@ -6,7 +6,7 @@ export declare class formRendererComponent extends ContainerComponent {
         icon: string;
         schema: any;
     };
-    static schema(): any;
+    static schema(...extend: any[]): any;
     static editForm: (...extend: any) => any;
     get className(): string;
     shouldSkipValidation(): boolean;

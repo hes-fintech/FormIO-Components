@@ -1,24 +1,20 @@
 import ContainerComponent from 'formiojs/components/container/Container';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
 import { settingsForm } from './FormRendererComponent.settingsForm';
 
 export class formRendererComponent extends ContainerComponent {
     static get builderInfo() {
         return {
-            title: 'Form renderer Component',
+            title: 'Form presentation',
             group: 'Data',
-            // TODO: Chnage icon
-            icon: 'refresh',
+            icon: 'folder-open',
             schema: formRendererComponent.schema(),
         };
     }
 
-    static schema() {
+    static schema(...extend) {
         return ContainerComponent.schema({
             key: 'formContainer',
-        });
+        }, ...extend);
     }
 
     static editForm = settingsForm;

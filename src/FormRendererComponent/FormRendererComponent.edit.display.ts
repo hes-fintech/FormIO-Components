@@ -1,5 +1,13 @@
 export const formRendererComponentEditDisplay = [
   {
+      type: 'textfield',
+      input: false,
+      label: 'Component label',
+      key: 'label',
+      defaultValue: 'Form builder form presentation',
+      weight: 0,
+  },
+  {
       key: 'placeholder',
       ignore: true,
   },
@@ -36,89 +44,15 @@ export const formRendererComponentEditDisplay = [
       ignore: true,
   },
   {
-      key: 'label',
+      key: 'customClass',
       ignore: true,
   },
   {
-    type: 'select',
-    input: true,
-    key: 'refreshOn',
-    label: 'Refresh Options On',
-    weight: 3,
-    tooltip: 'Refresh data when another field changes.',
-    dataSrc: 'custom',
-    valueProperty: 'value',
-    data: {
-      custom(context: any) {
-        var values: {label: string, value: string}[] = [];
-        values.push({ label: 'Any Change', value: 'data' });
-        context.utils.eachComponent(context.instance.options.editForm.components, function(component: any, path: any) {
-          if (component.key !== context.data.key) {
-            values.push({
-              label: component.label || component.key,
-              value: path
-            });
-          }
-        });
-        return values;
-      }
-    },
+      key: 'hidden',
+      ignore: true,
   },
   {
-    type: 'select',
-    input: true,
-    weight: 1,
-    key: 'requestType',
-    defaultValue: 'GET',
-    label: 'Type of request',
-    data: {
-      values: [
-        { label: 'GET', value: 'GET' },
-        { label: 'POST', value: 'POST' },
-      ],
-    },
-  },
-  {
-      type: 'textfield',
-      input: false,
-      label: 'URL',
-      key: 'url',
-      weight: 2,
-      validate: {
-          required: true,
-      },
-  },
-  {
-    type: 'datagrid',
-    input: true,
-    label: 'POST Body / GET Url queries',
-    tooltip:
-        'you can use this table as body for POST request and as url query string for GET requests',
-    key: 'requestBody',
-    weight: 3,
-    components: [
-      {
-        label: 'Key',
-        key: 'key',
-        input: true,
-        type: 'textfield',
-      },
-      {
-        label: 'Value',
-        key: 'value',
-        input: true,
-        type: 'textfield',
-      },
-    ],
-  },
-  {
-      type: 'textfield',
-      input: false,
-      label: 'Delay of request',
-      tooltip:
-          'definding delay for request, default delay is 0 ms, value definings in ms',
-      key: 'requestDelay',
-      defaultValue: 0,
-      weight: 4,
+      key: 'modalEdit',
+      ignore: true,
   },
 ];

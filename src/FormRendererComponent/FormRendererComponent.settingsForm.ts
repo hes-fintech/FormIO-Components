@@ -17,6 +17,26 @@ export const settingsForm = (...extend: any) => {
                 key: 'validation',
                 ignore: true,
             },
+            {
+                key: 'api',
+                ignore: true,
+            },
+            {
+                key: 'conditional',
+                ignore: true,
+            },
+            {
+                key: 'logic',
+                ignore: true,
+            },
+            {
+                key: 'layout',
+                ignore: true,
+            },
+            {
+                key: 'addons',
+                ignore: true,
+            },
         ],
         ...extend,
     );

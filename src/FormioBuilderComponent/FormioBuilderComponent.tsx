@@ -6,8 +6,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ReactComponent, FormBuilder } from 'react-formio';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
+import { componentsSettings } from './ComponentsSettings';
 
-type InformationComponentType = any;
+type InformationComponentType = {
+    nestedFormKey: string;
+    textFieldComponent: boolean;
+    textAreaComponent: boolean;
+    emailComponent: boolean;
+    numberComponent: boolean;
+};
 
 type ContextType = {
     instance: any;
@@ -30,21 +37,27 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     const { context } = props;
     const playerContainerFinds = (Utils as any).findComponents(context?.instance?.parent?.components, { key: 'formContainer' })
     const playerContainer = playerContainerFinds[0];
+    const addComponentsToForm = (components: any[]) => {
+        playerContainer.destroy();
+        playerContainer.addComponent({
+            "label": "Container",
+            "tableView": false,
+            "key": context.component.nestedFormKey,
+            "type": "container",
+            "input": true,
+            "components": components,
+        })
+        playerContainer.redraw()
+    };
     
     return (
-        <>
-        {context.isBuilderMode && (<FormBuilder
+        <div className='builderComponent'>
+        <FormBuilder
             onSaveComponent={(currentComponent, componentInstance, scheme) => {
-                playerContainer.destroy();
-                playerContainer.addComponent({
-                    "label": "Container",
-                    "tableView": false,
-                    "key": "container",
-                    "type": "container",
-                    "input": true,
-                    "components": scheme.components,
-                })
-                playerContainer.redraw()
+                addComponentsToForm(scheme.components);
+            }}
+            onDeleteComponent={(currentComponent, componentInstance, scheme) => {
+                addComponentsToForm(scheme.components);
             }}
             form={{ display: 'form' }}
             options={{
@@ -60,70 +73,27 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                     default: true,
                     weight: 0,
                     components: {
-                      textfield: true,
-                      textarea: true,
-                      email: true,
-                      number: true
+                      textfield: context.component.textFieldComponent,
+                      textarea: context.component.textAreaComponent,
+                      email: context.component.emailComponent,
+                      number: context.component.numberComponent
                     }
                   },
               },
               // Controls for specific component
-              editForm: {
-                  textfield: [
-                      {
-                          key: 'display',
-                          ignore: true,
-                      },
-                      {
-                          key: 'data',
-                          ignore: true,
-                      },
-                      {
-                          key: 'api',
-                          ignore: true,
-                      },
-                      {
-                          key: 'conditional',
-                          ignore: true,
-                      },
-                      {
-                          key: 'logic',
-                          ignore: true,
-                      },
-                      {
-                          weight: 0,
-                          key: 'customDisplay',
-                          type: 'textfield',
-                          label: 'Display',
-                          components: [
-                              {
-                                  weight: 0,
-                                  type: 'textfield',
-                                  input: true,
-                                  key: 'label',
-                                  label: 'Label',
-                                  placeholder: 'Field Label',
-                                  validate: {
-                                      required: true,
-                                  },
-                              },
-                          ],
-                      },
-                  ]
-              }
+              editForm: componentsSettings
             }}
-        />)}
-        </>
+        />
+        </div>
     );
 }
 
 export class formioBuilderComponent extends ReactComponent {
     static get builderInfo() {
         return {
-            title: 'Formio builder Component',
+            title: 'Form builder',
             group: 'Data',
-            // TODO: Chnage icon
-            icon: 'refresh',
+            icon: 'indent',
             schema: formioBuilderComponent.schema(),
         };
     }
