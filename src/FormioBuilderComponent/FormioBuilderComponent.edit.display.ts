@@ -2,8 +2,8 @@ export const formioBuilderComponentEditDisplay = [
   {
       type: 'textfield',
       input: false,
-      label: 'Key for nested container',
-      key: 'nestedFormKey',
+      label: 'Submission key',
+      key: 'key',
       defaultValue: 'container',
       weight: 0,
   },

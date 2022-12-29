@@ -4,8 +4,37 @@ export const formRendererComponentEditDisplay = [
       input: false,
       label: 'Component label',
       key: 'label',
-      defaultValue: 'Form builder form presentation',
       weight: 0,
+  },
+  {
+      type: 'textfield',
+      input: false,
+      label: 'Submission component',
+      key: 'key',
+      validate: {
+          required: true,
+      },
+      weight: 1,
+  },
+  {
+      type: 'textfield',
+      input: false,
+      label: 'Nested form submission key',
+      key: 'nestedKey',
+      validate: {
+          required: true,
+      },
+      weight: 2,
+  },
+  {
+      type: 'textfield',
+      input: false,
+      label: 'Path to components',
+      key: 'componentsKey',
+      validate: {
+          required: true,
+      },
+      weight: 3,
   },
   {
       key: 'placeholder',

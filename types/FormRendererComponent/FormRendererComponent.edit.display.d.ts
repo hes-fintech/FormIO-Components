@@ -3,7 +3,17 @@ export declare const formRendererComponentEditDisplay: ({
     input: boolean;
     label: string;
     key: string;
-    defaultValue: string;
+    weight: number;
+    validate?: undefined;
+    ignore?: undefined;
+} | {
+    type: string;
+    input: boolean;
+    label: string;
+    key: string;
+    validate: {
+        required: boolean;
+    };
     weight: number;
     ignore?: undefined;
 } | {
@@ -12,6 +22,6 @@ export declare const formRendererComponentEditDisplay: ({
     type?: undefined;
     input?: undefined;
     label?: undefined;
-    defaultValue?: undefined;
     weight?: undefined;
+    validate?: undefined;
 })[];

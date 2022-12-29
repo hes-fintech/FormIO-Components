@@ -35,19 +35,9 @@ type FormioBuilderComponentProps = {
 
 const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     const { context } = props;
-    const playerContainerFinds = (Utils as any).findComponents(context?.instance?.parent?.components, { key: 'formContainer' })
-    const playerContainer = playerContainerFinds[0];
+
     const addComponentsToForm = (components: any[]) => {
-        playerContainer.destroy();
-        playerContainer.addComponent({
-            "label": "Container",
-            "tableView": false,
-            "key": context.component.nestedFormKey,
-            "type": "container",
-            "input": true,
-            "components": components,
-        })
-        playerContainer.redraw()
+        context.setValue(components)
     };
     
     return (
@@ -93,7 +83,7 @@ export class formioBuilderComponent extends ReactComponent {
         return {
             title: 'Form builder',
             group: 'Data',
-            icon: 'indent',
+            icon: 'building',
             schema: formioBuilderComponent.schema(),
         };
     }
