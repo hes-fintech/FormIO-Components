@@ -9,7 +9,7 @@ export const formRendererComponentEditDisplay = [
   {
       type: 'textfield',
       input: false,
-      label: 'Submission component',
+      label: 'Submission component key',
       key: 'key',
       validate: {
           required: true,

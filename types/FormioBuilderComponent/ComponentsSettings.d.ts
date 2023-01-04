@@ -23,6 +23,51 @@ export declare const componentsSettings: {
             };
         }[];
         ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
     })[];
     textarea: ({
         key: string;
@@ -47,6 +92,51 @@ export declare const componentsSettings: {
             };
         }[];
         ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
     })[];
     email: ({
         key: string;
@@ -71,6 +161,51 @@ export declare const componentsSettings: {
             };
         }[];
         ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
     })[];
     number: ({
         key: string;
@@ -95,5 +230,50 @@ export declare const componentsSettings: {
             };
         }[];
         ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
     })[];
 };
