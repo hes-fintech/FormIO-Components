@@ -1,11 +1,11 @@
 {
   "name": "hes-formio-components",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "hes formio components",
   "main": "./build/index.js",
   "dependencies": {
     "@babel/preset-typescript": "^7.17.12",
-    "@babel/types": "^7.18.10",
+    "@babel/types": "^7.20.7",
     "antd": "^4.22.6",
     "axios": "^0.27.2",
     "gensync": "^1.0.0-beta.2",
