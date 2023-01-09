@@ -28,6 +28,7 @@ type ContextType = {
     componentKey: string;
     i18n: i18next.i18n;
     component: InformationComponentType;
+    dataForSetting: any[];
     data: any;
     row: any,
     setValue: (arg: any) => void;
@@ -56,7 +57,8 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                 addComponentsToForm(scheme.components);
             }}
             form={{ 
-                display: 'form'
+                display: 'form',
+                components: context?.dataForSetting,
             }}
             options={{
               noDefaultSubmitButton: true,
@@ -126,12 +128,17 @@ export class formioBuilderComponent extends ReactComponent {
             component: (this as any).component,
             data: (this as any).data,
             row: (this as any).data,
+            dataForSetting: (this as any)?.dataForSetting || [],
             setValue: (value: any) => {
                 (this as any).updateValue(value);
             },
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
+        
+        window.setTimeout(() => {
+            (this as any).refresh();
+        }, 0)
         
         return ReactDOM.render(
             <FormioBuilderComponent context={context} />,
