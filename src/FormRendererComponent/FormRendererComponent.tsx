@@ -17,6 +17,13 @@ export class formRendererComponent extends ContainerComponent {
         });
     }
 
+    get defaultSchema() {
+        if((this as any)?.component?.key) {
+            (this as any).component.key = `${(this as any)?.component?.nestedKey}MainContainer`;
+        }
+        return formRendererComponent.schema();
+    }
+
     static editForm = settingsForm;
 
     get className() {
@@ -25,7 +32,7 @@ export class formRendererComponent extends ContainerComponent {
 
     setComponents() {
         if(!(this as any).builderMode) {
-            const componentsForRender = (this as any).data.formioBuilderComponent;
+            const componentsForRender = getNestedValue((this as any).data, (this as any)?.component?.componentsKey);
             
             (this as any).addComponent({
                 "label": "Container",
@@ -41,12 +48,10 @@ export class formRendererComponent extends ContainerComponent {
     render(children) {
         (this as any).type = 'formRendererComponent';
         window.setTimeout(() => {
-            const componentsForRender = (this as any).data.formioBuilderComponent;
+            const componentsForRender = getNestedValue((this as any).data, (this as any)?.component?.componentsKey);
             if(componentsForRender?.length) {
                 this.setComponents();
                 (this as any).refresh();
-            } else {
-                (this as any).redraw();
             }
         }, 0)
         return super.render(children)
@@ -56,3 +61,10 @@ export class formRendererComponent extends ContainerComponent {
         return super.attach(element);
     }
 }
+
+const getNestedValue = (obj: any, key: string) => {
+    const splitCondition = ".";
+    return key.split(splitCondition).reduce((result, key) => {
+        return result?.[key]
+    }, obj);
+};

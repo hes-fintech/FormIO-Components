@@ -4,37 +4,21 @@ export const formRendererComponentEditDisplay = [
       input: false,
       label: 'Component label',
       key: 'label',
+      validate: {
+          required: false,
+      },
       weight: 0,
   },
   {
       type: 'textfield',
       input: false,
-      label: 'Submission component key',
-      key: 'key',
-      validate: {
-          required: true,
-      },
-      weight: 1,
-  },
-  {
-      type: 'textfield',
-      input: false,
-      label: 'Nested form submission key',
-      key: 'nestedKey',
-      validate: {
-          required: true,
-      },
-      weight: 2,
-  },
-  {
-      type: 'textfield',
-      input: false,
-      label: 'Path to components',
+      label: 'Component source property name',
+      tooltip: "Name of the property which contains source of the component.",
       key: 'componentsKey',
       validate: {
           required: true,
       },
-      weight: 3,
+      weight: 1,
   },
   {
       key: 'placeholder',
