@@ -44,6 +44,7 @@ export const formioBuilderComponentEditDisplay = [
     type: 'checkbox',
     label: 'File component',
     key: 'fileComponent',
+    defaultValue: true,
     input: true
   },
   {
@@ -51,6 +52,7 @@ export const formioBuilderComponentEditDisplay = [
     type: 'checkbox',
     label: 'Date/Time',
     key: 'dateTimeComponent',
+    defaultValue: true,
     input: true
   },
   {
@@ -58,6 +60,7 @@ export const formioBuilderComponentEditDisplay = [
     type: 'checkbox',
     label: 'Panel',
     key: 'panelComponent',
+    defaultValue: true,
     input: true
   },
   {
@@ -65,6 +68,7 @@ export const formioBuilderComponentEditDisplay = [
     type: 'checkbox',
     label: 'Columns',
     key: 'columnsComponent',
+    defaultValue: true,
     input: true
   },
   {
