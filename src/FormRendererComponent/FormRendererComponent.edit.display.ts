@@ -9,17 +9,8 @@ export const formRendererComponentEditDisplay = [
   {
       type: 'textfield',
       input: false,
-      label: 'Submission component key',
-      key: 'key',
-      validate: {
-          required: true,
-      },
-      weight: 1,
-  },
-  {
-      type: 'textfield',
-      input: false,
-      label: 'Nested form submission key',
+      label: 'Property Name',
+      tooltip: "The name of this field in the API endpoint.",
       key: 'nestedKey',
       validate: {
           required: true,
