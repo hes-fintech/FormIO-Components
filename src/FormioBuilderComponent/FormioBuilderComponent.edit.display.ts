@@ -40,6 +40,42 @@ export const formioBuilderComponentEditDisplay = [
     input: true
   },
   {
+    weight: 5,
+    type: 'checkbox',
+    label: 'File component',
+    key: 'fileComponent',
+    input: true
+  },
+  {
+    weight: 6,
+    type: 'checkbox',
+    label: 'Date/Time',
+    key: 'dateTimeComponent',
+    input: true
+  },
+  {
+    weight: 7,
+    type: 'checkbox',
+    label: 'Panel',
+    key: 'panelComponent',
+    input: true
+  },
+  {
+    weight: 8,
+    type: 'checkbox',
+    label: 'Columns',
+    key: 'columnsComponent',
+    input: true
+  },
+  {
+    weight: 9,
+    type: 'checkbox',
+    label: 'Disabled',
+    tooltip: 'Disable the component in form.',
+    key: 'disabled',
+    input: true
+  },
+  {
       key: 'placeholder',
       ignore: true,
   },
@@ -61,10 +97,6 @@ export const formioBuilderComponentEditDisplay = [
   },
   {
       key: 'hideLabel',
-      ignore: true,
-  },
-  {
-      key: 'disabled',
       ignore: true,
   },
   {

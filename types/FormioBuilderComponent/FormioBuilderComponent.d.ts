@@ -1,4 +1,5 @@
 import { ReactComponent } from 'react-formio';
+import './styles/index.scss';
 export declare class formioBuilderComponent extends ReactComponent {
     static get builderInfo(): {
         title: string;

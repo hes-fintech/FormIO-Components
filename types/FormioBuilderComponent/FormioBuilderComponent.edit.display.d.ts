@@ -5,6 +5,7 @@ export declare const formioBuilderComponentEditDisplay: ({
     key: string;
     defaultValue: string;
     weight: number;
+    tooltip?: undefined;
     ignore?: undefined;
 } | {
     weight: number;
@@ -13,6 +14,25 @@ export declare const formioBuilderComponentEditDisplay: ({
     key: string;
     defaultValue: boolean;
     input: boolean;
+    tooltip?: undefined;
+    ignore?: undefined;
+} | {
+    weight: number;
+    type: string;
+    label: string;
+    key: string;
+    input: boolean;
+    defaultValue?: undefined;
+    tooltip?: undefined;
+    ignore?: undefined;
+} | {
+    weight: number;
+    type: string;
+    label: string;
+    tooltip: string;
+    key: string;
+    input: boolean;
+    defaultValue?: undefined;
     ignore?: undefined;
 } | {
     key: string;
@@ -22,4 +42,5 @@ export declare const formioBuilderComponentEditDisplay: ({
     label?: undefined;
     defaultValue?: undefined;
     weight?: undefined;
+    tooltip?: undefined;
 })[];

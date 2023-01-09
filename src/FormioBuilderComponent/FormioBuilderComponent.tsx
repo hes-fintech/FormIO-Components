@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { ReactComponent, FormBuilder } from 'react-formio';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
+import './styles/index.scss'
 
 type InformationComponentType = {
     nestedFormKey: string;
@@ -14,6 +15,11 @@ type InformationComponentType = {
     textAreaComponent: boolean;
     emailComponent: boolean;
     numberComponent: boolean;
+    fileComponent: boolean;
+    dateTimeComponent: boolean;
+    panelComponent: boolean;
+    columnsComponent: boolean;
+    disabled: boolean;
 };
 
 type ContextType = {
@@ -41,7 +47,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     };
     
     return (
-        <div className='builderComponent'>
+        <div className={`builderComponent ${context.component.disabled ? 'disabled-formio-component' : ''}`}>
         <FormBuilder
             onSaveComponent={(currentComponent, componentInstance, scheme) => {
                 addComponentsToForm(scheme.components);
@@ -49,8 +55,11 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
             onDeleteComponent={(currentComponent, componentInstance, scheme) => {
                 addComponentsToForm(scheme.components);
             }}
-            form={{ display: 'form' }}
+            form={{ 
+                display: 'form'
+            }}
             options={{
+              noDefaultSubmitButton: true,
               // Controls for components categories
               builder: {
                   basic: false,
@@ -66,7 +75,11 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                       textfield: context.component.textFieldComponent,
                       textarea: context.component.textAreaComponent,
                       email: context.component.emailComponent,
-                      number: context.component.numberComponent
+                      number: context.component.numberComponent,
+                      datetime: context.component.dateTimeComponent,
+                      panel: context.component.panelComponent,
+                      columns: context.component.columnsComponent,
+                      file: context.component.fileComponent
                     }
                   },
               },
