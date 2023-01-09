@@ -1,5 +1,6 @@
 import baseEditForm from 'formiojs/components/_classes/component/Component.form';
 import { formRendererComponentEditDisplay } from './FormRendererComponent.edit.display';
+import { formRendererComponentApiEditDisplay } from './FormRendererComponentApi.edit.display';
 
 export const settingsForm = (...extend: any) => {
     return baseEditForm(
@@ -9,15 +10,15 @@ export const settingsForm = (...extend: any) => {
                 components: formRendererComponentEditDisplay,
             },
             {
+                key: 'api',
+                components: formRendererComponentApiEditDisplay,
+            },
+            {
                 key: 'data',
                 ignore: true,
             },
             {
                 key: 'validation',
-                ignore: true,
-            },
-            {
-                key: 'api',
                 ignore: true,
             },
             {
