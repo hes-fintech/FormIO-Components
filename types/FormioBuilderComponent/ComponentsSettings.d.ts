@@ -276,4 +276,249 @@ export declare const componentsSettings: {
         ignore?: undefined;
         type?: undefined;
     })[];
+    datetime: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            validate: {
+                required: boolean;
+            };
+        }[];
+        ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    })[];
+    panel: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            validate: {
+                required: boolean;
+            };
+        }[];
+        ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    })[];
+    columns: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: ({
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            validate: {
+                required: boolean;
+            };
+            addAnother?: undefined;
+            tooltip?: undefined;
+            reorder?: undefined;
+            components?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            addAnother: string;
+            tooltip: string;
+            reorder: boolean;
+            components: ({
+                type: string;
+                key: string;
+                defaultValue: never[];
+                label?: undefined;
+                data?: undefined;
+            } | {
+                type: string;
+                key: string;
+                defaultValue: string;
+                label: string;
+                data: {
+                    values: {
+                        label: string;
+                        value: string;
+                    }[];
+                };
+            } | {
+                type: string;
+                key: string;
+                defaultValue: number;
+                label: string;
+                data?: undefined;
+            })[];
+            validate?: undefined;
+        })[];
+        ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            key: string;
+            defaultValue: string;
+            input: boolean;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            defaultValue?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    })[];
 };

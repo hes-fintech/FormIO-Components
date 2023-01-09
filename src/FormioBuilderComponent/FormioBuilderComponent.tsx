@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom';
 import { ReactComponent, FormBuilder } from 'react-formio';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
+import './styles/index.scss'
 
 type InformationComponentType = {
     nestedFormKey: string;
@@ -14,6 +15,11 @@ type InformationComponentType = {
     textAreaComponent: boolean;
     emailComponent: boolean;
     numberComponent: boolean;
+    fileComponent: boolean;
+    dateTimeComponent: boolean;
+    panelComponent: boolean;
+    columnsComponent: boolean;
+    disabled: boolean;
 };
 
 type ContextType = {
@@ -22,6 +28,7 @@ type ContextType = {
     componentKey: string;
     i18n: i18next.i18n;
     component: InformationComponentType;
+    dataForSetting: any[];
     data: any;
     row: any,
     setValue: (arg: any) => void;
@@ -41,7 +48,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     };
     
     return (
-        <div className='builderComponent'>
+        <div className={`builderComponent ${context.component.disabled ? 'disabled-formio-component' : ''}`}>
         <FormBuilder
             onSaveComponent={(currentComponent, componentInstance, scheme) => {
                 addComponentsToForm(scheme.components);
@@ -49,8 +56,12 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
             onDeleteComponent={(currentComponent, componentInstance, scheme) => {
                 addComponentsToForm(scheme.components);
             }}
-            form={{ display: 'form' }}
+            form={{ 
+                display: 'form',
+                components: context?.dataForSetting,
+            }}
             options={{
+              noDefaultSubmitButton: true,
               // Controls for components categories
               builder: {
                   basic: false,
@@ -66,7 +77,11 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                       textfield: context.component.textFieldComponent,
                       textarea: context.component.textAreaComponent,
                       email: context.component.emailComponent,
-                      number: context.component.numberComponent
+                      number: context.component.numberComponent,
+                      datetime: context.component.dateTimeComponent,
+                      panel: context.component.panelComponent,
+                      columns: context.component.columnsComponent,
+                      file: context.component.fileComponent
                     }
                   },
               },
@@ -113,12 +128,17 @@ export class formioBuilderComponent extends ReactComponent {
             component: (this as any).component,
             data: (this as any).data,
             row: (this as any).data,
+            dataForSetting: (this as any)?.dataForSetting || [],
             setValue: (value: any) => {
                 (this as any).updateValue(value);
             },
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
+        
+        window.setTimeout(() => {
+            (this as any).refresh();
+        }, 0)
         
         return ReactDOM.render(
             <FormioBuilderComponent context={context} />,

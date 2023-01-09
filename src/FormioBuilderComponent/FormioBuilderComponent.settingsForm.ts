@@ -22,10 +22,6 @@ export const settingsForm = (...extend: any) => {
                 ignore: true,
             },
             {
-                key: 'conditional',
-                ignore: true,
-            },
-            {
                 key: 'logic',
                 ignore: true,
             },
