@@ -7,6 +7,7 @@ export declare class formRendererComponent extends ContainerComponent {
         schema: any;
     };
     static schema(): any;
+    get defaultSchema(): any;
     static editForm: (...extend: any) => any;
     get className(): string;
     setComponents(): void;
