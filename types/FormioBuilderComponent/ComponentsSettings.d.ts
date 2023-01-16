@@ -521,4 +521,165 @@ export declare const componentsSettings: {
         ignore?: undefined;
         type?: undefined;
     })[];
+    datagrid: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            validate: {
+                required: boolean;
+            };
+        }[];
+        ignore?: undefined;
+    })[];
+    checkbox: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: ({
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            validate: {
+                required: boolean;
+            };
+            tooltip?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            tooltip: string;
+            placeholder: string;
+            validate: {
+                required: boolean;
+            };
+        })[];
+        ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    })[];
+    select: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            validate: {
+                required: boolean;
+            };
+        }[];
+        ignore?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: ({
+            type: string;
+            input: boolean;
+            label: string;
+            key: string;
+            tooltip: string;
+            weight: number;
+            reorder: boolean;
+            defaultValue: {
+                label: string;
+                value: string;
+            }[];
+            components: ({
+                label: string;
+                key: string;
+                input: boolean;
+                type: string;
+                allowCalculateOverride?: undefined;
+                calculateValue?: undefined;
+            } | {
+                label: string;
+                key: string;
+                input: boolean;
+                type: string;
+                allowCalculateOverride: boolean;
+                calculateValue: string;
+            })[];
+            conditional: {
+                json: {
+                    '===': (string | {
+                        var: string;
+                    })[];
+                };
+            };
+        } | {
+            type: string;
+            input: boolean;
+            weight: number;
+            key: string;
+            label: string;
+            defaultValue: boolean;
+            tooltip: string;
+            reorder?: undefined;
+            components?: undefined;
+            conditional?: undefined;
+        })[];
+        ignore?: undefined;
+    })[];
 };

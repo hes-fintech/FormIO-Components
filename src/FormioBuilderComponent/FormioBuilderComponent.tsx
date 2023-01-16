@@ -20,6 +20,9 @@ type InformationComponentType = {
     panelComponent: boolean;
     columnsComponent: boolean;
     disabled: boolean;
+    selectComponent: boolean;
+    checkboxComponent: boolean;
+    datagridComponent: boolean;
 };
 
 type ContextType = {
@@ -30,7 +33,7 @@ type ContextType = {
     component: InformationComponentType;
     dataForSetting: any[];
     data: any;
-    row: any,
+    row: any;
     setValue: (arg: any) => void;
     isBuilderMode: boolean;
     _: LoDashStatic;
@@ -44,54 +47,69 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     const { context } = props;
 
     const addComponentsToForm = (components: any[]) => {
-        context.setValue(components)
+        context.setValue(components);
     };
-    
+
     return (
-        <div className={`builderComponent ${context.component.disabled ? 'disabled-formio-component' : ''}`}>
-        <FormBuilder
-            onSaveComponent={(currentComponent, componentInstance, scheme) => {
-                addComponentsToForm(scheme.components);
-            }}
-            onDeleteComponent={(currentComponent, componentInstance, scheme) => {
-                addComponentsToForm(scheme.components);
-            }}
-            form={{ 
-                display: 'form',
-                components: context?.dataForSetting,
-            }}
-            options={{
-              noDefaultSubmitButton: true,
-              // Controls for components categories
-              builder: {
-                  basic: false,
-                  advanced: false,
-                  layout: false,
-                  data: false,
-                  premium: false,
-                  customBasic: {
-                    title: 'Basic Components',
-                    default: true,
-                    weight: 0,
-                    components: {
-                      textfield: context.component.textFieldComponent,
-                      textarea: context.component.textAreaComponent,
-                      email: context.component.emailComponent,
-                      number: context.component.numberComponent,
-                      datetime: context.component.dateTimeComponent,
-                      panel: context.component.panelComponent,
-                      columns: context.component.columnsComponent,
-                      file: context.component.fileComponent
-                    }
-                  },
-              },
-              // Controls for specific component
-              editForm: componentsSettings
-            }}
-        />
+        <div
+            className={`builderComponent ${
+                context.component.disabled ? 'disabled-formio-component' : ''
+            }`}
+        >
+            <FormBuilder
+                onSaveComponent={(
+                    currentComponent,
+                    componentInstance,
+                    scheme,
+                ) => {
+                    addComponentsToForm(scheme.components);
+                }}
+                onDeleteComponent={(
+                    currentComponent,
+                    componentInstance,
+                    scheme,
+                ) => {
+                    addComponentsToForm(scheme.components);
+                }}
+                form={{
+                    display: 'form',
+                    components: context?.dataForSetting,
+                }}
+                options={{
+                    noDefaultSubmitButton: true,
+                    // Controls for components categories
+                    builder: {
+                        basic: false,
+                        advanced: false,
+                        layout: false,
+                        data: false,
+                        premium: false,
+                        customBasic: {
+                            title: 'Basic Components',
+                            default: true,
+                            weight: 0,
+                            components: {
+                                textfield: context.component.textFieldComponent,
+                                textarea: context.component.textAreaComponent,
+                                email: context.component.emailComponent,
+                                number: context.component.numberComponent,
+                                datetime: context.component.dateTimeComponent,
+                                panel: context.component.panelComponent,
+                                columns: context.component.columnsComponent,
+                                file: context.component.fileComponent,
+                                select: context.component.selectComponent,
+                                checkbox: context.component.checkboxComponent,
+                                datagrid: context.component.datagridComponent,
+                            },
+                        },
+                    },
+                    // Controls for specific component
+                    editForm: componentsSettings,
+                }}
+            />
         </div>
     );
-}
+};
 
 export class formioBuilderComponent extends ReactComponent {
     static get builderInfo() {
@@ -135,11 +153,11 @@ export class formioBuilderComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
-        
+
         window.setTimeout(() => {
             (this as any).refresh();
-        }, 0)
-        
+        }, 0);
+
         return ReactDOM.render(
             <FormioBuilderComponent context={context} />,
             element,
