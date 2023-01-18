@@ -32,6 +32,7 @@ type ContextType = {
     i18n: i18next.i18n;
     component: InformationComponentType;
     dataForSetting: any[];
+    parentDisabled: boolean;
     data: any;
     row: any;
     setValue: (arg: any) => void;
@@ -53,7 +54,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     return (
         <div
             className={`builderComponent ${
-                context.component.disabled ? 'disabled-formio-component' : ''
+                (context.component.disabled || context.parentDisabled) ? 'disabled-formio-component' : ''
             }`}
         >
             <FormBuilder
@@ -147,6 +148,7 @@ export class formioBuilderComponent extends ReactComponent {
             data: (this as any).data,
             row: (this as any).data,
             dataForSetting: (this as any)?.dataForSetting || [],
+            parentDisabled: (this as any)?.parentDisabled,
             setValue: (value: any) => {
                 (this as any).updateValue(value);
             },

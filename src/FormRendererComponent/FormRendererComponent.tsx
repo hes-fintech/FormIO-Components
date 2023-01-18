@@ -31,6 +31,8 @@ export class formRendererComponent extends ContainerComponent {
     }
 
     setComponents() {
+        const isComponentDisabled = (this as any)?.parentDisabled || (this as any)?.disabled;
+
         if(!(this as any).builderMode) {
             const componentsForRender = getNestedValue((this as any).data, (this as any)?.component?.componentsKey);
             
@@ -39,6 +41,7 @@ export class formRendererComponent extends ContainerComponent {
                 "tableView": false,
                 "key": (this as any)?.component?.nestedKey,
                 "type": "container",
+                "disabled": isComponentDisabled,
                 "input": true,
                 "components": componentsForRender,
             })
