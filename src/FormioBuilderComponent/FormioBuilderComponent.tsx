@@ -78,7 +78,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                 }}
                 options={{
                     noDefaultSubmitButton: true,
-                    // Controls for components categories
+                    // Controls for component categories
                     builder: {
                         basic: false,
                         advanced: false,

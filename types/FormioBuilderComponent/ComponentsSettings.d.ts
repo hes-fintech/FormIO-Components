@@ -682,4 +682,161 @@ export declare const componentsSettings: {
         })[];
         ignore?: undefined;
     })[];
+    file: ({
+        key: string;
+        ignore: boolean;
+        components?: undefined;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+    } | {
+        key: string;
+        ignore: boolean;
+        components: ({
+            type: string;
+            input: boolean;
+            label: string;
+            key: string;
+            defaultValue: string;
+            placeholder?: undefined;
+            tooltip?: undefined;
+            weight?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            defaultValue: string;
+            placeholder: string;
+            tooltip: string;
+            weight: number;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            weight: number;
+            placeholder: string;
+            defaultValue: string;
+            tooltip?: undefined;
+        })[];
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            validate: {
+                required: boolean;
+            };
+        }[];
+        ignore?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        label: string;
+        components: ({
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            weight: number;
+            conditional: {
+                json: {
+                    '!==': (string | {
+                        var: string;
+                    })[];
+                    '=='?: undefined;
+                };
+            };
+            components?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            weight: number;
+            tooltip?: undefined;
+            conditional?: undefined;
+            components?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            label: string;
+            key: string;
+            tooltip: string;
+            weight: number;
+            components: {
+                label: string;
+                key: string;
+                input: boolean;
+                type: string;
+            }[];
+            placeholder?: undefined;
+            conditional?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            tooltip: string;
+            weight: number;
+            placeholder?: undefined;
+            conditional?: undefined;
+            components?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            weight: number;
+            conditional: {
+                json: {
+                    '==': (boolean | {
+                        var: string;
+                    })[];
+                    '!=='?: undefined;
+                };
+            };
+            components?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    })[];
 };
