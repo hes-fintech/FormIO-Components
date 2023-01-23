@@ -1140,4 +1140,232 @@ export const componentsSettings = {
       ],
     },
   ],
+  file: [
+      {
+          key: 'display',
+          ignore: true,
+      },
+      {
+          key: 'data',
+          ignore: true,
+      },
+      {
+          key: 'api',
+          ignore: true,
+      },
+      {
+          key: 'conditional',
+          ignore: true,
+      },
+      {
+          key: 'logic',
+          ignore: true,
+      },
+      {
+          key: 'attributes',
+          ignore: true,
+      },
+      {
+          key: 'layout',
+          ignore: true,
+      },
+      {
+          key: 'validation',
+          ignore: true,
+      },
+      {
+          key: 'file',
+          ignore: true,
+          components: [
+            {
+              type: 'textfield',
+              input: true,
+              label: 'Url',
+              key: 'storage',
+              defaultValue: 'url',
+            },
+            {
+              type: 'textfield',
+              input: true,
+              key: 'fileMaxSize',
+              label: 'File Maximum Size',
+              defaultValue: '20MB',
+              placeholder: '10MB',
+              tooltip: 'See <a href=\'https://github.com/danialfarid/ng-file-upload#full-reference\' target=\'_blank\'>https://github.com/danialfarid/ng-file-upload#full-reference</a> for how to specify file sizes.',
+              weight: 70
+            },
+            {
+              type: 'textfield',
+              input: true,
+              key: 'url',
+              label: 'Url',
+              weight: 10,
+              placeholder: 'Enter the url to post the files to.',
+              defaultValue: '/api/file',
+            },
+          ]
+      },
+      {
+          weight: 0,
+          key: 'customDisplay',
+          type: 'textfield',
+          label: 'Display',
+          components: [
+              {
+                  weight: 0,
+                  type: 'textfield',
+                  input: true,
+                  key: 'key',
+                  label: 'Component key in form',
+                  validate: {
+                      required: true,
+                  },
+              },
+              {
+                  weight: 1,
+                  type: 'textfield',
+                  input: true,
+                  key: 'label',
+                  label: 'Label',
+                  validate: {
+                      required: true,
+                  },
+              },
+          ],
+      },
+      {
+          weight: 1,
+          key: 'customFile',
+          label: 'File',
+          components: [
+            {
+              type: 'textfield',
+              input: true,
+              key: 'dir',
+              label: 'Directory',
+              placeholder: '(optional) Enter a directory for the files',
+              tooltip: 'This will place all the files uploaded in this field in the directory',
+              weight: 1,
+              conditional: {
+                json: {
+                  '!==': [{
+                    var: 'data.storage'
+                  }, 'googledrive']
+                }
+              }
+            },
+            {
+              type: 'textfield',
+              input: true,
+              key: 'filePattern',
+              label: 'File Pattern',
+              placeholder: '.jpg,video/*,application/pdf',
+              weight: 2
+            },
+            {
+              type: 'datagrid',
+              input: true,
+              label: 'File Types',
+              key: 'fileTypes',
+              tooltip: 'Specify file types to classify the uploads. This is useful if you allow multiple types of uploads but want to allow the user to specify which type of file each is.',
+              weight: 3,
+              components: [
+                {
+                  label: 'Label',
+                  key: 'label',
+                  input: true,
+                  type: 'textfield'
+                },
+                {
+                  label: 'Value',
+                  key: 'value',
+                  input: true,
+                  type: 'textfield'
+                }
+              ]
+            },
+            {
+              type: 'checkbox',
+              input: true,
+              key: 'image',
+              label: 'Display as image(s)',
+              tooltip: 'Instead of a list of linked files, images will be rendered in the view.',
+              weight: 4
+            },
+            {
+              type: 'textfield',
+              input: true,
+              key: 'imageSize',
+              label: 'Image Size',
+              placeholder: '100',
+              tooltip: 'The image size for previewing images.',
+              weight: 5,
+              conditional: {
+                json: { '==': [{ var: 'data.image' }, true] }
+              }
+            },
+            {
+              type: 'checkbox',
+              input: true,
+              key: 'webcam',
+              label: 'Enable web camera',
+              tooltip: 'This will allow using an attached camera to directly take a picture instead of uploading an existing file.',
+              weight: 7,
+            },
+            {
+              type: 'textfield',
+              input: true,
+              key: 'webcamSize',
+              label: 'Webcam Width',
+              placeholder: '320',
+              tooltip: 'The webcam size for taking pictures.',
+              weight: 8,
+              conditional: {
+                json: { '==': [{ var: 'data.webcam' }, true] }
+              }
+            },
+            {
+              weight: 9,
+              type: 'checkbox',
+              label: 'Multiple Values',
+              tooltip: 'Allows multiple values to be entered for this field.',
+              key: 'multiple',
+              input: true
+            },
+          ],
+      },
+      {
+        label: 'Validation',
+        key: 'customValidation',
+        weight: 2,
+        components: [
+          {
+            weight: 10,
+            type: 'checkbox',
+            label: 'Required',
+            tooltip: 'A required field must be filled in before the form can be submitted.',
+            key: 'validate.required',
+            input: true
+          },
+          {
+            weight: 190,
+            type: 'textfield',
+            input: true,
+            key: 'errorLabel',
+            label: 'Error Label',
+            placeholder: 'Error Label',
+            tooltip: 'The label for this field when an error occurs.'
+          },
+          {
+            weight: 200,
+            key: 'validate.customMessage',
+            label: 'Custom Error Message',
+            placeholder: 'Custom Error Message',
+            type: 'textfield',
+            tooltip: 'Error message displayed if any error occurred.',
+            input: true
+          },
+        ]
+      },
+  ],
 }
