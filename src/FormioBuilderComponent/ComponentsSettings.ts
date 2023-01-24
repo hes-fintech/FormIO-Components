@@ -1176,34 +1176,6 @@ export const componentsSettings = {
       {
           key: 'file',
           ignore: true,
-          components: [
-            {
-              type: 'textfield',
-              input: true,
-              label: 'Url',
-              key: 'storage',
-              defaultValue: 'url',
-            },
-            {
-              type: 'textfield',
-              input: true,
-              key: 'fileMaxSize',
-              label: 'File Maximum Size',
-              defaultValue: '20MB',
-              placeholder: '10MB',
-              tooltip: 'See <a href=\'https://github.com/danialfarid/ng-file-upload#full-reference\' target=\'_blank\'>https://github.com/danialfarid/ng-file-upload#full-reference</a> for how to specify file sizes.',
-              weight: 70
-            },
-            {
-              type: 'textfield',
-              input: true,
-              key: 'url',
-              label: 'Url',
-              weight: 10,
-              placeholder: 'Enter the url to post the files to.',
-              defaultValue: '/api/file',
-            },
-          ]
       },
       {
           weight: 0,
@@ -1253,14 +1225,6 @@ export const componentsSettings = {
                   }, 'googledrive']
                 }
               }
-            },
-            {
-              type: 'textfield',
-              input: true,
-              key: 'filePattern',
-              label: 'File Pattern',
-              placeholder: '.jpg,video/*,application/pdf',
-              weight: 2
             },
             {
               type: 'datagrid',
@@ -1355,15 +1319,6 @@ export const componentsSettings = {
             label: 'Error Label',
             placeholder: 'Error Label',
             tooltip: 'The label for this field when an error occurs.'
-          },
-          {
-            weight: 200,
-            key: 'validate.customMessage',
-            label: 'Custom Error Message',
-            placeholder: 'Custom Error Message',
-            type: 'textfield',
-            tooltip: 'Error message displayed if any error occurred.',
-            input: true
           },
         ]
       },
