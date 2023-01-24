@@ -763,16 +763,6 @@ export declare const componentsSettings: {
         } | {
             type: string;
             input: boolean;
-            key: string;
-            label: string;
-            placeholder: string;
-            weight: number;
-            tooltip?: undefined;
-            conditional?: undefined;
-            components?: undefined;
-        } | {
-            type: string;
-            input: boolean;
             label: string;
             key: string;
             tooltip: string;

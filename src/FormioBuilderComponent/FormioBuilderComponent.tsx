@@ -97,10 +97,21 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                                 datetime: context.component.dateTimeComponent,
                                 panel: context.component.panelComponent,
                                 columns: context.component.columnsComponent,
-                                file: context.component.fileComponent,
                                 select: context.component.selectComponent,
                                 checkbox: context.component.checkboxComponent,
                                 datagrid: context.component.datagridComponent,
+                                file: context.component.fileComponent ? {
+                                    title: 'file',
+                                    key: 'file',
+                                    icon: 'file',
+                                    schema: {
+                                      type: 'file',
+                                      input: true,
+                                      storage: 'url',
+                                      url: '/api/file',
+                                      fileMaxSize: '20MB',
+                                    }
+                                  } : null,
                             },
                         },
                     },
