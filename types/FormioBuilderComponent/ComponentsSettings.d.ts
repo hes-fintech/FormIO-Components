@@ -357,7 +357,7 @@ export declare const componentsSettings: {
         key: string;
         type: string;
         label: string;
-        components: {
+        components: ({
             weight: number;
             type: string;
             input: boolean;
@@ -366,7 +366,23 @@ export declare const componentsSettings: {
             validate: {
                 required: boolean;
             };
-        }[];
+            dataSrc?: undefined;
+            data?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            label: string;
+            key: string;
+            dataSrc: string;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            validate?: undefined;
+        })[];
         ignore?: undefined;
     } | {
         label: string;
@@ -685,44 +701,10 @@ export declare const componentsSettings: {
     file: ({
         key: string;
         ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
         components?: undefined;
-        weight?: undefined;
-        type?: undefined;
-        label?: undefined;
-    } | {
-        key: string;
-        ignore: boolean;
-        components: ({
-            type: string;
-            input: boolean;
-            label: string;
-            key: string;
-            defaultValue: string;
-            placeholder?: undefined;
-            tooltip?: undefined;
-            weight?: undefined;
-        } | {
-            type: string;
-            input: boolean;
-            key: string;
-            label: string;
-            defaultValue: string;
-            placeholder: string;
-            tooltip: string;
-            weight: number;
-        } | {
-            type: string;
-            input: boolean;
-            key: string;
-            label: string;
-            weight: number;
-            placeholder: string;
-            defaultValue: string;
-            tooltip?: undefined;
-        })[];
-        weight?: undefined;
-        type?: undefined;
-        label?: undefined;
     } | {
         weight: number;
         key: string;
