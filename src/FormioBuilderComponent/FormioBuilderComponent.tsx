@@ -58,20 +58,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
             }`}
         >
             <FormBuilder
-                onSaveComponent={(
-                    currentComponent,
-                    componentInstance,
-                    scheme,
-                ) => {
-                    addComponentsToForm(scheme.components);
-                }}
-                onDeleteComponent={(
-                    currentComponent,
-                    componentInstance,
-                    scheme,
-                ) => {
-                    addComponentsToForm(scheme.components);
-                }}
+                onChange={(scheme) => addComponentsToForm(scheme.components)}
                 form={{
                     display: 'form',
                     components: context?.dataForSetting,

@@ -655,6 +655,24 @@ export const componentsSettings = {
                         required: true,
                     },
                 },
+                {
+                  weight: 2,
+                  type: 'select',
+                  input: true,
+                  label: 'Theme',
+                  key: 'theme',
+                  dataSrc: 'values',
+                  data: {
+                    values: [
+                      { label: 'Default', value: 'default' },
+                      { label: 'Primary', value: 'primary' },
+                      { label: 'Info', value: 'info' },
+                      { label: 'Success', value: 'success' },
+                      { label: 'Danger', value: 'danger' },
+                      { label: 'Warning', value: 'warning' }
+                    ]
+                  }
+                }
             ],
         },
         {
