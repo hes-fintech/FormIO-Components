@@ -34,25 +34,6 @@ export declare const componentsSettings: {
             tooltip: string;
             key: string;
             input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
             placeholder?: undefined;
         } | {
             weight: number;
@@ -62,9 +43,6 @@ export declare const componentsSettings: {
             label: string;
             placeholder: string;
             tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
         })[];
         ignore?: undefined;
         type?: undefined;
@@ -103,25 +81,6 @@ export declare const componentsSettings: {
             tooltip: string;
             key: string;
             input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
             placeholder?: undefined;
         } | {
             weight: number;
@@ -131,9 +90,6 @@ export declare const componentsSettings: {
             label: string;
             placeholder: string;
             tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
         })[];
         ignore?: undefined;
         type?: undefined;
@@ -172,25 +128,6 @@ export declare const componentsSettings: {
             tooltip: string;
             key: string;
             input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
             placeholder?: undefined;
         } | {
             weight: number;
@@ -200,9 +137,6 @@ export declare const componentsSettings: {
             label: string;
             placeholder: string;
             tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
         })[];
         ignore?: undefined;
         type?: undefined;
@@ -241,25 +175,6 @@ export declare const componentsSettings: {
             tooltip: string;
             key: string;
             input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
             placeholder?: undefined;
         } | {
             weight: number;
@@ -269,14 +184,71 @@ export declare const componentsSettings: {
             label: string;
             placeholder: string;
             tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
         })[];
         ignore?: undefined;
         type?: undefined;
     })[];
     datetime: ({
+        key: string;
+        ignore: boolean;
+        weight?: undefined;
+        type?: undefined;
+        label?: undefined;
+        components?: undefined;
+    } | {
+        weight: number;
+        key: string;
+        type: string;
+        label: string;
+        components: ({
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            validate: {
+                required: boolean;
+            };
+            placeholder?: undefined;
+            description?: undefined;
+            tooltip?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            description: string;
+            tooltip: string;
+            weight: number;
+            validate?: undefined;
+        })[];
+        ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
+    })[];
+    panel: ({
         key: string;
         ignore: boolean;
         weight?: undefined;
@@ -310,25 +282,6 @@ export declare const componentsSettings: {
             tooltip: string;
             key: string;
             input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
             placeholder?: undefined;
         } | {
             weight: number;
@@ -338,94 +291,6 @@ export declare const componentsSettings: {
             label: string;
             placeholder: string;
             tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-        })[];
-        ignore?: undefined;
-        type?: undefined;
-    })[];
-    panel: ({
-        key: string;
-        ignore: boolean;
-        weight?: undefined;
-        type?: undefined;
-        label?: undefined;
-        components?: undefined;
-    } | {
-        weight: number;
-        key: string;
-        type: string;
-        label: string;
-        components: ({
-            weight: number;
-            type: string;
-            input: boolean;
-            key: string;
-            label: string;
-            validate: {
-                required: boolean;
-            };
-            dataSrc?: undefined;
-            data?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            input: boolean;
-            label: string;
-            key: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
-            validate?: undefined;
-        })[];
-        ignore?: undefined;
-    } | {
-        label: string;
-        key: string;
-        weight: number;
-        components: ({
-            weight: number;
-            type: string;
-            label: string;
-            tooltip: string;
-            key: string;
-            input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            input: boolean;
-            key: string;
-            label: string;
-            placeholder: string;
-            tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
         })[];
         ignore?: undefined;
         type?: undefined;
@@ -502,25 +367,6 @@ export declare const componentsSettings: {
             tooltip: string;
             key: string;
             input: boolean;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
-            placeholder?: undefined;
-        } | {
-            weight: number;
-            type: string;
-            key: string;
-            defaultValue: string;
-            input: boolean;
-            label: string;
-            tooltip: string;
-            dataSrc: string;
-            data: {
-                values: {
-                    label: string;
-                    value: string;
-                }[];
-            };
             placeholder?: undefined;
         } | {
             weight: number;
@@ -530,9 +376,6 @@ export declare const componentsSettings: {
             label: string;
             placeholder: string;
             tooltip: string;
-            defaultValue?: undefined;
-            dataSrc?: undefined;
-            data?: undefined;
         })[];
         ignore?: undefined;
         type?: undefined;
@@ -584,6 +427,8 @@ export declare const componentsSettings: {
                 required: boolean;
             };
             tooltip?: undefined;
+            dataSrc?: undefined;
+            data?: undefined;
         } | {
             weight: number;
             type: string;
@@ -595,6 +440,24 @@ export declare const componentsSettings: {
             validate: {
                 required: boolean;
             };
+            dataSrc?: undefined;
+            data?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            tooltip: string;
+            dataSrc: string;
+            weight: number;
+            data: {
+                values: {
+                    label: string;
+                    value: string;
+                }[];
+            };
+            placeholder?: undefined;
+            validate?: undefined;
         })[];
         ignore?: undefined;
     } | {

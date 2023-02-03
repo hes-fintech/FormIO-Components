@@ -64,14 +64,6 @@ export const formioBuilderComponentEditDisplay = [
         input: true,
     },
     {
-        weight: 8,
-        type: 'checkbox',
-        label: 'Columns',
-        key: 'columnsComponent',
-        defaultValue: true,
-        input: true,
-    },
-    {
         weight: 9,
         type: 'checkbox',
         label: 'Select',

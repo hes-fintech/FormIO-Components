@@ -84,22 +84,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 0,
-              type: 'select',
-              key: 'validateOn',
-              defaultValue: 'change',
-              input: true,
-              label: 'Validate On',
-              tooltip: 'Determines when this component should trigger front-end validation.',
-              dataSrc: 'values',
-              data: {
-                values: [
-                  { label: 'Change', value: 'change' },
-                  { label: 'Blur', value: 'blur' }
-                ]
-              }
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -107,15 +91,6 @@ export const componentsSettings = {
               label: 'Error Label',
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
-            },
-            {
-              weight: 200,
-              key: 'validate.customMessage',
-              label: 'Custom Error Message',
-              placeholder: 'Custom Error Message',
-              type: 'textfield',
-              tooltip: 'Error message displayed if any error occurred.',
-              input: true
             },
           ]
         },
@@ -203,22 +178,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 0,
-              type: 'select',
-              key: 'validateOn',
-              defaultValue: 'change',
-              input: true,
-              label: 'Validate On',
-              tooltip: 'Determines when this component should trigger front-end validation.',
-              dataSrc: 'values',
-              data: {
-                values: [
-                  { label: 'Change', value: 'change' },
-                  { label: 'Blur', value: 'blur' }
-                ]
-              }
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -226,15 +185,6 @@ export const componentsSettings = {
               label: 'Error Label',
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
-            },
-            {
-              weight: 200,
-              key: 'validate.customMessage',
-              label: 'Custom Error Message',
-              placeholder: 'Custom Error Message',
-              type: 'textfield',
-              tooltip: 'Error message displayed if any error occurred.',
-              input: true
             },
           ]
         },
@@ -322,22 +272,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 0,
-              type: 'select',
-              key: 'validateOn',
-              defaultValue: 'change',
-              input: true,
-              label: 'Validate On',
-              tooltip: 'Determines when this component should trigger front-end validation.',
-              dataSrc: 'values',
-              data: {
-                values: [
-                  { label: 'Change', value: 'change' },
-                  { label: 'Blur', value: 'blur' }
-                ]
-              }
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -345,15 +279,6 @@ export const componentsSettings = {
               label: 'Error Label',
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
-            },
-            {
-              weight: 200,
-              key: 'validate.customMessage',
-              label: 'Custom Error Message',
-              placeholder: 'Custom Error Message',
-              type: 'textfield',
-              tooltip: 'Error message displayed if any error occurred.',
-              input: true
             },
           ]
         },
@@ -441,22 +366,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 0,
-              type: 'select',
-              key: 'validateOn',
-              defaultValue: 'change',
-              input: true,
-              label: 'Validate On',
-              tooltip: 'Determines when this component should trigger front-end validation.',
-              dataSrc: 'values',
-              data: {
-                values: [
-                  { label: 'Change', value: 'change' },
-                  { label: 'Blur', value: 'blur' }
-                ]
-              }
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -464,15 +373,6 @@ export const componentsSettings = {
               label: 'Error Label',
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
-            },
-            {
-              weight: 200,
-              key: 'validate.customMessage',
-              label: 'Custom Error Message',
-              placeholder: 'Custom Error Message',
-              type: 'textfield',
-              tooltip: 'Error message displayed if any error occurred.',
-              input: true
             },
           ]
         },
@@ -536,12 +436,22 @@ export const componentsSettings = {
                         required: true,
                     },
                 },
+                {
+                  type: 'textfield',
+                  input: true,
+                  key: 'format',
+                  label: 'Format',
+                  placeholder: 'Format',
+                  description: 'Use formats provided by <a href="https://github.com/angular-ui/bootstrap/tree/master/src/dateparser/docs#uibdateparsers-format-codes" target="_blank">DateParser Codes</a>',
+                  tooltip: 'The date format for displaying the datetime value.',
+                  weight: 3
+                },
             ],
         },
         {
           label: 'Validation',
           key: 'customValidation',
-          weight: 2,
+          weight: 5,
           components: [
             {
               weight: 10,
@@ -560,22 +470,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 0,
-              type: 'select',
-              key: 'validateOn',
-              defaultValue: 'change',
-              input: true,
-              label: 'Validate On',
-              tooltip: 'Determines when this component should trigger front-end validation.',
-              dataSrc: 'values',
-              data: {
-                values: [
-                  { label: 'Change', value: 'change' },
-                  { label: 'Blur', value: 'blur' }
-                ]
-              }
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -583,15 +477,6 @@ export const componentsSettings = {
               label: 'Error Label',
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
-            },
-            {
-              weight: 200,
-              key: 'validate.customMessage',
-              label: 'Custom Error Message',
-              placeholder: 'Custom Error Message',
-              type: 'textfield',
-              tooltip: 'Error message displayed if any error occurred.',
-              input: true
             },
           ]
         },
@@ -655,24 +540,6 @@ export const componentsSettings = {
                         required: true,
                     },
                 },
-                {
-                  weight: 2,
-                  type: 'select',
-                  input: true,
-                  label: 'Theme',
-                  key: 'theme',
-                  dataSrc: 'values',
-                  data: {
-                    values: [
-                      { label: 'Default', value: 'default' },
-                      { label: 'Primary', value: 'primary' },
-                      { label: 'Info', value: 'info' },
-                      { label: 'Success', value: 'success' },
-                      { label: 'Danger', value: 'danger' },
-                      { label: 'Warning', value: 'warning' }
-                    ]
-                  }
-                }
             ],
         },
         {
@@ -697,22 +564,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 0,
-              type: 'select',
-              key: 'validateOn',
-              defaultValue: 'change',
-              input: true,
-              label: 'Validate On',
-              tooltip: 'Determines when this component should trigger front-end validation.',
-              dataSrc: 'values',
-              data: {
-                values: [
-                  { label: 'Change', value: 'change' },
-                  { label: 'Blur', value: 'blur' }
-                ]
-              }
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -720,15 +571,6 @@ export const componentsSettings = {
               label: 'Error Label',
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
-            },
-            {
-              weight: 200,
-              key: 'validate.customMessage',
-              label: 'Custom Error Message',
-              placeholder: 'Custom Error Message',
-              type: 'textfield',
-              tooltip: 'Error message displayed if any error occurred.',
-              input: true
             },
           ]
         },
@@ -872,22 +714,6 @@ export const componentsSettings = {
             input: true
           },
           {
-            weight: 0,
-            type: 'select',
-            key: 'validateOn',
-            defaultValue: 'change',
-            input: true,
-            label: 'Validate On',
-            tooltip: 'Determines when this component should trigger front-end validation.',
-            dataSrc: 'values',
-            data: {
-              values: [
-                { label: 'Change', value: 'change' },
-                { label: 'Blur', value: 'blur' }
-              ]
-            }
-          },
-          {
             weight: 190,
             type: 'textfield',
             input: true,
@@ -895,15 +721,6 @@ export const componentsSettings = {
             label: 'Error Label',
             placeholder: 'Error Label',
             tooltip: 'The label for this field when an error occurs.'
-          },
-          {
-            weight: 200,
-            key: 'validate.customMessage',
-            label: 'Custom Error Message',
-            placeholder: 'Custom Error Message',
-            type: 'textfield',
-            tooltip: 'Error message displayed if any error occurred.',
-            input: true
           },
         ]
       },
@@ -1021,6 +838,21 @@ export const componentsSettings = {
             required: true,
           },
         },
+        {
+          type: 'select',
+          input: true,
+          key: 'inputType',
+          label: 'Input Type',
+          tooltip: 'This is the input type used for this checkbox.',
+          dataSrc: 'values',
+          weight: 2,
+          data: {
+            values: [
+              { label: 'Checkbox', value: 'checkbox' },
+              { label: 'Radio', value: 'radio' },
+            ],
+          },
+        },
       ],
     },
     {
@@ -1046,19 +878,10 @@ export const componentsSettings = {
           placeholder: 'Error Label',
           tooltip: 'The label for this field when an error occurs.',
         },
-        {
-          weight: 200,
-          key: 'validate.customMessage',
-          label: 'Custom Error Message',
-          placeholder: 'Custom Error Message',
-          type: 'textfield',
-          tooltip: 'Error message displayed if any error occurred.',
-          input: true,
-        },
       ],
     },
   ],
-    select: [
+  select: [
     {
       key: 'api',
       ignore: true,
