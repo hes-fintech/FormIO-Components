@@ -436,6 +436,16 @@ export const componentsSettings = {
                         required: true,
                     },
                 },
+                {
+                  type: 'textfield',
+                  input: true,
+                  key: 'format',
+                  label: 'Format',
+                  placeholder: 'Format',
+                  description: 'Use formats provided by <a href="https://github.com/angular-ui/bootstrap/tree/master/src/dateparser/docs#uibdateparsers-format-codes" target="_blank">DateParser Codes</a>',
+                  tooltip: 'The date format for displaying the datetime value.',
+                  weight: 3
+                },
             ],
         },
         {
