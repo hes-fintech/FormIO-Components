@@ -200,7 +200,7 @@ export declare const componentsSettings: {
         key: string;
         type: string;
         label: string;
-        components: {
+        components: ({
             weight: number;
             type: string;
             input: boolean;
@@ -209,7 +209,20 @@ export declare const componentsSettings: {
             validate: {
                 required: boolean;
             };
-        }[];
+            placeholder?: undefined;
+            description?: undefined;
+            tooltip?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            description: string;
+            tooltip: string;
+            weight: number;
+            validate?: undefined;
+        })[];
         ignore?: undefined;
     } | {
         label: string;
