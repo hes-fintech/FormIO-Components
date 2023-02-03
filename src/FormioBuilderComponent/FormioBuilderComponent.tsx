@@ -18,7 +18,6 @@ type InformationComponentType = {
     fileComponent: boolean;
     dateTimeComponent: boolean;
     panelComponent: boolean;
-    columnsComponent: boolean;
     disabled: boolean;
     selectComponent: boolean;
     checkboxComponent: boolean;
@@ -83,12 +82,11 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                                 number: context.component.numberComponent,
                                 datetime: context.component.dateTimeComponent,
                                 panel: context.component.panelComponent,
-                                columns: context.component.columnsComponent,
                                 select: context.component.selectComponent,
                                 checkbox: context.component.checkboxComponent,
                                 datagrid: context.component.datagridComponent,
                                 file: context.component.fileComponent ? {
-                                    title: 'file',
+                                    title: 'File',
                                     key: 'file',
                                     icon: 'file',
                                     schema: {
