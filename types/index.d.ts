@@ -4,6 +4,7 @@ import { refreshComponent } from "./refreshComponent/refreshComponent";
 import { pdfViewer } from "./PDFViewer/PDFViewerComponent";
 import { formioBuilderComponent } from "./FormioBuilderComponent/FormioBuilderComponent";
 import { formRendererComponent } from "./FormRendererComponent/FormRendererComponent";
+import { phoneInputComponent } from "./PhoneInput/PhoneInput";
 export declare const customComponents: {
     iframe: typeof iframe;
     sliderComponent: typeof sliderComponent;
@@ -11,4 +12,5 @@ export declare const customComponents: {
     pdfViewer: typeof pdfViewer;
     formioBuilderComponent: typeof formioBuilderComponent;
     formRendererComponent: typeof formRendererComponent;
+    phoneInputComponent: typeof phoneInputComponent;
 };
