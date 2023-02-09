@@ -10,18 +10,7 @@ import { componentsSettings } from './ComponentsSettings';
 import './styles/index.scss'
 
 type InformationComponentType = {
-    nestedFormKey: string;
-    textFieldComponent: boolean;
-    textAreaComponent: boolean;
-    emailComponent: boolean;
-    numberComponent: boolean;
-    fileComponent: boolean;
-    dateTimeComponent: boolean;
-    panelComponent: boolean;
     disabled: boolean;
-    selectComponent: boolean;
-    checkboxComponent: boolean;
-    datagridComponent: boolean;
 };
 
 type ContextType = {
@@ -76,16 +65,16 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                             default: true,
                             weight: 0,
                             components: {
-                                textfield: context.component.textFieldComponent,
-                                textarea: context.component.textAreaComponent,
-                                email: context.component.emailComponent,
-                                number: context.component.numberComponent,
-                                datetime: context.component.dateTimeComponent,
-                                panel: context.component.panelComponent,
-                                select: context.component.selectComponent,
-                                checkbox: context.component.checkboxComponent,
-                                datagrid: context.component.datagridComponent,
-                                file: context.component.fileComponent ? {
+                                textfield: true,
+                                textarea: true,
+                                email: true,
+                                number: true,
+                                datetime: true,
+                                panel: true,
+                                select: true,
+                                checkbox: true,
+                                datagrid: true,
+                                file: {
                                     title: 'File',
                                     key: 'file',
                                     icon: 'file',
@@ -96,7 +85,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                                       url: '/api/file',
                                       fileMaxSize: '20MB',
                                     }
-                                  } : null,
+                                },
                             },
                         },
                     },

@@ -11,24 +11,6 @@ export declare const formioBuilderComponentEditDisplay: ({
     weight: number;
     type: string;
     label: string;
-    key: string;
-    defaultValue: boolean;
-    input: boolean;
-    tooltip?: undefined;
-    ignore?: undefined;
-} | {
-    weight: number;
-    type: string;
-    label: string;
-    tooltip: string;
-    key: string;
-    defaultValue: boolean;
-    input: boolean;
-    ignore?: undefined;
-} | {
-    weight: number;
-    type: string;
-    label: string;
     tooltip: string;
     key: string;
     input: boolean;
