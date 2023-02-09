@@ -14,5 +14,4 @@ export declare class phoneInputComponent extends Component {
     render(children: any): any;
     attach(element: any): any;
     getValue(): string;
-    setValue(value: any, flags?: {}): any;
 }

@@ -48,16 +48,17 @@ export class phoneInputComponent extends Component {
         const inputComponent = (this as any).refs.phoneInput; // This will be either null or the div with "myref" set on it.
         (this as any).refs.codeSelectOption; // This will be either null or an array of divs with "mychild" set on them.
         console.log(this, 'selectComponent');
-        console.log(selectComponent.value, 'selectComponent');
+        console.log(selectComponent, 'selectComponent 1');
         (this as any).addEventListener(selectComponent, 'change', (e) => {
             console.log(e.target.value, 'selectComponent');
             const value = e.target.value;
             this.phoneMask = IMask(inputComponent, {
                 mask: `+{${value.replace("+", '')}}${countriesData.find((item) => item.code === value)?.mask}` 
             });
+            (this as any).setValue(value);
         });
 
-        (this as any).addEventListener(inputComponent, 'change', (e) => {
+        (this as any).addEventListener(inputComponent, 'keypress', (e) => {
             return (this as any).updateValue()
         });
 
@@ -68,23 +69,23 @@ export class phoneInputComponent extends Component {
         return `${this.phoneMask.unmaskedValue}`;
     }
 
-    setValue(value, flags = {}) {
-        const changed = (this as any).updateValue(value, flags);
-        value = (this as any).dataValue;
+    // setValue(value, flags = {}) {
+    //     const changed = (this as any).updateValue(value, flags);
+    //     value = (this as any).dataValue;
 
-        console.log(changed, 'changed value')
-        console.log(value, 'changed value 123')
+    //     console.log(changed, 'changed value')
+    //     console.log(value, 'changed value 123')
 
-        if ((this as any).isHtmlRenderMode() && flags && (flags as any).fromSubmission && changed) {
-            (this as any).itemsLoaded.then(() => {
-                (this as any).redraw();
-            });
+    //     if ((this as any).isHtmlRenderMode() && flags && (flags as any).fromSubmission && changed) {
+    //         (this as any).itemsLoaded.then(() => {
+    //             (this as any).redraw();
+    //         });
       
-            return changed;
-        }
-        (this as any).redraw();
+    //         return changed;
+    //     }
+    //     (this as any).redraw();
 
-        return changed;
-    }
+    //     return changed;
+    // }
 
 }
