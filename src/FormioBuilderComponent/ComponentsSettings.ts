@@ -39,7 +39,7 @@ export const componentsSettings = {
                     type: 'textfield',
                     input: true,
                     key: 'key',
-                    label: 'Component key in form',
+                    label: 'Submission data key',
                     placeholder: 'Field Label',
                     validate: {
                         required: true,
@@ -127,7 +127,7 @@ export const componentsSettings = {
                     type: 'textfield',
                     input: true,
                     key: 'key',
-                    label: 'Component key in form',
+                    label: 'Submission data key',
                     validate: {
                         required: true,
                     },
@@ -213,7 +213,7 @@ export const componentsSettings = {
                     type: 'textfield',
                     input: true,
                     key: 'key',
-                    label: 'Component key in form',
+                    label: 'Submission data key',
                     validate: {
                         required: true,
                     },
@@ -299,7 +299,7 @@ export const componentsSettings = {
                     type: 'textfield',
                     input: true,
                     key: 'key',
-                    label: 'Component key in form',
+                    label: 'Submission data key',
                     validate: {
                         required: true,
                     },
@@ -385,7 +385,7 @@ export const componentsSettings = {
                     type: 'textfield',
                     input: true,
                     key: 'key',
-                    label: 'Component key in form',
+                    label: 'Submission data key',
                     validate: {
                         required: true,
                     },
@@ -481,7 +481,7 @@ export const componentsSettings = {
                     type: 'textfield',
                     input: true,
                     key: 'key',
-                    label: 'Component key in form',
+                    label: 'Submission data key',
                     validate: {
                         required: true,
                     },
@@ -567,7 +567,7 @@ export const componentsSettings = {
                   type: 'textfield',
                   input: true,
                   key: 'key',
-                  label: 'Component key in form',
+                  label: 'Submission data key',
                   validate: {
                       required: true,
                   },
@@ -701,7 +701,7 @@ export const componentsSettings = {
           type: 'textfield',
           input: true,
           key: 'key',
-          label: 'Component key in form',
+          label: 'Submission data key',
           validate: {
             required: true,
           },
@@ -763,7 +763,7 @@ export const componentsSettings = {
           type: 'textfield',
           input: true,
           key: 'key',
-          label: 'Component key in form',
+          label: 'Submission data key',
           placeholder: 'Field Label',
           validate: {
             required: true,
@@ -861,7 +861,7 @@ export const componentsSettings = {
           type: 'textfield',
           input: true,
           key: 'key',
-          label: 'Component key in form',
+          label: 'Submission data key',
           placeholder: 'Field Label',
           validate: {
             required: true,
@@ -1002,7 +1002,7 @@ export const componentsSettings = {
                   type: 'textfield',
                   input: true,
                   key: 'key',
-                  label: 'Component key in form',
+                  label: 'Submission data key',
                   validate: {
                       required: true,
                   },
