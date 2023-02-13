@@ -13,10 +13,6 @@ export const componentsSettings = {
             ignore: true,
         },
         {
-            key: 'conditional',
-            ignore: true,
-        },
-        {
             key: 'logic',
             ignore: true,
         },
@@ -73,14 +69,6 @@ export const componentsSettings = {
               label: 'Required',
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
-              input: true
-            },
-            {
-              weight: 100,
-              type: 'checkbox',
-              label: 'Unique',
-              tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-              key: 'unique',
               input: true
             },
             {
@@ -170,14 +158,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 100,
-              type: 'checkbox',
-              label: 'Unique',
-              tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-              key: 'unique',
-              input: true
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -264,14 +244,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 100,
-              type: 'checkbox',
-              label: 'Unique',
-              tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-              key: 'unique',
-              input: true
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -355,14 +327,6 @@ export const componentsSettings = {
               label: 'Required',
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
-              input: true
-            },
-            {
-              weight: 100,
-              type: 'checkbox',
-              label: 'Unique',
-              tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-              key: 'unique',
               input: true
             },
             {
@@ -462,14 +426,6 @@ export const componentsSettings = {
               input: true
             },
             {
-              weight: 100,
-              type: 'checkbox',
-              label: 'Unique',
-              tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-              key: 'unique',
-              input: true
-            },
-            {
               weight: 190,
               type: 'textfield',
               input: true,
@@ -553,14 +509,6 @@ export const componentsSettings = {
               label: 'Required',
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
-              input: true
-            },
-            {
-              weight: 100,
-              type: 'checkbox',
-              label: 'Unique',
-              tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-              key: 'unique',
               input: true
             },
             {
@@ -706,14 +654,6 @@ export const componentsSettings = {
             input: true
           },
           {
-            weight: 100,
-            type: 'checkbox',
-            label: 'Unique',
-            tooltip: 'Makes sure the data submitted for this field is unique, and has not been submitted before.',
-            key: 'unique',
-            input: true
-          },
-          {
             weight: 190,
             type: 'textfield',
             input: true,
@@ -737,6 +677,10 @@ export const componentsSettings = {
     {
       key: 'logic',
       ignore: true,
+    },
+    {
+        key: 'conditional',
+        ignore: true,
     },
     {
       key: 'data',
@@ -899,6 +843,10 @@ export const componentsSettings = {
       ignore: true,
     },
     {
+        key: 'conditional',
+        ignore: true,
+    },
+    {
       key: 'display',
       ignore: true,
     },
@@ -977,6 +925,31 @@ export const componentsSettings = {
           defaultValue: true,
           tooltip:
             'When checked, the select dropdown will allow for searching within the static list of items provided.',
+        },
+      ],
+    },
+    {
+      label: 'Validation',
+      key: 'customValidation',
+      weight: 2,
+      components: [
+        {
+          weight: 10,
+          type: 'checkbox',
+          label: 'Required',
+          tooltip:
+            'A required field must be filled in before the form can be submitted.',
+          key: 'validate.required',
+          input: true,
+        },
+        {
+          weight: 190,
+          type: 'textfield',
+          input: true,
+          key: 'errorLabel',
+          label: 'Error Label',
+          placeholder: 'Error Label',
+          tooltip: 'The label for this field when an error occurs.',
         },
       ],
     },

@@ -560,6 +560,29 @@ export declare const componentsSettings: {
             conditional?: undefined;
         })[];
         ignore?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            weight: number;
+            type: string;
+            label: string;
+            tooltip: string;
+            key: string;
+            input: boolean;
+            placeholder?: undefined;
+        } | {
+            weight: number;
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
     })[];
     file: ({
         key: string;
