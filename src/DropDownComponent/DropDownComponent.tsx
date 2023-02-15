@@ -6,7 +6,7 @@ export class dropDownComponent extends NestedComponent {
         return {
             title: 'Dropdown Component',
             group: 'Data',
-            icon: 'indent',
+            icon: 'arrow-down',
             schema: dropDownComponent.schema(),
         };
     }
@@ -18,6 +18,7 @@ export class dropDownComponent extends NestedComponent {
     static schema() {
         return NestedComponent.schema({
             type: 'dropDownComponent',
+            collapsible: true,
         });
     }
 
