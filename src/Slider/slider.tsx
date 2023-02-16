@@ -110,7 +110,7 @@ export class sliderComponent extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Slider Component',
-            group: 'Data',
+            group: 'layout',
             icon: 'slider',
             schema: sliderComponent.schema(),
         };

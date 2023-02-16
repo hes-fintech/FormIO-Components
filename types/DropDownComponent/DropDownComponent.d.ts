@@ -7,7 +7,7 @@ export declare class dropDownComponent extends NestedComponent {
         schema: any;
     };
     get templateName(): string;
-    static schema(): any;
+    static schema(...extend: any[]): any;
     get defaultSchema(): any;
     static editForm: (...extend: any) => any;
 }

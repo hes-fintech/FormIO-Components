@@ -5,7 +5,7 @@ export class dropDownComponent extends NestedComponent {
     static get builderInfo() {
         return {
             title: 'Dropdown Component',
-            group: 'Data',
+            group: 'layout',
             icon: 'arrow-down',
             schema: dropDownComponent.schema(),
         };
@@ -15,11 +15,16 @@ export class dropDownComponent extends NestedComponent {
        return 'dropDownTemplate';
     }
 
-    static schema() {
+    static schema(...extend) {
         return NestedComponent.schema({
             type: 'dropDownComponent',
             collapsible: true,
-        });
+            components: [],
+            clearOnHide: false,
+            input: false,
+            tableView: false,
+            persistent: false
+        }, ...extend);
     }
 
     get defaultSchema() {

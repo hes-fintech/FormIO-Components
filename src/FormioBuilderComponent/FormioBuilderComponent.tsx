@@ -101,7 +101,7 @@ export class formioBuilderComponent extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Form builder',
-            group: 'Data',
+            group: 'advanced',
             icon: 'building',
             schema: formioBuilderComponent.schema(),
         };
