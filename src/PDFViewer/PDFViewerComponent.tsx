@@ -153,7 +153,7 @@ export class pdfViewer extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'PDF Viewer',
-            group: 'Data',
+            group: 'advanced',
             icon: 'file',
             schema: pdfViewer.schema(),
         };

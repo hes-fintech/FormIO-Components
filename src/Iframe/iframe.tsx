@@ -45,7 +45,7 @@ export class iframe extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Iframe',
-            group: 'Data',
+            group: 'advanced',
             icon: 'film',
             schema: iframe.schema(),
         };

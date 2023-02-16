@@ -5,7 +5,7 @@ export class dropDownComponent extends NestedComponent {
     static get builderInfo() {
         return {
             title: 'Dropdown Component',
-            group: 'Data',
+            group: 'layout',
             icon: 'arrow-down',
             schema: dropDownComponent.schema(),
         };

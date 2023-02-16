@@ -76,7 +76,7 @@ export class refreshComponent extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Fetch Component',
-            group: 'Data',
+            group: 'data',
             icon: 'refresh',
             schema: refreshComponent.schema(),
         };

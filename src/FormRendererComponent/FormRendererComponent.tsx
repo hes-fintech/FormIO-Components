@@ -5,7 +5,7 @@ export class formRendererComponent extends ContainerComponent {
     static get builderInfo() {
         return {
             title: 'Form player',
-            group: 'Data',
+            group: 'advanced',
             icon: 'indent',
             schema: formRendererComponent.schema(),
         };
