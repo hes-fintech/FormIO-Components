@@ -67,6 +67,7 @@ export const componentsSettings = {
               weight: 10,
               type: 'checkbox',
               label: 'Required',
+              defaultValue: true,
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
               input: true
@@ -153,6 +154,7 @@ export const componentsSettings = {
               weight: 10,
               type: 'checkbox',
               label: 'Required',
+              defaultValue: true,
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
               input: true
@@ -239,6 +241,7 @@ export const componentsSettings = {
               weight: 10,
               type: 'checkbox',
               label: 'Required',
+              defaultValue: true,
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
               input: true
@@ -325,6 +328,7 @@ export const componentsSettings = {
               weight: 10,
               type: 'checkbox',
               label: 'Required',
+              defaultValue: true,
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
               input: true
@@ -421,6 +425,7 @@ export const componentsSettings = {
               weight: 10,
               type: 'checkbox',
               label: 'Required',
+              defaultValue: true,
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
               input: true
@@ -507,6 +512,7 @@ export const componentsSettings = {
               weight: 10,
               type: 'checkbox',
               label: 'Required',
+              defaultValue: true,
               tooltip: 'A required field must be filled in before the form can be submitted.',
               key: 'validate.required',
               input: true
@@ -649,6 +655,7 @@ export const componentsSettings = {
             weight: 10,
             type: 'checkbox',
             label: 'Required',
+            defaultValue: true,
             tooltip: 'A required field must be filled in before the form can be submitted.',
             key: 'validate.required',
             input: true
@@ -808,6 +815,7 @@ export const componentsSettings = {
           weight: 10,
           type: 'checkbox',
           label: 'Required',
+          defaultValue: true,
           tooltip:
             'A required field must be filled in before the form can be submitted.',
           key: 'validate.required',
@@ -937,6 +945,7 @@ export const componentsSettings = {
           weight: 10,
           type: 'checkbox',
           label: 'Required',
+          defaultValue: true,
           tooltip:
             'A required field must be filled in before the form can be submitted.',
           key: 'validate.required',
@@ -1121,6 +1130,7 @@ export const componentsSettings = {
             weight: 10,
             type: 'checkbox',
             label: 'Required',
+            defaultValue: true,
             tooltip: 'A required field must be filled in before the form can be submitted.',
             key: 'validate.required',
             input: true
