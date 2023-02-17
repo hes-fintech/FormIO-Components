@@ -495,7 +495,7 @@ export const componentsSettings = {
                     weight: 1,
                     type: 'textfield',
                     input: true,
-                    key: 'label',
+                    key: 'title',
                     label: 'Label',
                     validate: {
                         required: true,
