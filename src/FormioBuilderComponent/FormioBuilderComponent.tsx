@@ -7,6 +7,9 @@ import ReactDOM from 'react-dom';
 import { ReactComponent, FormBuilder } from 'react-formio';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
+import en from './translations/en';
+import es from './translations/es';
+import fr from './translations/fr';
 import './styles/index.scss'
 
 type InformationComponentType = {
@@ -53,6 +56,12 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                 }}
                 options={{
                     noDefaultSubmitButton: true,
+                    language: context.i18n.language,
+                    i18n: {
+                        en: en,
+                        es: es,
+                        fr: fr,
+                    },
                     // Controls for component categories
                     builder: {
                         basic: false,

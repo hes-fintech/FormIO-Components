@@ -17,6 +17,10 @@ export const componentsSettings = {
             ignore: true,
         },
         {
+            key: 'conditional',
+            ignore: true,
+        },
+        {
             key: 'attributes',
             ignore: true,
         },
