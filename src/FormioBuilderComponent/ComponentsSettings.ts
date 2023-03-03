@@ -381,6 +381,10 @@ export const componentsSettings = {
             ignore: true,
         },
         {
+            key: 'date',
+            ignore: true,
+        },
+        {
             weight: 0,
             key: 'customDisplay',
             type: 'textfield',
@@ -441,6 +445,48 @@ export const componentsSettings = {
               placeholder: 'Error Label',
               tooltip: 'The label for this field when an error occurs.'
             },
+          ]
+        },
+        {
+          label: 'Date',
+          key: 'customDate',
+          weight: 4,
+          components: [
+            {
+              type: 'checkbox',
+              input: true,
+              key: 'enableDate',
+              label: 'Enable Date Input',
+              weight: 0,
+            },
+            {
+              type: 'tags',
+              input: true,
+              key: 'datePicker.disable',
+              label: 'Disable specific dates or dates by range',
+              placeholder: '(yyyy-MM-dd) or (yyyy-MM-dd - yyyy-MM-dd)',
+              tooltip: 'Add dates that you want to blacklist. For example: 2025-02-21',
+              validate: {
+                custom: 'if (_.isEmpty(input)) {\n  return true;\n}\nconst dates = _.isArray(input) ?\ninput : input.split(component.delimeter);\nconst isValid = _.every(dates, (data) => \n  !!data.match(/\\d{4}-\\d{2}-\\d{2}/g));\nvalid = isValid || \'Invalid date\';'
+              },
+              weight: 21
+            },
+            {
+              type: 'checkbox',
+              input: true,
+              key: 'datePicker.disableWeekends',
+              label: 'Disable weekends',
+              tooltip: 'Check to disable weekends',
+              weight: 23
+            },
+            {
+              type: 'checkbox',
+              input: true,
+              key: 'datePicker.disableWeekdays',
+              label: 'Disable weekdays',
+              tooltip: 'Check to disable weekdays',
+              weight: 23
+            }
           ]
         },
     ],
@@ -698,6 +744,10 @@ export const componentsSettings = {
     {
       key: 'display',
       ignore: true,
+    },
+    {
+        key: 'validation',
+        ignore: true,
     },
     {
       weight: 0,
