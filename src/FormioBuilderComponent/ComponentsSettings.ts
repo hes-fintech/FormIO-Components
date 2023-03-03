@@ -44,7 +44,6 @@ export const componentsSettings = {
                     input: true,
                     key: 'key',
                     label: 'Submission data key',
-                    placeholder: 'Field Label',
                     validate: {
                         required: true,
                     },
@@ -55,7 +54,6 @@ export const componentsSettings = {
                     input: true,
                     key: 'label',
                     label: 'Label',
-                    placeholder: 'Field Label',
                     validate: {
                         required: true,
                     },
@@ -775,7 +773,6 @@ export const componentsSettings = {
           input: true,
           key: 'key',
           label: 'Submission data key',
-          placeholder: 'Field Label',
           validate: {
             required: true,
           },
@@ -788,7 +785,6 @@ export const componentsSettings = {
           label: 'Label',
           tooltip:
             'The label for this field that will appear next to it.',
-          placeholder: 'Field Label',
           validate: {
             required: true,
           },
@@ -874,7 +870,6 @@ export const componentsSettings = {
           input: true,
           key: 'key',
           label: 'Submission data key',
-          placeholder: 'Field Label',
           validate: {
             required: true,
           },
@@ -885,7 +880,6 @@ export const componentsSettings = {
           input: true,
           key: 'label',
           label: 'Label',
-          placeholder: 'Field Label',
           validate: {
             required: true,
           },

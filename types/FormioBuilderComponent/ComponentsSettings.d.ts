@@ -17,7 +17,6 @@ export declare const componentsSettings: {
             input: boolean;
             key: string;
             label: string;
-            placeholder: string;
             validate: {
                 required: boolean;
             };
@@ -436,7 +435,6 @@ export declare const componentsSettings: {
             input: boolean;
             key: string;
             label: string;
-            placeholder: string;
             validate: {
                 required: boolean;
             };
@@ -450,7 +448,6 @@ export declare const componentsSettings: {
             key: string;
             label: string;
             tooltip: string;
-            placeholder: string;
             validate: {
                 required: boolean;
             };
@@ -470,7 +467,6 @@ export declare const componentsSettings: {
                     value: string;
                 }[];
             };
-            placeholder?: undefined;
             validate?: undefined;
         })[];
         ignore?: undefined;
@@ -518,7 +514,6 @@ export declare const componentsSettings: {
             input: boolean;
             key: string;
             label: string;
-            placeholder: string;
             validate: {
                 required: boolean;
             };
