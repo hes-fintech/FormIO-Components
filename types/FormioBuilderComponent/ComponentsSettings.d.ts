@@ -256,6 +256,42 @@ export declare const componentsSettings: {
         })[];
         ignore?: undefined;
         type?: undefined;
+    } | {
+        label: string;
+        key: string;
+        weight: number;
+        components: ({
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            weight: number;
+            placeholder?: undefined;
+            tooltip?: undefined;
+            validate?: undefined;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            placeholder: string;
+            tooltip: string;
+            validate: {
+                custom: string;
+            };
+            weight: number;
+        } | {
+            type: string;
+            input: boolean;
+            key: string;
+            label: string;
+            tooltip: string;
+            weight: number;
+            placeholder?: undefined;
+            validate?: undefined;
+        })[];
+        ignore?: undefined;
+        type?: undefined;
     })[];
     panel: ({
         key: string;

@@ -142,7 +142,6 @@ export class formioBuilderComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
-        console.log(this, 'thisis')
 
         window.setTimeout(() => {
             (this as any).refresh();
