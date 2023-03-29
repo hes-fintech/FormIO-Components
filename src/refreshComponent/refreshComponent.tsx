@@ -209,8 +209,6 @@ const getData = (context: ContextType) => {
 
     const requestUrl = `${getTemplateStringContext(context)}${requestParams}`
 
-    console.log(fetchedRequests, 'fetchedRequests123')
-
     if(!alreadyFetched(`${context.componentKey}_${requestUrl}`, requestUrl) && context?.instanceCurrentForm?.submissionSet  || requestType === 'POST') {
         context.addDataGridLoaders();
         fetch(requestUrl, {
