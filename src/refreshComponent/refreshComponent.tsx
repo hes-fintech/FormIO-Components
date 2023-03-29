@@ -209,7 +209,9 @@ const getData = (context: ContextType) => {
 
     const requestUrl = `${getTemplateStringContext(context)}${requestParams}`
 
-    if(!alreadyFetched(context.componentKey, requestUrl) && context?.instanceCurrentForm?.submissionSet  || requestType === 'POST') {
+    console.log(fetchedRequests, 'fetchedRequests123')
+
+    if(!alreadyFetched(`${context.componentKey}_${requestUrl}`, requestUrl) && context?.instanceCurrentForm?.submissionSet  || requestType === 'POST') {
         context.addDataGridLoaders();
         fetch(requestUrl, {
             method: requestType,
@@ -223,7 +225,7 @@ const getData = (context: ContextType) => {
             context.updateDataGrid();
         });
 
-        fetchedRequests.set(context.componentKey, requestUrl)
+        fetchedRequests.set(`${context.componentKey}_${requestUrl}`, requestUrl)
     }
 };
 
