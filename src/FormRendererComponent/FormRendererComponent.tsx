@@ -43,7 +43,7 @@ export class formRendererComponent extends ContainerComponent {
                 "type": "container",
                 "disabled": isComponentDisabled,
                 "input": true,
-                "components": componentsForRender,
+                "components": componentNormalize(componentsForRender, isComponentDisabled),
             })
         }
     }
@@ -71,3 +71,55 @@ const getNestedValue = (obj: any, key: string) => {
         return result?.[key]
     }, obj);
 };
+
+const componentNormalize = (obj: any, isDisabledParent = false): any => {
+    console.log("ASD")
+    if (Array.isArray(obj)) {
+        return obj.map((item) => componentNormalize(item, isDisabledParent));
+    }
+
+    if (typeof obj === 'object') {
+
+        const entries = Object.entries(obj);
+
+        const newEntries: [string, any][] = entries
+            .filter(([key]) => {
+                if (isComponent(obj) && (isDisabledParent || obj.disabled)) {
+                    return key !== 'validate';
+                }
+
+                return true;
+            })
+            .map(([key, value]) => {
+                if (value) {
+                    return [
+                        key,
+                        componentNormalize(
+                            value,
+                            isDisabledParent || obj.disabled,
+                        ),
+                    ];
+                }
+
+                return [key, value];
+            });
+
+        return Object.fromEntries(newEntries);
+    }
+
+    return obj;
+};
+
+type FormioComponent = {
+    type: string;
+    disabled?: boolean;
+    validate?: any;
+};
+
+function isComponent(value: any): value is FormioComponent {
+    if (typeof value?.type === 'string') {
+        return true;
+    }
+
+    return false;
+}
