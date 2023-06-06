@@ -7,6 +7,7 @@ export declare const refreshComponentEditDisplay: ({
     weight?: undefined;
     tooltip?: undefined;
     dataSrc?: undefined;
+    multiple?: undefined;
     valueProperty?: undefined;
     data?: undefined;
     defaultValue?: undefined;
@@ -20,6 +21,7 @@ export declare const refreshComponentEditDisplay: ({
     weight: number;
     tooltip: string;
     dataSrc: string;
+    multiple: boolean;
     valueProperty: string;
     data: {
         custom(context: any): {
@@ -48,6 +50,7 @@ export declare const refreshComponentEditDisplay: ({
     ignore?: undefined;
     tooltip?: undefined;
     dataSrc?: undefined;
+    multiple?: undefined;
     valueProperty?: undefined;
     validate?: undefined;
     components?: undefined;
@@ -63,6 +66,7 @@ export declare const refreshComponentEditDisplay: ({
     ignore?: undefined;
     tooltip?: undefined;
     dataSrc?: undefined;
+    multiple?: undefined;
     valueProperty?: undefined;
     data?: undefined;
     defaultValue?: undefined;
@@ -82,6 +86,7 @@ export declare const refreshComponentEditDisplay: ({
     }[];
     ignore?: undefined;
     dataSrc?: undefined;
+    multiple?: undefined;
     valueProperty?: undefined;
     data?: undefined;
     defaultValue?: undefined;
@@ -96,6 +101,7 @@ export declare const refreshComponentEditDisplay: ({
     weight: number;
     ignore?: undefined;
     dataSrc?: undefined;
+    multiple?: undefined;
     valueProperty?: undefined;
     data?: undefined;
     validate?: undefined;

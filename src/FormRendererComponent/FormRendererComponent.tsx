@@ -73,7 +73,6 @@ const getNestedValue = (obj: any, key: string) => {
 };
 
 const componentNormalize = (obj: any, isDisabledParent = false): any => {
-    console.log("ASD")
     if (Array.isArray(obj)) {
         return obj.map((item) => componentNormalize(item, isDisabledParent));
     }
