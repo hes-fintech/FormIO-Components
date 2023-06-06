@@ -47,6 +47,7 @@ export const refreshComponentEditDisplay = [
     weight: 3,
     tooltip: 'Refresh data when another field changes.',
     dataSrc: 'custom',
+    multiple: true,
     valueProperty: 'value',
     data: {
       custom(context: any) {

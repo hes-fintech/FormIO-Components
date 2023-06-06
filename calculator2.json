@@ -1,0 +1,49 @@
+{
+  "components": [
+    {
+      "initialValue": "{{data.amount}}",
+      "input": true,
+      "key": "amount",
+      "label": "",
+      "maxTerm": "{{data.amount}}",
+      "minTerm": "1000",
+      "prefix": "$",
+      "refreshOn": "change",
+      "sliderStep": 1,
+      "sliderTitle": "Loan amount",
+      "tableView": false,
+      "type": "sliderComponent"
+    },
+    {
+      "input": true,
+      "key": "refreshComponent",
+      "label": "",
+      "refreshOn": "data",
+      "requestBody": [
+        {
+          "key": "",
+          "value": ""
+        }
+      ],
+      "requestType": "GET",
+      "tableView": false,
+      "type": "refreshComponent",
+      "url": "/asd"
+    },
+    {
+      "disableOnInvalid": true,
+      "input": true,
+      "key": "submit",
+      "label": "Submit",
+      "tableView": false,
+      "type": "button"
+    }
+  ],
+  "name": "calculator2",
+  "path": "/Users/vadim/Documents/GitHub/FormIO-Components/calculator2",
+  "title": "calculator2",
+  "type": "form",
+  "_id": "a8f5e9a0-fe2b-11ec-b942-13dca48246e8",
+  "created": "2022-07-07T19:39:57.451Z",
+  "modified": "2023-06-06T21:34:15.641Z"
+}

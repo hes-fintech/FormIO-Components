@@ -98,7 +98,7 @@ export class refreshComponent extends ReactComponent {
 
     updateDataGrid = () => {
         const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
-        dataGrids?.forEach(async (dataGrid) => {
+        dataGrids?.filter((item) => item?.component?.redrawOn === this.component.key)?.forEach(async (dataGrid) => {
             await dataGrid.rebuild();
         });
     }
@@ -209,7 +209,17 @@ const getData = (context: ContextType) => {
 
     const requestUrl = `${getTemplateStringContext(context)}${requestParams}`
 
-    if(!alreadyFetched(`${context.componentKey}_${requestUrl}`, requestUrl) && context?.instanceCurrentForm?.submissionSet  || requestType === 'POST') {
+    const refreshOnParams = context?.component?.refreshOn;
+
+    const isRefreshOnArray = Array.isArray(refreshOnParams);
+
+    const isRefreshOnData = refreshOnParams === "data" || refreshOnParams.includes("data");
+
+    if(
+    !alreadyFetched(`${context.componentKey}_${requestUrl}`, requestUrl) && context?.instanceCurrentForm?.submissionSet 
+    || requestType === 'POST' 
+    || isRefreshOnArray 
+    || !isRefreshOnData) {
         context.addDataGridLoaders();
         fetch(requestUrl, {
             method: requestType,
