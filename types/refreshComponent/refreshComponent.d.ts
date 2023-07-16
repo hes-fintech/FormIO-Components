@@ -1,5 +1,5 @@
-import { ReactComponent } from 'react-formio';
-export declare class refreshComponent extends ReactComponent {
+import Component from 'formiojs/components/_classes/component/Component';
+export declare class refreshComponent extends Component {
     static get builderInfo(): {
         title: string;
         group: string;
@@ -7,12 +7,18 @@ export declare class refreshComponent extends ReactComponent {
         schema: any;
     };
     static schema(): any;
+    render(): any;
     static editForm: (...extend: any) => any;
-    get className(): string;
-    currentComponentData: never[];
-    updateDataGrid: () => void;
+    getValueWithType(value: any): any;
+    getTemplateString(value: string): any;
+    getRequestBody(requestBody: any): any;
+    getTemplateStringContext(comp: any): string;
+    getValue(): any;
+    updateDataGrid(): void;
     addDataGridLoaders: () => void;
     shouldSkipValidation(): boolean;
-    attachReact(element: HTMLElement): any;
-    detachReact(element: HTMLElement): void;
+    isFetched: boolean;
+    fetchData(): Promise<void>;
+    get defaultSchema(): any;
+    attach(element: any): void;
 }
