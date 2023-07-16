@@ -149,12 +149,14 @@ export class refreshComponent extends ReactComponent {
             redraw: this.redraw.bind(this),
             currentComponentData: this.currentComponentData,
         };
-        
-        if(currentFormName.has('form') && currentFormName.get('form') !== this?.currentForm?.form?.name) {
-            fetchedRequests.clear();
-        }
 
-        currentFormName.set('form', this?.currentForm?.form?.name)
+        console.log(this, 'instance')
+        
+        // if(currentFormName.has('form') && currentFormName.get('form') !== this?.currentForm?.form?.name) {
+        //     fetchedRequests.clear();
+        // }
+
+        // currentFormName.set('form', this?.currentForm?.form?.name)
         return ReactDOM.render(
             <RefreshComponent context={context} />,
             element,
@@ -216,7 +218,8 @@ const getData = (context: ContextType) => {
     const isRefreshOnData = refreshOnParams === "data" || refreshOnParams.includes("data");
 
     if(
-    !alreadyFetched(`${context.componentKey}_${requestUrl}`, requestUrl) && context?.instanceCurrentForm?.submissionSet 
+    // !alreadyFetched(`${context.componentKey}_${requestUrl}`, requestUrl) && 
+    context?.instanceCurrentForm?.submissionSet 
     || requestType === 'POST' 
     || isRefreshOnArray 
     || !isRefreshOnData) {
@@ -233,7 +236,7 @@ const getData = (context: ContextType) => {
             context.updateDataGrid();
         });
 
-        fetchedRequests.set(`${context.componentKey}_${requestUrl}`, requestUrl)
+        // fetchedRequests.set(`${context.componentKey}_${requestUrl}`, requestUrl)
     }
 };
 
