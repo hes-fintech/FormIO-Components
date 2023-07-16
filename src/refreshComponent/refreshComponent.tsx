@@ -1,17 +1,16 @@
 
-import NestedComponent from 'formiojs/components/_classes/nested/NestedComponent';
+import Component from 'formiojs/components/_classes/component/Component';
 import { Utils } from 'formiojs';
 import { settingsForm } from './FetchComponent.settingsForm';
 import _ from 'lodash';
 import fetch from 'node-fetch'; // or window.fetch in the browser
 
-export class refreshComponent extends NestedComponent {
+export class refreshComponent extends Component {
   static schema(...extend) {
-    return NestedComponent.schema({
+    return Component.schema({
       type: 'refreshComponent',
       label: 'Fetch Data',
-      input: true,
-      key: 'refreshComponent',
+      input: false,
       dataSrc: 'url',
     }, ...extend);
   }
@@ -57,7 +56,10 @@ export class refreshComponent extends NestedComponent {
         return requestBody?.reduce((initial, current: any) => {
             return {
                 ...initial,
-                [current.key]: this.getTemplateString((this as any).data, current.value),
+                [current.key]: (this as any).interpolate(current.value, {
+                  data: (this as any).data,
+                  row: (this as any).row,
+              }) || null,
             };
         }, {});
   };
@@ -69,24 +71,28 @@ export class refreshComponent extends NestedComponent {
         (_.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
     );
 
-    console.log(compiled(comp), '123compiled(comp)')
-
     return compiled(comp);
-    // return '';
 }
 
-updateDataGrid() {
-  const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
-  dataGrids?.forEach(async (dataGrid) => {
-      await dataGrid.refresh();
-  });
+getValue() {
+  return super.getValue();
 }
+
+updateDataGrid () {
+    const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
+    dataGrids?.forEach(async (dataGrid) => {
+        await dataGrid.rebuild();
+    });
+}
+shouldSkipValidation() {
+    return true;
+}
+
+isFetched = false;
 
   async fetchData() {
     if ((this as any)?.currentForm?.submissionSet) {
-      const { url, requestType, requestBody } = (this as any).component;
-  
-      console.log('Fetch')
+      const { requestType, requestBody } = (this as any).component;
   
       const requestBody1 = this.getRequestBody(requestBody);
       const requestUrlParams = `?${new URLSearchParams(requestBody1)}`;
@@ -109,44 +115,34 @@ updateDataGrid() {
   
       try {
         const response = await fetch(requestUrl, options);
+
         if (response.ok) {
           const data = await response.json();
-          (this as any).updateValue(data);
+          (this as any).setValue(data, {});
+          this.updateDataGrid();
         } else {
           throw new Error(response.statusText);
         }
-        this.updateDataGrid();
+        this.isFetched = true;
       } catch (error) {
-        console.error(error);
-        alert(`Failed to fetch data: ${(error as any).message}`);
+        console.error('Fetch component request error:', error);
       }
 
     }
-  }
-
-  init() {
-    console.log(this, '123')
-    console.log((this as any).data, '123')
-    console.log((this as any)._data, '123')
-    super.init();
   }
 
   get defaultSchema() {
     return refreshComponent.schema();
   }
 
-  get templateName() {
-    return 'fetch';
-  }
 
   attach(element) {
+    setTimeout(() => {
+      if(!this.isFetched && !(this as any).component?.refreshOnParams?.includes("data")) {
+        this.fetchData()
+      }
+    }, 0)
     super.attach(element);
-    this.fetchData()
-    // this.addEventListener(this.refs.input, 'change', () => this.fetchData());
   }
 
-  detach() {
-    super.detach();
-    // this.removeEventListener(this.refs.input, 'change', () => this.fetchData());
-  }
 }

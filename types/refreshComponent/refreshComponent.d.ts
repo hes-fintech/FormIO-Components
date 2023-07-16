@@ -1,5 +1,5 @@
-import NestedComponent from 'formiojs/components/_classes/nested/NestedComponent';
-export declare class refreshComponent extends NestedComponent {
+import Component from 'formiojs/components/_classes/component/Component';
+export declare class refreshComponent extends Component {
     static schema(...extend: any[]): any;
     static get builderInfo(): {
         title: string;
@@ -14,11 +14,11 @@ export declare class refreshComponent extends NestedComponent {
     getTemplateString(context: any, value: string): any;
     getRequestBody(requestBody: any): any;
     getTemplateStringContext(comp: any): string;
+    getValue(): any;
     updateDataGrid(): void;
+    shouldSkipValidation(): boolean;
+    isFetched: boolean;
     fetchData(): Promise<void>;
-    init(): void;
     get defaultSchema(): any;
-    get templateName(): string;
     attach(element: any): void;
-    detach(): void;
 }
