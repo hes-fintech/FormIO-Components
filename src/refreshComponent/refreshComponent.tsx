@@ -49,14 +49,11 @@ export class refreshComponent extends Component {
   };
 
 
-  getTemplateString(value: string) {
-    const compiledValue = (this as any).interpolate(value, {
-      data: (this as any).root.data,
-      row: (this as any).row,
-    });
+  getTemplateString (value: string) {
+    const compiledValue = getNestedValue({ data: (this as any).root.data }, value?.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}")));
 
     return this.getValueWithType(compiledValue);
-  };
+};
 
   getRequestBody(requestBody: any) {
     return requestBody?.reduce((initial, current: any) => {
@@ -165,3 +162,12 @@ export class refreshComponent extends Component {
     super.attach(element);
   }
 }
+
+const getNestedValue = (obj: any, key: string) => {
+  const splitCondition = key.includes("?") ? "?." : ".";
+  console.log(obj, 'obj')
+  console.log(key, 'obj key')
+  return key.split(splitCondition).reduce((result, key) => {
+      return result?.[key]
+  }, obj);
+};
