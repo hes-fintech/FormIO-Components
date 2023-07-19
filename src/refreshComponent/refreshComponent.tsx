@@ -152,7 +152,7 @@ export class refreshComponent extends Component {
 
 
   attach(element) {
-    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data")) {
+    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
       this.fetchData()
     }
     super.attach(element);
