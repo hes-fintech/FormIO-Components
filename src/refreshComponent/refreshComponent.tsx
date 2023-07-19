@@ -25,15 +25,15 @@ export class refreshComponent extends Component {
   render() {
     return super.render(`
           <div>
-              <label class="col-form-label">
-                Fetch component
-              </label>
-              <div class="drag-container">
-                  <p>
-                      <b>"${(this as any).component.requestType}" </b>
-                      request, to url: <b>"${(this as any).component.url || ""}"</b>
-                  </p>
-              </div>
+            <label class="col-form-label">
+              Fetch component
+            </label>
+            <div class="drag-container">
+                <p>
+                    <b>"${(this as any).component.requestType}" </b>
+                    request, to url: <b>"${(this as any).component.url || ""}"</b>
+                </p>
+            </div>
           </div>
         `);
   }
@@ -137,7 +137,7 @@ export class refreshComponent extends Component {
 
         if (response.ok) {
           const data = await response.json();
-          (this as any).setValue(data, {});
+          (this as any).setValue(data);
           this.updateDataGrid();
         } else {
           throw new Error(response.statusText);
@@ -148,10 +148,6 @@ export class refreshComponent extends Component {
       }
 
     }
-  }
-
-  get defaultSchema() {
-    return refreshComponent.schema();
   }
 
 
@@ -165,8 +161,7 @@ export class refreshComponent extends Component {
 
 const getNestedValue = (obj: any, key: string) => {
   const splitCondition = key.includes("?") ? "?." : ".";
-  console.log(obj, 'obj')
-  console.log(key, 'obj key')
+  console.log(obj, 'form submission')
   return key.split(splitCondition).reduce((result, key) => {
       return result?.[key]
   }, obj);

@@ -19,6 +19,5 @@ export declare class refreshComponent extends Component {
     shouldSkipValidation(): boolean;
     isFetched: boolean;
     fetchData(): Promise<void>;
-    get defaultSchema(): any;
     attach(element: any): void;
 }
