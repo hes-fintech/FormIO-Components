@@ -180,7 +180,8 @@ export class pdfViewer extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
-        (this as any).component.refreshOn = 'data'
+        (this as any).component.refreshOn = 'data';
+        (this as any).component.redrawOn = 'data';
 
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(

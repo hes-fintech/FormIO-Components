@@ -47,8 +47,22 @@ const SliderComponent = (props: SliderComponentProps) => {
         initialValue
     } = context.component;
 
-    const numberWithCommas = (x: number) => {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    const getSeparatorsByLocale = (
+        locale: string,
+    ): {
+        thousands: string;
+        decimal: string;
+    } => {
+        const numberFormat = new Intl.NumberFormat(locale);
+    
+        return {
+            thousands: numberFormat.format(1111).replace(/1/g, ''),
+            decimal: numberFormat.format(1.1).replace(/1/g, ''),
+        };
+    };
+
+    const numberWithCommas = (x: number, locale: string) => {
+        return  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, getSeparatorsByLocale(locale).thousands || '.');
     }
 
     const prefixValue = getTemplateString(context, prefix);
@@ -80,7 +94,7 @@ const SliderComponent = (props: SliderComponentProps) => {
                 controls={false}
                 id={inputId}
                 value={sliderValue as number}
-                formatter={(value: any) => `${context.i18n.t(prefixValue || '') || ''} ${numberWithCommas(value)} ${context.i18n.t(suffixValue || '') || ''}`}
+                formatter={(value: any) => `${context.i18n.t(prefixValue || '') || ''} ${numberWithCommas(value, context.i18n.language)} ${context.i18n.t(suffixValue || '') || ''}`}
                 parser={(value: any) => Number.parseInt(value || '0')}
                 onChange={(value: any) => {
                     setSliderValue(value);
@@ -138,6 +152,7 @@ export class sliderComponent extends ReactComponent {
             isBuilderMode: Boolean((this as any).builderMode) || Boolean((this as any).options.preview),
             _: Utils._,
         };
+
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
