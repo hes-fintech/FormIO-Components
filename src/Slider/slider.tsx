@@ -53,7 +53,9 @@ const SliderComponent = (props: SliderComponentProps) => {
         thousands: string;
         decimal: string;
     } => {
-        const numberFormat = new Intl.NumberFormat(locale);
+        const transformedLocale = locale === 'es' ? 'fr' : locale;
+    
+        const numberFormat = new Intl.NumberFormat(transformedLocale);
     
         return {
             thousands: numberFormat.format(1111).replace(/1/g, ''),
