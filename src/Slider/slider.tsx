@@ -153,7 +153,6 @@ export class sliderComponent extends ReactComponent {
             _: Utils._,
         };
 
-        console.log(this, 'attachReact')
         // eslint-disable-next-line react/no-render-return-value
         return ReactDOM.render(
             <SliderComponent context={context} onChange={(this as any).updateValue} />,
