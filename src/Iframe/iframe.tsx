@@ -26,16 +26,18 @@ type IframeComponentProps = {
     onChange: () => void;
 };
 
-class IframeComponent extends React.Component<IframeComponentProps> {
+class IframeComponent extends React.Component<any> {
 
     render() {
         const iframeRef = React.createRef<any>();
+        const getAllowValue = () => "autoplay; camera; microphone"
         return (
             <iframe
                 ref={iframeRef}
                 width={this.props.context.component.width}
                 height={this.props.context.component.height}
                 src={getTemplateString(this.props.context)}
+                allow={getAllowValue()}
             />
         );
     }
