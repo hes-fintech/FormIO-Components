@@ -138,7 +138,7 @@ export class refreshComponent extends Component {
         if (response.ok) {
           const data = await response.json();
           (this as any).setValue(data);
-          // this.updateDataGrid();
+          this.updateDataGrid();
         } else {
           throw new Error(response.statusText);
         }
