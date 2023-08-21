@@ -130,7 +130,7 @@ export class refreshComponent extends Component {
         ...requestOptions,
       };
 
-      this.addDataGridLoaders();
+      // this.addDataGridLoaders();
 
       try {
         const response = await fetch(requestUrl, options);
@@ -138,7 +138,7 @@ export class refreshComponent extends Component {
         if (response.ok) {
           const data = await response.json();
           (this as any).setValue(data);
-          this.updateDataGrid();
+          // this.updateDataGrid();
         } else {
           throw new Error(response.statusText);
         }
