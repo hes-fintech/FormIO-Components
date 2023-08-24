@@ -136,6 +136,8 @@ export class paginationComponent extends ContainerComponent {
 
     static editForm = settingsForm;
 
+    interval;
+
     attach(element) {
       (this as any).loadRefs(element, {
         nextPageButton: 'single',
@@ -143,7 +145,7 @@ export class paginationComponent extends ContainerComponent {
         buttonPage: 'multiple',
       });
 
-      setTimeout(() => {
+      this.interval = setTimeout(() => {
         const initialValue = {
           dataList: _.get((this as any).root.data, (this as any).component.dataSourcePath),
           paginatedList: this.paginateArray(_.get((this as any).root.data, (this as any).component.dataSourcePath), 1, (this as any).component.itemsPerPage),
@@ -171,12 +173,17 @@ export class paginationComponent extends ContainerComponent {
       (this as any).refs.buttonPage.forEach((pageButton) => {
         (this as any).addEventListener(pageButton, 'click', (event) => {
           event.preventDefault();
-          const pageNumber = event.target.dataset.pagenumber;
+          const pageNumber = event.target.dataset.pageNumber;
           this.goToPage(pageNumber);
         });
       });
 
       return super.attach(element);
+    }
+
+    detach() {
+      clearInterval(this.interval);
+      super.detach();
     }
     
 }

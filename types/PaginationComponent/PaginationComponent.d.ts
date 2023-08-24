@@ -19,5 +19,7 @@ export declare class paginationComponent extends ContainerComponent {
     render(children: any): any;
     get defaultSchema(): any;
     static editForm: (...extend: any) => any;
+    interval: any;
     attach(element: any): any;
+    detach(): void;
 }
