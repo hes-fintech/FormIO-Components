@@ -8,7 +8,14 @@ export declare class paginationComponent extends ContainerComponent {
     };
     get templateName(): string;
     static schema(...extend: any[]): any;
-    checkRefresh(refreshData: any, changed: any, flags: any): void;
+    setValue(value: any, flags?: {}): any;
+    getPagesNum(): number;
+    paginateArray(array: never[] | undefined, currentPage: any, itemsPerPage: any): never[];
+    getInitialPaginatedData(): any;
+    setNewPageValue(nextPage: number): void;
+    goToNextPage(): void;
+    goToPreviousPage(): void;
+    goToPage(page: string): void;
     render(children: any): any;
     get defaultSchema(): any;
     static editForm: (...extend: any) => any;
