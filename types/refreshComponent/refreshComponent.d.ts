@@ -14,6 +14,8 @@ export declare class refreshComponent extends Component {
     getRequestBody(requestBody: any): any;
     getTemplateStringContext(comp: any): string;
     getValue(): any;
+    updateDataGrid(): void;
+    addDataGridLoaders: () => void;
     shouldSkipValidation(): boolean;
     isFetched: boolean;
     fetchData(): Promise<void>;
