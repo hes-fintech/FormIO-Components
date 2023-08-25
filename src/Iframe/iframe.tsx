@@ -30,7 +30,7 @@ class IframeComponent extends React.Component<any> {
 
     render() {
         const iframeRef = React.createRef<any>();
-        const getAllowValue = () => "autoplay; camera; microphone"
+        const getAllowValue = () => "geolocation; microphone; camera; midi; encrypted-media; accelerometer; gyroscope; deviceorientation; devicemotion;"
         return (
             <iframe
                 ref={iframeRef}
