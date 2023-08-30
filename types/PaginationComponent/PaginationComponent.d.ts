@@ -20,7 +20,6 @@ export declare class paginationComponent extends ContainerComponent {
     goToPage(page: string): void;
     setPageSize(page: string): void;
     render(children: any): any;
-    getTotalElements(): any;
     get defaultSchema(): any;
     static editForm: (...extend: any) => any;
     interval: any;
