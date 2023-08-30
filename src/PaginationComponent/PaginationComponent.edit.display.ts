@@ -66,19 +66,18 @@ export const paginationComponentEditDisplay = [
         },
     },
     {
-        type: 'textfield',
+        type: 'checkbox',
         input: false,
-        label: 'Data source path',
-        tooltip: 'Path to data in submission that will be paginated. Use it in case if you have full list in submission that should be paginated. No need to use it if you have endpoint with paginated data.',
-        key: 'dataSourcePath',
-        weight: 1,
-    },
-    {
-        type: 'textfield',
-        input: false,
-        label: 'Total elements value path',
-        tooltip: 'Path to total elements value in case you are use request for paginated data. Use it if you have endpoint with paginated data.',
-        key: 'totalElementsValuePath',
+        label: 'Show next and previous buttons',
+        key: 'showNextPrevBtns',
+        defaultValue: true,
         weight: 2,
     },
+    {
+        type: 'checkbox',
+        input: false,
+        label: 'Show items per page dropdown',
+        key: 'showItemsPerPageDropdown',
+        weight: 3,
+    }
 ];

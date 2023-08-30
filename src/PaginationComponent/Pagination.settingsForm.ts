@@ -2,6 +2,7 @@ import baseEditForm from 'formiojs/components/_classes/component/Component.form'
 
 import { paginationComponentEditDisplay } from './PaginationComponent.edit.display';
 import { paginationComponentApiEditDisplay } from './PaginationComponentApi.edit.display';
+import { paginationComponentApiEditData } from './PaginationComponentApi.edit.data';
 
 export const settingsForm = (...extend: any) => {
     return baseEditForm(
@@ -16,7 +17,7 @@ export const settingsForm = (...extend: any) => {
             },
             {
                 key: 'data',
-                ignore: true,
+                components: paginationComponentApiEditData,
             },
             {
                 key: 'validation',

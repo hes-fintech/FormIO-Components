@@ -9,17 +9,22 @@ export declare class paginationComponent extends ContainerComponent {
     get templateName(): string;
     static schema(...extend: any[]): any;
     setValue(value: any, flags?: {}): any;
+    getStartPageValue(): "0" | "1";
     getPagesNum(): number;
     paginateArray(array: never[] | undefined, currentPage: any, itemsPerPage: any): never[];
-    getInitialPaginatedData(): any;
+    getInitialPaginatedData(): never[];
     setNewPageValue(nextPage: number): void;
+    setNewPageFetchedValue(): void;
     goToNextPage(): void;
     goToPreviousPage(): void;
     goToPage(page: string): void;
+    setPageSize(page: string): void;
     render(children: any): any;
+    getTotalElements(): any;
     get defaultSchema(): any;
     static editForm: (...extend: any) => any;
     interval: any;
     attach(element: any): any;
+    checkRefresh(refreshData: any, changed: any, flags: any): void;
     detach(): void;
 }

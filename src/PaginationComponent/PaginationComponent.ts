@@ -72,8 +72,13 @@ export class paginationComponent extends ContainerComponent {
       }, ...extend);
     }
 
+
     setValue(value, flags = {}) {
       return super.setValue(value, flags);
+    }
+
+    getStartPageValue() {
+      return (this as any).component.isStartPageZero ? "0" : "1";
     }
 
     getPagesNum() {
@@ -91,18 +96,26 @@ export class paginationComponent extends ContainerComponent {
     getInitialPaginatedData() {
       return Boolean((this as any).component.dataSourcePath) ? 
       this.paginateArray(_.get((this as any).root.data, (this as any).component.dataSourcePath), 1, (this as any).component.itemsPerPage) :
-      (this as any).getValue().paginatedList;
+      [];
     }
 
     setNewPageValue(nextPage: number) {
       if(Boolean((this as any).component.dataSourcePath)) {
-        const dataList = (this as any).getValue()?.dataList;
         const paginatedListComponent = (Utils as any).getComponent((this as any).components, 'paginatedList');
+        const dataList = (this as any)?.getValue()?.dataList;
         const paginatedList = this.paginateArray(dataList, nextPage, (this as any).component.itemsPerPage);
-        paginatedListComponent.setValue(paginatedList);
+        paginatedListComponent?.setValue(paginatedList);
       }
       const currentPageComponent = (Utils as any).getComponent((this as any).components, 'currentPage');
-      currentPageComponent.setValue(nextPage);
+      currentPageComponent?.setValue(nextPage);
+    }
+
+    setNewPageFetchedValue() {
+      if(Boolean((this as any).component.paginatedDataSourcePath)) {
+        const paginatedListComponent = (Utils as any).getComponent((this as any).components, 'paginatedList');
+        const paginatedList = _.get((this as any).root.data, (this as any).component.paginatedDataSourcePath);
+        paginatedListComponent.setValue(paginatedList);
+      }
     }
 
     goToNextPage() {
@@ -122,10 +135,15 @@ export class paginationComponent extends ContainerComponent {
       this.setNewPageValue(nextPage);
     }
 
+    setPageSize(page: string) {
+      const currentPageSizeComponent = (Utils as any).getComponent((this as any).components, 'itemsPerPage');
+      currentPageSizeComponent?.setValue(page);
+    }
+
     render(children) {
         return super.render(children || (this as any).renderTemplate(this.templateName, {
-          currentPage: (this as any).getValue()?.currentPage || 1,
-          totalPages:(this as any).getValue()?.totalPages || 1,
+          currentPage: (this as any).getValue()?.currentPage,
+          totalPages:(this as any).getValue()?.totalPages,
           children: (this as any).renderComponents(),
         }));
     }
@@ -142,19 +160,24 @@ export class paginationComponent extends ContainerComponent {
       (this as any).loadRefs(element, {
         nextPageButton: 'single',
         previousPageButton: 'single',
+        sizeBtns: 'single',
         buttonPage: 'multiple',
+        sizeBtn: 'multiple',
       });
 
       this.interval = setTimeout(() => {
         const initialValue = {
           dataList: _.get((this as any).root.data, (this as any).component.dataSourcePath),
-          paginatedList: this.paginateArray(_.get((this as any).root.data, (this as any).component.dataSourcePath), 1, (this as any).component.itemsPerPage),
-          currentPage: (this as any).getValue().currentPage || 1,
+          paginatedList: this.getInitialPaginatedData(),
+          currentPage: (this as any).component.isStartPageZero ? 0 : 1,
+          itemsPerPage: (this as any).getValue()?.itemsPerPage || (this as any).component.itemsPerPage || 10,
           totalElements: _.get((this as any).root.data, (this as any).component.totalElementsValuePath) || _.get((this as any).root.data, (this as any).component.dataSourcePath)?.length,
           totalPages: this.getPagesNum(),
         }
 
-        if((this as any).getValue().currentPage < 2) {
+        const pageForSetInitialValue = (this as any).component.isStartPageZero ? 1 : 2;
+        
+        if((this as any).getValue().currentPage < pageForSetInitialValue) {
           this.setValue(initialValue);
         }
       }, 0);
@@ -169,16 +192,52 @@ export class paginationComponent extends ContainerComponent {
         this.goToPreviousPage();
       });
 
-
       (this as any).refs.buttonPage.forEach((pageButton) => {
         (this as any).addEventListener(pageButton, 'click', (event) => {
           event.preventDefault();
           const pageNumber = event.target.dataset.pageNumber;
+
           this.goToPage(pageNumber);
         });
       });
 
+      (this as any).refs.sizeBtn.forEach((sizeButton) => {
+        (this as any).addEventListener(sizeButton, 'click', (event) => {
+          event.preventDefault();
+          const pageSize = event.target.dataset.itemsPerPage;
+
+          this.setPageSize(pageSize);
+        });
+      });
+
       return super.attach(element);
+    }
+
+    
+    checkRefresh(refreshData, changed, flags) {
+      const changePath = _.get(changed, 'instance.path', false);
+      // Don't let components change themselves.
+      if (changePath && (this as any).path === changePath) {
+        return;
+      }
+      if (refreshData === 'data') {
+        (this as any).refresh((this as any).data, changed, flags);
+      }
+      else if (
+        (changePath && (Utils as any).getComponentPath(changed.instance) === refreshData) && changed && changed.instance &&
+        // Make sure the changed component is not in a different "context". Solves issues where refreshOn being set
+        // in fields inside EditGrids could alter their state from other rows (which is bad).
+        (this as any).inContext(changed.instance)
+      ) {
+        (this as any).refresh(changed.value, changed, flags);
+      }
+
+      if(changed?.component?.type === "tabs") {
+        const pageNumber = this.getStartPageValue();
+        if((this as any).getValue()?.currentPage > pageNumber) {
+          this.goToPage(pageNumber);
+        }
+      }
     }
 
     detach() {

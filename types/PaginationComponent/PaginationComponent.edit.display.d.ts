@@ -6,7 +6,7 @@ export declare const paginationComponentEditDisplay: ({
     label?: undefined;
     weight?: undefined;
     validate?: undefined;
-    tooltip?: undefined;
+    defaultValue?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -17,14 +17,23 @@ export declare const paginationComponentEditDisplay: ({
         required: boolean;
     };
     ignore?: undefined;
-    tooltip?: undefined;
+    defaultValue?: undefined;
 } | {
     type: string;
     input: boolean;
     label: string;
-    tooltip: string;
+    key: string;
+    defaultValue: boolean;
+    weight: number;
+    ignore?: undefined;
+    validate?: undefined;
+} | {
+    type: string;
+    input: boolean;
+    label: string;
     key: string;
     weight: number;
     ignore?: undefined;
     validate?: undefined;
+    defaultValue?: undefined;
 })[];

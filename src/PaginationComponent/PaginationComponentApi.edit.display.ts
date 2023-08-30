@@ -2,6 +2,14 @@ export const paginationComponentApiEditDisplay = [
     {
         key: 'key',
         ignore: false,
+        weight: 1,
+    },
+    {
+        type: 'checkbox',
+        input: false,
+        label: 'Is start page 0 (zero)',
+        key: 'isStartPageZero',
+        weight: 2,
     },
     {
         key: 'tags',
@@ -10,5 +18,5 @@ export const paginationComponentApiEditDisplay = [
     {
         key: 'properties',
         ignore: true,
-    },
+    }
 ];
