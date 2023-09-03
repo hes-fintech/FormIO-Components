@@ -78,29 +78,6 @@ export class refreshComponent extends Component {
     return super.getValue();
   }
 
-  updateDataGrid() {
-    const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
-    dataGrids?.forEach(async (dataGrid) => {
-      await dataGrid.rebuild();
-    });
-  }
-
-  addDataGridLoaders = () => {
-    const dataGrids = (Utils as any).findComponents((this as any)?._currentForm?.components, { type: 'datagrid' });
-    const filteredDataGrids = dataGrids.filter(dataGrid => {
-      return [(this as any).component.key].includes(dataGrid.component.redrawOn);
-    })
-    filteredDataGrids?.forEach(async (dataGrid) => {
-      const element = document.getElementById(dataGrid?.id);
-      if (element)
-        element.innerHTML = `
-            <div class="grid-loader-wrapper">
-                <div class="grid-loader"></div>
-            </div>
-        `;
-    });
-  }
-
   shouldSkipValidation() {
     return true;
   }
@@ -130,15 +107,12 @@ export class refreshComponent extends Component {
         ...requestOptions,
       };
 
-      this.addDataGridLoaders();
-
       try {
         const response = await fetch(requestUrl, options);
 
         if (response.ok) {
           const data = await response.json();
           (this as any).setValue(data);
-          this.updateDataGrid();
         } else {
           throw new Error(response.statusText);
         }
