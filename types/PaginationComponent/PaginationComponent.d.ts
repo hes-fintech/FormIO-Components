@@ -1,5 +1,5 @@
-import Container from 'formiojs/components/container/Container';
-export declare class paginationComponent extends Container {
+import ContainerComponent from 'formiojs/components/container/Container';
+export declare class paginationComponent extends ContainerComponent {
     static get builderInfo(): {
         title: string;
         group: string;

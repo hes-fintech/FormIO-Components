@@ -1,10 +1,10 @@
-import Container from 'formiojs/components/container/Container';
+import ContainerComponent from 'formiojs/components/container/Container';
 import { settingsForm } from './Pagination.settingsForm';
 import { Utils } from 'formiojs';
 import _ from 'lodash';
 
 
-export class paginationComponent extends Container {
+export class paginationComponent extends ContainerComponent {
     static get builderInfo() {
       return {
         title: 'Table pagination',
@@ -20,7 +20,7 @@ export class paginationComponent extends Container {
     
   
     static schema(...extend) {
-      return Container.schema({
+      return ContainerComponent.schema({
         type: 'paginationComponent',
         redrawOn: 'data',
         components: [
