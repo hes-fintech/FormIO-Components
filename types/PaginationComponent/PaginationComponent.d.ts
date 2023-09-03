@@ -7,7 +7,7 @@ export declare class paginationComponent extends ContainerComponent {
         schema: any;
     };
     get templateName(): string;
-    static schema(...extend: any[]): any;
+    static schema(): any;
     setValue(value: any, flags?: {}): any;
     getStartPageValue(): "0" | "1";
     getPagesNum(): number;

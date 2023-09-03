@@ -19,7 +19,7 @@ export class paginationComponent extends ContainerComponent {
     }
     
   
-    static schema(...extend) {
+    static schema() {
       return ContainerComponent.schema({
         type: 'paginationComponent',
         redrawOn: 'data',
@@ -69,7 +69,7 @@ export class paginationComponent extends ContainerComponent {
             input: true,
           },
         ],
-      }, ...extend);
+      });
     }
 
 
