@@ -4,20 +4,29 @@ export declare const paginationComponentEditDisplay: ({
     type?: undefined;
     input?: undefined;
     label?: undefined;
+    defaultValue?: undefined;
     weight?: undefined;
     validate?: undefined;
+} | {
+    key: string;
+    ignore?: undefined;
+    type?: undefined;
+    input?: undefined;
+    label?: undefined;
     defaultValue?: undefined;
+    weight?: undefined;
+    validate?: undefined;
 } | {
     type: string;
     input: boolean;
     label: string;
     key: string;
+    defaultValue: number;
     weight: number;
     validate: {
         required: boolean;
     };
     ignore?: undefined;
-    defaultValue?: undefined;
 } | {
     type: string;
     input: boolean;
@@ -27,13 +36,4 @@ export declare const paginationComponentEditDisplay: ({
     weight: number;
     ignore?: undefined;
     validate?: undefined;
-} | {
-    type: string;
-    input: boolean;
-    label: string;
-    key: string;
-    weight: number;
-    ignore?: undefined;
-    validate?: undefined;
-    defaultValue?: undefined;
 })[];
