@@ -27,11 +27,6 @@ export class dropDownComponent extends NestedComponent {
         }, ...extend);
     }
 
-    render(children) {
-        // If already rendering, don't re-render.
-        return super.render(children || (this as any).renderTemplate(this.templateName));
-      }
-
     get defaultSchema() {
         return dropDownComponent.schema();
     }
