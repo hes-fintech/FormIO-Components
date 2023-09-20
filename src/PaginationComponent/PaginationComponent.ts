@@ -140,12 +140,21 @@ export class paginationComponent extends ContainerComponent {
       currentPageSizeComponent?.setValue(page);
     }
 
+    getComponentTemplate(children) {
+      return (this as any).builderMode ? 
+      super.render(`<div>
+        <div class="drag-container">
+          ${(this as any).component.label}
+        </div>
+      </div>`) : super.render(children || (this as any).renderTemplate(this.templateName, {
+        currentPage: (this as any).getValue()?.currentPage,
+        totalPages:(this as any).getValue()?.totalPages,
+        children: (this as any).renderComponents(),
+      }))
+    }
+
     render(children) {
-        return super.render(children || (this as any).renderTemplate(this.templateName, {
-          currentPage: (this as any).getValue()?.currentPage,
-          totalPages:(this as any).getValue()?.totalPages,
-          children: (this as any).renderComponents(),
-        }));
+        return this.getComponentTemplate(children);
     }
 
     get defaultSchema() {
