@@ -186,7 +186,7 @@ export class paginationComponent extends ContainerComponent {
 
         const pageForSetInitialValue = (this as any).component.isStartPageZero ? 1 : 2;
         
-        if((this as any).getValue().currentPage < pageForSetInitialValue) {
+        if((this as any).getValue().currentPage < pageForSetInitialValue && !(this as any).builderMode) {
           this.setValue(initialValue);
         }
       }, 0);
