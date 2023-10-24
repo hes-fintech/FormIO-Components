@@ -1,6 +1,5 @@
-import { ReactComponent } from 'react-formio';
-import './styles/index.scss';
-export declare class sliderComponent extends ReactComponent {
+declare const NumberComponent: any;
+export declare class sliderComponent extends NumberComponent {
     static get builderInfo(): {
         title: string;
         group: string;
@@ -9,7 +8,18 @@ export declare class sliderComponent extends ReactComponent {
     };
     static schema(): any;
     static editForm: (...extend: any) => any;
-    get className(): string;
-    attachReact(element: HTMLElement): any;
-    detachReact(element: HTMLElement): void;
+    get prefix(): any;
+    get suffix(): any;
+    get defaultValue(): any;
+    createNumberMask(): any;
+    getCustomDefaultValue(): any;
+    getFormattedValue: (value: string) => any;
+    getSlierMaxValue: () => any;
+    getSlierMinValue: () => any;
+    interval: any;
+    calculateBackgroundValue: (value: string) => number;
+    attach(elements: string): void;
+    formatValue(value: string): string;
+    detach(): void;
 }
+export {};

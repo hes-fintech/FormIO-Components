@@ -1,126 +1,16 @@
-import { InputNumber, Slider } from 'antd';
-import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
-import { LoDashStatic } from 'lodash';
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
+import { createNumberMask } from '@formio/text-mask-addons';
 import { settingsForm } from './sliderComponent.settingsForm';
-import './styles/index.scss';
+import Components from 'formiojs/components/Components';
+import { NumberHelper } from '../utils/NumberHelper';
 
-type InformationComponentType = {
-    sliderTitle: string;
-    inputId: string;
-    suffix?: string;
-    prefix?: string;
-    sliderStep: number;
-    min: number;
-    max: number;
-    initialValue: number;
-};
 
-type ContextType = {
-    i18n: i18next.i18n;
-    component: InformationComponentType;
-    data: any;
-    setValue: (value: any) => void;
-    isBuilderMode: boolean;
-    _: LoDashStatic;
-};
 
-type SliderComponentProps = {
-    context: ContextType;
-    onChange: () => void;
-};
+const NumberComponent = (Components as any).components.number;
 
-const SliderComponent = (props: SliderComponentProps) => {
-    const { context } = props;
-    const {
-        sliderTitle,
-        inputId,
-        suffix,
-        prefix,
-        sliderStep = 1,
-        min,
-        max,
-        initialValue
-    } = context.component;
+export class sliderComponent extends NumberComponent {
 
-    const getSeparatorsByLocale = (
-        locale: string,
-    ): {
-        thousands: string;
-        decimal: string;
-    } => {
-        const numberFormat = new Intl.NumberFormat(locale);
-    
-        return {
-            thousands: numberFormat.format(1111).replace(/1/g, ''),
-            decimal: numberFormat.format(1.1).replace(/1/g, ''),
-        };
-    };
-
-    const numberWithCommas = (x: number, locale: string) => {
-        return  x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, getSeparatorsByLocale(locale).thousands || '.');
-    }
-
-    const prefixValue = getTemplateString(context, prefix);
-    const suffixValue = getTemplateString(context, suffix);
-
-    const [sliderValue, setSliderValue] = useState(0);
-    const [minValue, setMinInitialValue] = useState(0);
-    const [maxValue, setMaxInitialValue] = useState(0);
-
-    const setValues = _.debounce(() => {
-        context.setValue(Number(getTemplateString(context, initialValue)));
-        setMinInitialValue(Number(getTemplateString(context, min)) as number);
-        setMaxInitialValue(Number(getTemplateString(context, max)) as number);
-        setSliderValue(Number(getTemplateString(context, initialValue)));
-    }, 0);
-
-    useEffect(() => {
-        if (!context.isBuilderMode) {
-            setValues();
-        };
-    }, [context.data]);
-
-    return (
-        <div className="formio-slider-container">
-            <span>{context.i18n.t(sliderTitle) as string}</span>
-            <InputNumber
-                className="formio-slider-input"
-                bordered={false}
-                controls={false}
-                id={inputId}
-                value={sliderValue as number}
-                formatter={(value: any) => `${context.i18n.t(prefixValue || '') || ''} ${numberWithCommas(value, context.i18n.language)} ${context.i18n.t(suffixValue || '') || ''}`}
-                parser={(value: any) => Number.parseInt(value || '0')}
-                onChange={(value: any) => {
-                    setSliderValue(value);
-                    context.setValue(value);
-                }}
-                min={minValue as number}
-                max={maxValue as number}
-            />
-            <Slider
-                className="formio-slider-slider"
-                min={minValue as number}
-                max={maxValue as number}
-                value={sliderValue as number}
-                step={Number(getTemplateString(context, sliderStep))}
-                onChange={(value: number) => {
-                    setSliderValue(value);
-                }}
-                onAfterChange={(value: number) => {
-                    context.setValue(value);
-                }}
-            />
-        </div>
-    );
-};
-
-export class sliderComponent extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Slider Component',
@@ -129,55 +19,185 @@ export class sliderComponent extends ReactComponent {
             schema: sliderComponent.schema(),
         };
     }
-
+    
     static schema() {
-        return ReactComponent.schema({
+        return NumberComponent.schema({
             type: 'sliderComponent',
         });
     }
 
     static editForm = settingsForm;
 
-    get className() {
-        return `${(this as any).component.customClass}`;
+    get prefix() {
+        const parentPrefix = super.prefix;
+
+        return parentPrefix
+            ? this.interpolate(parentPrefix, {
+                  data: this?.root?.data,
+                  row: this?.row || this?.data,
+              })
+            : '';
     }
 
-    attachReact(element: HTMLElement) {
-        const context = {
-            i18n: (this as any).i18next,
-            component: (this as any).component,
-            data: (this as any).data as any,
-            row: (this as any).data as any,
-            setValue: (this as any).updateValue,
-            isBuilderMode: Boolean((this as any).builderMode) || Boolean((this as any).options.preview),
-            _: Utils._,
-        };
+    get suffix() {
+        const parentSuffix = super.suffix;
 
-        // eslint-disable-next-line react/no-render-return-value
-        return ReactDOM.render(
-            <SliderComponent context={context} onChange={(this as any).updateValue} />,
-            element,
-        );
+        return parentSuffix
+            ? this.interpolate(parentSuffix, {
+                  data: this?.root?.data,
+                  row: this?.row || this?.data,
+              })
+            : '';
     }
 
-    detachReact(element: HTMLElement) {
-        if (element) {
-            ReactDOM.unmountComponentAtNode(element);
-        }
+    get defaultValue() {
+        return this.interpolate((this as any).component?.max, {
+            data: this?.root?.data,
+            row: this?.row || this?.data,
+        });
     }
-};
 
-const getTemplateString = (context: ContextType, value: any) => {
-    if (value?.toString()?.includes('{{')) {
-        const src = value ? getNestedValue(context, value.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}"))) : "";
-        return value?.replace(/\{{(.+?)\}}/g, `${src}`);
+    createNumberMask() {
+        return createNumberMask({
+            prefix: '',
+            suffix: '',
+            requireDecimal: _.get(this.component, 'requireDecimal', false),
+            thousandsSeparatorSymbol: _.get(
+                this.component,
+                'thousandsSeparator',
+                NumberHelper.getSeparatorsByLocale(this.i18next.language)?.thousands,
+            ),
+            decimalSymbol: _.get(
+                this.component,
+                'decimalSymbol',
+                NumberHelper.getSeparatorsByLocale(this.i18next.language)?.decimal,
+            ),
+            decimalLimit: _.get(
+                this.component,
+                'decimalLimit',
+                this.decimalLimit,
+            ),
+            allowNegative: _.get(this.component, 'allowNegative', true),
+            allowDecimal: this.isDecimalAllowed(),
+        });
+    }
+
+    getCustomDefaultValue() {
+        return this.interpolate((this as any).component?.max, {
+            data: this?.root?.data,
+            row: this?.row || this?.data,
+        });
+    }
+
+    getFormattedValue = (value: string) => {
+        return this.getValueAsString(
+            this.formatValue(this.parseValue(value)),
+        ).replace(/"/g, '&quot;');
     };
-    return value
-};
 
-const getNestedValue = (obj: any, key: string) => {
-    const splitCondition = key.includes("?") ? "?." : ".";
-    return key.split(splitCondition).reduce((result, key) => {
-        return result?.[key]
-    }, obj);
-};
+    getSlierMaxValue = () => {
+        return this.interpolate(this.component?.max, {
+            data: this?.root?.data,
+            row: this?.row || this?.data,
+        });
+    };
+
+    getSlierMinValue = () => {
+        return this.interpolate(this.component?.min, {
+            data: this?.root?.data,
+            row: this?.row || this?.data,
+        });
+    };
+
+    interval: any;
+
+    calculateBackgroundValue = (value: string) => {
+        const min = Number(this.getSlierMinValue());
+        const max = Number(this.getSlierMaxValue());
+
+        const sliderRangeDeltaValue = max - min;
+
+        return ((Number(value) - min) * 100) / sliderRangeDeltaValue;
+    };
+
+    attach(elements: string) {
+        this.loadRefs(elements, {
+            slider: 'single',
+        });
+
+        this.addEventListener(this.refs?.slider, 'input', (event: Event) => {
+            const sliderValue = (event.target as HTMLInputElement).value;
+            const input = this.refs?.input?.[0];
+            input.value = this.getFormattedValue(sliderValue);
+
+            const coloredPercentage =
+                this.calculateBackgroundValue(sliderValue);
+
+            (
+                event.target as HTMLInputElement
+            ).style.backgroundSize = `${coloredPercentage}% 100%`;
+        });
+
+        this.addEventListener(this.refs?.slider, 'change', (event: Event) => {
+            const sliderValue = (event.target as HTMLInputElement).value;
+            this.setValue(sliderValue);
+        });
+
+        this.decimalSeparator = NumberHelper.getSeparatorsByLocale(
+            this.i18next.language,
+        )?.decimal;
+        this.delimiter = NumberHelper.getSeparatorsByLocale(
+            this.i18next.language,
+        )?.thousands;
+
+        if (this.refs?.slider) {
+            const coloredPercentage = this.calculateBackgroundValue(
+                this.getValue(),
+            );
+            this.refs.slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+        }
+
+        this.interval = setTimeout(() => {
+            if (this.getValue() === null) {
+                const defaultValue = this.interpolate(this.component?.max, {
+                    data: this?.root?.data,
+                    row: this?.row || this?.data,
+                });
+                this.setValue(defaultValue);
+            }
+        }, 0);
+
+        super.attach(elements);
+    }
+
+    formatValue(value: string) {
+        if (
+            this.component.requireDecimal &&
+            value &&
+            !value.includes(this.decimalSeparator)
+        ) {
+            return `${value}${this.decimalSeparator}${_.repeat(
+                '0',
+                this.decimalLimit,
+            )}`;
+        }
+        if (
+            this.component.requireDecimal &&
+            value &&
+            value.includes(this.decimalSeparator)
+        ) {
+            return `${value}${_.repeat(
+                '0',
+                this.decimalLimit -
+                    value.split(this.decimalSeparator)[1].length,
+            )}`;
+        }
+
+        return value;
+    }
+
+    detach() {
+        clearInterval(this.interval);
+        super.detach();
+    }
+}
