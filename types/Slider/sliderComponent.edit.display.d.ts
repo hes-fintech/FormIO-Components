@@ -57,6 +57,19 @@ export declare const sliderComponentDisplay: ({
 } | {
     type: string;
     input: boolean;
+    weight: number;
+    key: string;
+    label: string;
+    tooltip: string;
+    ignore?: undefined;
+    validate?: undefined;
+    defaultValue?: undefined;
+    dataSrc?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
+} | {
+    type: string;
+    input: boolean;
     key: string;
     label: string;
     weight: number;

@@ -110,6 +110,14 @@ export const sliderComponentDisplay = [
         },
     },
     {
+      type: 'number',
+      input: true,
+      weight: 80,
+      key: 'decimalLimit',
+      label: 'Decimal Places',
+      tooltip: 'The maximum number of decimal places.'
+    },
+    {
       type: 'select',
       input: true,
       key: 'refreshOn',
