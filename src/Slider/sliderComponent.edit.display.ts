@@ -24,6 +24,18 @@ export const sliderComponentDisplay = [
         ignore: true,
     },
     {
+        key: 'hidden',
+        ignore: true,
+    },
+    {
+        key: 'modalEdit',
+        ignore: true,
+    },
+    {
+        key: 'customClass',
+        ignore: true,
+    },
+    {
         key: 'disabled',
         ignore: true,
     },
