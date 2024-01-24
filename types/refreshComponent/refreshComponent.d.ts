@@ -6,6 +6,7 @@ export declare class refreshComponent extends Component {
         icon: string;
         schema: any;
     };
+    abortController: AbortController;
     static schema(): any;
     render(): any;
     static editForm: (...extend: any) => any;
@@ -18,4 +19,5 @@ export declare class refreshComponent extends Component {
     isFetched: boolean;
     fetchData(): Promise<void>;
     attach(element: any): void;
+    destroy(): any;
 }
