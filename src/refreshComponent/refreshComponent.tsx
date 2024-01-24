@@ -15,6 +15,8 @@ export class refreshComponent extends Component {
     };
   }
 
+  abortController = new AbortController();
+
   static schema() {
     return Component.schema({
       type: 'refreshComponent',
@@ -105,6 +107,7 @@ export class refreshComponent extends Component {
       const options = {
         method: requestType,
         ...requestOptions,
+        signal: this.abortController.signal,
       };
 
       try {
@@ -130,6 +133,11 @@ export class refreshComponent extends Component {
       this.fetchData()
     }
     super.attach(element);
+  }
+
+  destroy() {
+    this.abortController.abort();
+    return super.destroy();
   }
 }
 

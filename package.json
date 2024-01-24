@@ -1,13 +1,12 @@
 {
   "name": "hes-formio-components",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "hes formio components",
   "main": "./build/index.js",
   "dependencies": {
     "@babel/preset-typescript": "^7.17.12",
     "@babel/types": "^7.21.2",
     "@formio/vanilla-text-mask": "^5.1.1-formio.1",
-    "@jridgewell/trace-mapping": "^0.3.19",
     "antd": "^4.22.6",
     "axios": "^0.27.2",
     "gensync": "^1.0.0-beta.2",
@@ -25,6 +24,7 @@
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.17.12",
+    "@jridgewell/trace-mapping": "^0.3.22",
     "@types/jest": "^28.1.1",
     "@types/lodash": "^4.14.182",
     "@types/react": "^18.0.12",
