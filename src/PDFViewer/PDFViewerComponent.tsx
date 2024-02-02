@@ -1,10 +1,3 @@
-import {
-    DownloadOutlined,
-    LeftOutlined,
-    RightOutlined,
-    ZoomInOutlined,
-    ZoomOutOutlined,
-} from '@ant-design/icons';
 import { Button } from 'antd';
 import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
@@ -99,13 +92,13 @@ const PDFViewerComponent = (props: PDFViewerComponentProps) => {
                         {withPagination && (
                             <>
                                 <Button type="text" onClick={setPrevPage}>
-                                    <LeftOutlined />
+                                    Prev
                                 </Button>
                                 <div className="formio-pdf-viewer_page-numbers">
                                     Page {pageNumber} of {numPages}
                                 </div>
                                 <Button type="text" onClick={setNextPage}>
-                                    <RightOutlined />
+                                    Next
                                 </Button>
                             </>
                         )}
@@ -119,20 +112,20 @@ const PDFViewerComponent = (props: PDFViewerComponentProps) => {
                                     download
                                     className="formio-pdf-viewer_download-btn"
                                 >
-                                    <DownloadOutlined />
+                                    <div>Download</div>
                                 </Button>
                             </div>
                         )}
                         {withZoom && (
                             <div className="formio-pdf-viewer_zoom-container">
                                 <Button type="text" onClick={zoomOut}>
-                                    <ZoomOutOutlined />
+                                    -
                                 </Button>
                                 <div className="formio-pdf-viewer_page-numbers">
                                     {scale}%
                                 </div>
                                 <Button type="text" onClick={zoomIn}>
-                                    <ZoomInOutlined />
+                                    +
                                 </Button>
                             </div>
                         )}
