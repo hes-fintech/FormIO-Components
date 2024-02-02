@@ -19,5 +19,6 @@ export declare class refreshComponent extends Component {
     isFetched: boolean;
     fetchData(): Promise<void>;
     attach(element: any): void;
-    destroy(): any;
+    destroy(): void;
+    detach(): void;
 }

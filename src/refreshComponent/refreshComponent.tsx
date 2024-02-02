@@ -25,6 +25,10 @@ export class refreshComponent extends Component {
   }
 
   render() {
+    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
+      this.fetchData()
+    }
+
     return super.render(`
           <div>
             <label class="col-form-label">
@@ -126,18 +130,30 @@ export class refreshComponent extends Component {
     }
   }
 
-
   attach(element) {
-    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
-      this.fetchData()
-    }
+    (this as any)?.on('cancelFetch', () => {
+      console.log('cancelFetch this Hello')
+      this.abortController?.abort();
+    });
+    (this as any)?.formio?.on('cancelFetch', () => {
+      console.log('cancelFetch formio Hello')
+      this.abortController?.abort();
+    });
+    console.log(this, 'this');
+    // (this as any)?.on('cancelFetch', () => console.log('cancelFetch Hello'));
     super.attach(element);
   }
 
   destroy() {
-    this.abortController.abort();
-    return super.destroy();
+    super.destroy()
+    this.abortController?.abort();
   }
+
+  detach() {
+    super.detach()
+    this.abortController?.abort();
+  }
+
 }
 
 const getNestedValue = (obj: any, key: string) => {
