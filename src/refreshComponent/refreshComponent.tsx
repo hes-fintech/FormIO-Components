@@ -17,6 +17,10 @@ export class refreshComponent extends Component {
 
   abortController = new AbortController();
 
+  abortRequest() {
+    this.abortController?.abort();
+  }
+
   static schema() {
     return Component.schema({
       type: 'refreshComponent',
@@ -25,9 +29,6 @@ export class refreshComponent extends Component {
   }
 
   render() {
-    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
-      this.fetchData()
-    }
 
     return super.render(`
           <div>
@@ -59,7 +60,7 @@ export class refreshComponent extends Component {
     const compiledValue = getNestedValue({ data: (this as any).root.data }, value?.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}")));
 
     return this.getValueWithType(compiledValue);
-};
+  };
 
   getRequestBody(requestBody: any) {
     return requestBody?.reduce((initial, current: any) => {
@@ -91,10 +92,10 @@ export class refreshComponent extends Component {
   isFetched = false;
 
   async fetchData() {
-    this.abortController.abort();
+    this.abortRequest();
     this.abortController = new AbortController();
 
-    // if ((this as any)?.currentForm?.submissionSet) {
+    if ((this as any)?.currentForm?.ready) {
       const { requestType, requestBody } = (this as any).component;
 
       const requestBody1 = this.getRequestBody(requestBody);
@@ -131,31 +132,25 @@ export class refreshComponent extends Component {
         console.error('Fetch component request error:', error);
       }
 
-    // }
+    }
   }
 
   attach(element) {
-    (this as any)?.on('cancelFetch', () => {
-      console.log('cancelFetch this Hello')
-      this.abortController?.abort();
+
+    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
+      this.fetchData()
+    }
+
+    (this as any)?.on('cancelFetchComponentRequest', () => {
+      this.abortRequest();
     });
-    (this as any)?.formio?.on('cancelFetch', () => {
-      console.log('cancelFetch formio Hello')
-      this.abortController?.abort();
-    });
-    console.log(this, 'this');
-    // (this as any)?.on('cancelFetch', () => console.log('cancelFetch Hello'));
+    
     super.attach(element);
   }
 
   destroy() {
     super.destroy()
-    this.abortController?.abort();
-  }
-
-  detach() {
-    super.detach()
-    this.abortController?.abort();
+    this.abortRequest();
   }
 
 }
