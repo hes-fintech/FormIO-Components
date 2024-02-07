@@ -87,6 +87,7 @@ export class refreshComponent extends Component {
   isFetched = false;
 
   async fetchData() {
+    if ((this as any)?.currentForm?.submissionSet || (this as any).component.requestType === 'POST') {
       const { requestType, requestBody } = (this as any).component;
 
       const requestBody1 = this.getRequestBody(requestBody);
@@ -122,6 +123,7 @@ export class refreshComponent extends Component {
       } catch (error) {
         console.error('Fetch component request error:', error);
       }
+    }
   }
 
 

@@ -5,7 +5,7 @@
   "main": "./build/index.js",
   "dependencies": {
     "@babel/preset-typescript": "^7.17.12",
-    "@babel/types": "^7.21.2",
+    "@babel/types": "^7.23.9",
     "@formio/vanilla-text-mask": "^5.1.1-formio.1",
     "antd": "^4.22.6",
     "axios": "^0.27.2",
