@@ -6,6 +6,7 @@ import {formioBuilderComponent} from "./FormioBuilderComponent/FormioBuilderComp
 import {formRendererComponent} from "./FormRendererComponent/FormRendererComponent";
 import {dropDownComponent} from "./DropDownComponent/DropDownComponent";
 import {paginationComponent} from "./PaginationComponent/PaginationComponent";
+import {fetchComponent} from "./FetchComponent/FetchComponent";
 
 export const customComponents = {
     iframe,
@@ -16,4 +17,5 @@ export const customComponents = {
     formRendererComponent,
     dropDownComponent,
     paginationComponent,
+    fetchComponent,
 };
