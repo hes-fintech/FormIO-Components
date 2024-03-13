@@ -8,6 +8,7 @@ export const settingsForm = (...extend: any) => {
     return baseEditForm(
         [
             {
+                label: 'Fetch',
                 key: 'display',
                 components: fetchComponentEditDisplay,
             },
@@ -16,6 +17,7 @@ export const settingsForm = (...extend: any) => {
                 components: fetchComponentEditApi,
             },
             {
+                weight: 5,
                 key: 'trigger',
                 label: 'Trigger',
                 components: fetchComponentEditTrigger,

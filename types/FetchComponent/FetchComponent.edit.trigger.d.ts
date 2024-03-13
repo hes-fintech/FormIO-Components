@@ -1,6 +1,20 @@
 export declare const fetchComponentEditTrigger: ({
     type: string;
     input: boolean;
+    label: string;
+    tooltip: string;
+    key: string;
+    customClass: string;
+    defaultValue: boolean;
+    weight: number;
+    dataSrc?: undefined;
+    multiple?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
+    components?: undefined;
+} | {
+    type: string;
+    input: boolean;
     key: string;
     label: string;
     weight: number;
@@ -14,15 +28,26 @@ export declare const fetchComponentEditTrigger: ({
             value: string;
         }[];
     };
+    customClass?: undefined;
+    defaultValue?: undefined;
+    components?: undefined;
 } | {
     type: string;
     input: boolean;
     label: string;
     tooltip: string;
     key: string;
-    multiple: boolean;
     weight: number;
+    components: {
+        label: string;
+        key: string;
+        input: boolean;
+        type: string;
+    }[];
+    customClass?: undefined;
+    defaultValue?: undefined;
     dataSrc?: undefined;
+    multiple?: undefined;
     valueProperty?: undefined;
     data?: undefined;
 })[];

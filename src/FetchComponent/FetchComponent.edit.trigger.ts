@@ -1,10 +1,20 @@
 export const fetchComponentEditTrigger = [
   {
+      type: 'checkbox',
+      input: false,
+      label: 'Trigger on attach',
+      tooltip: 'Trigger when component has been attached.',
+      key: 'triggerOnAttach',
+      customClass: "form-group",
+      defaultValue: false,
+      weight: 1,
+  },
+  {
     type: 'select',
     input: true,
-    key: 'redrawOn',
+    key: 'refreshOn',
     label: 'Trigger on Data change',
-    weight: 0,
+    weight: 2,
     tooltip: 'Refresh data when another field changes.',
     dataSrc: 'custom',
     multiple: true,
@@ -16,9 +26,10 @@ export const fetchComponentEditTrigger = [
         context.utils.eachComponent(context.instance.options.editForm.components, function(component: any, path: any) {
           if (component.key !== context.data.key) {
             values.push({
-              label: component.label || component.key,
+              label: `${component.label || component.key} (${path})`,
               value: path
             });
+            context.instance.dataValue = context.instance.dataValue || [];
           }
         });
         return values;
@@ -26,19 +37,35 @@ export const fetchComponentEditTrigger = [
     },
   },
   {
-      type: 'textfield',
-      input: false,
-      label: 'Trigger on event',
-      tooltip: 'Event that will trigger request.',
-      key: 'triggerOnEvent',
-      weight: 1,
+    type: 'datagrid',
+    input: true,
+    label: 'Trigger on event',
+    tooltip: 'Event that will trigger request.',
+    key: 'triggerOnEvents',
+    weight: 3,
+    components: [
+      {
+        label: 'Events',
+        key: 'event',
+        input: true,
+        type: 'textfield',
+      },
+    ],
   },
   {
-      type: 'textfield',
-      input: false,
-      label: 'Triggered event',
-      tooltip: 'Event will be called after request has been finished.',
-      key: 'triggeredEvent',
-      weight: 2,
+    type: 'datagrid',
+    input: true,
+    label: 'Triggered event',
+    tooltip: 'Event will be called after request has been finished.',
+    key: 'triggeredEvents',
+    weight: 4,
+    components: [
+      {
+        label: 'Events',
+        key: 'event',
+        input: true,
+        type: 'textfield',
+      },
+    ],
   },
 ];

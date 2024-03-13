@@ -2,16 +2,24 @@
 import Component from 'formiojs/components/_classes/component/Component';
 import _ from 'lodash';
 import { settingsForm } from './FetchComponent.settingsForm';
-import fetch from 'node-fetch'; // or window.fetch in the browser
+import { REQUEST_TYPES_WITH_BODIES, REQUEST_TYPES_WITH_PARAMS } from './FetchComponent.const';
 
-export class fetchComponent extends Component {
+export class refreshComponent extends Component {
   static get builderInfo() {
     return {
       title: 'Fetch Component (New)',
       group: 'data',
       icon: 'refresh',
-      schema: fetchComponent.schema(),
+      schema: refreshComponent.schema(),
     };
+  }
+
+  init() {
+    super.init();
+
+    if ((this as any).component?.redrawOn === "data") {
+      (this as any).component.refreshOn = "data";
+    }
   }
 
   abortController = new AbortController();
@@ -22,26 +30,25 @@ export class fetchComponent extends Component {
 
   static schema() {
     return Component.schema({
-      type: 'fetchComponent',
-      hidden: true,
+      type: 'refreshComponent',
+      clearOnHide: false,
     });
   }
 
   render() {
-
     return super.render(`
-          <div>
-            <label class="col-form-label">
-              Fetch component
-            </label>
-            <div class="drag-container">
-                <p>
-                    <b>"${(this as any).component.requestType}" </b>
-                    request, to url: <b>"${(this as any).component.url || ""}"</b>
-                </p>
+            <div>
+              <label class="col-form-label">
+                Fetch component
+              </label>
+              <div class="drag-container">
+                  <p>
+                      <b>"${(this as any).component.requestType || ""}" </b>
+                      request, to url: <b>"${(this as any).component.url || ""}"</b>
+                  </p>
+              </div>
             </div>
-          </div>
-        `);
+          `);
   }
 
   static editForm = settingsForm;
@@ -54,35 +61,17 @@ export class fetchComponent extends Component {
     };
   };
 
-
-  getTemplateString (value: string) {
-    const compiledValue = getNestedValue({ data: (this as any).root.data }, value?.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}")));
-
-    return this.getValueWithType(compiledValue);
-  };
-
-  getRequestBody(requestBody: any) {
-    return requestBody?.reduce((initial, current: any) => {
+  getFormatStringValueToObject(requestBody: any) {
+    return requestBody?.reduce((initial: any, current: any) => {
       return {
         ...initial,
-        [current.key]: this.getTemplateString(current?.value),
+        [current.key]: (this as any).interpolate(current?.value, {
+          data: (this as any)?.root?.data,
+          row: (this as any)?.root?.data,
+        }),
       };
     }, {});
   };
-
-  getTemplateStringContext(comp: any) {
-    const compiled = _.template(
-      comp.component.url,
-      // eslint-disable-next-line no-param-reassign
-      (_.templateSettings.interpolate = /{{([\s\S]+?)}}/g) as any,
-    );
-
-    return compiled(comp);
-  }
-
-  getValue() {
-    return super.getValue();
-  }
 
   shouldSkipValidation() {
     return true;
@@ -91,86 +80,131 @@ export class fetchComponent extends Component {
   isFetched = false;
 
   async fetchData() {
-    this.abortRequest();
     this.abortController = new AbortController();
+    const { requestType, requestBody, corsMode, cache, credentials, redirect, referrerPolicy, requestHeaders } = (this as any).component;
 
-    if ((this as any)?.currentForm?.ready) {
-      const { requestType, requestBody } = (this as any).component;
+    const requestBodyAndParams = this.getFormatStringValueToObject(requestBody);
+    const requestUrlParams = `?${new URLSearchParams(requestBodyAndParams)}`;
+    const hasRequestQueryParams = Object.values(requestBodyAndParams).filter((req) => req).length > 0;
+    const requestWithBodyOptions = {
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(requestBodyAndParams),
+    };
 
-      const requestBody1 = this.getRequestBody(requestBody);
-      const requestUrlParams = `?${new URLSearchParams(requestBody1)}`;
-      const hasRequestQueryParams = Object.values(requestBody1).filter((req) => req !== null).length > 0;
-      const postRequestOptions = {
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify(requestBody1),
-      };
-      const requestOptions = requestType === 'POST' ? postRequestOptions : {};
-      const requestParams = (requestType === 'GET' && hasRequestQueryParams) ? requestUrlParams : "";
+    const requestOptions = REQUEST_TYPES_WITH_BODIES.includes(requestType) ? requestWithBodyOptions : {};
+    const requestParams = (REQUEST_TYPES_WITH_PARAMS.includes(requestType) && hasRequestQueryParams) ? requestUrlParams : "";
 
-      const requestUrl = `${this.getTemplateStringContext({ component: (this as any).component, row: (this as any)._data, data: (this as any)._data })}${requestParams}`
+    const requestUrl = `${(this as any).interpolate((this as any).component.url, {
+      data: (this as any)?.root?.data,
+      row: (this as any)?.root?.data,
+    })}${requestParams}`
 
-      const options = {
-        method: requestType,
-        ...requestOptions,
-        signal: this.abortController.signal,
-      };
+    const formattedHeaders = _.merge((requestOptions as any)?.headers, this.getFormatStringValueToObject(requestHeaders))
 
-      try {
-        const response = await fetch(requestUrl, options);
+    const formattedRequestHeaders = _.isEmpty(formattedHeaders) ? {} : formattedHeaders;
 
-        if (response.ok) {
-          const data = await response.json();
-          (this as any).setValue(data);
-        } else {
-          throw new Error(response.statusText);
-        }
+    const options = {
+      method: requestType,
+      signal: this.abortController.signal,
+      mode: corsMode,
+      cache: cache,
+      credentials: credentials,
+      redirect: redirect,
+      referrerPolicy: referrerPolicy,
+      ...requestOptions,
+      ...formattedRequestHeaders,
+    };
 
-        this.emitEvents((this as any).component.triggeredEvent);
+    const basicRequestMetaData = {
+      requestOptions: options,
+      requestUrl: requestUrl,
+      formSubmission: (this as any)?.root?.data,
+      component: this,
+    };
 
-        this.isFetched = true;
-      } catch (error) {
-        console.error('Fetch component request error:', error);
+    (this as any).emit(`${(this as any).component.key}-request-started`, basicRequestMetaData);
+
+    try {
+      const response = await fetch(requestUrl, options);
+
+      if (response.ok) {
+        const data = await response.json();
+        (this as any).setValue(data);
+
+        (this as any).emit(`${(this as any).component.key}-request-success`, { ...basicRequestMetaData, requestResponse: data });
+      } else {
+        throw new Error(response.statusText);
       }
 
+      this.isFetched = true;
+
+      this.emitEvents(_.filter((this as any).component?.triggeredEvents, obj => obj.event !== ''));
+    } catch (error) {
+      console.error('Fetch component request error:', error);
+      (this as any).emit(`${(this as any).component.key}-request-error`, { ...basicRequestMetaData, requestError: error });
+    } finally {
+      (this as any).emit(`${(this as any).component.key}-request-ended`, basicRequestMetaData);
     }
   }
 
-  attachEventsForListen = (events: string) => {
-    const eventsList = events?.split(',');
-  
-    if(eventsList.length) {
-      eventsList.forEach((event) => {
-        (this as any).on(event, () => {
-          (this as any).fetchData();
+  attachEventsForListen = (events: { event: string }[]) => {
+    if (events?.length) {
+      events?.forEach((item) => {
+        (this as any).on(item?.event, () => {
+          this.fetchData();
         })
       });
     }
   };
 
-  emitEvents = (events: string) => {
-    const eventsList = events?.split(',');
-  
-    if(eventsList.length) {
-      eventsList.forEach((event) => {
-        (this as any).emit(event);
+  emitEvents = (events: { event: string }[]) => {
+    if (events?.length) {
+      events?.forEach((item) => {
+        (this as any).emit(item?.event);
       });
     }
   };
 
-  attach(element) {
+  allowSameRequests() {
+    return [
+      !((this as any).component?.refreshOn?.includes("data") || false)
+    ].some((item) => item)
+  }
 
-    if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
-      this.fetchData()
+  getData() {
+    if (!this.isFetched || this.allowSameRequests()) {
+      this.fetchData();
+    }
+  }
+
+  getDataAfterSubmissionSet() {
+    if ((this as any)?.currentForm?.submissionSet) {
+      this.getData();
+    }
+  }
+
+  attach(element: any) {
+    if ((this as any).component.triggerOnAttach) {
+      this.getData();
+    }
+
+    if (Array.isArray((this as any).component?.refreshOn)) {
+      this.getData();
+    }
+
+    if ((this as any).component?.refreshOn === "data" &&
+      !Array.isArray((this as any).component?.refreshOn)) {
+      this.getDataAfterSubmissionSet();
     }
 
     (this as any)?.on('cancelFetchComponentRequest', () => {
       this.abortRequest();
     });
 
-    this.attachEventsForListen((this as any).component.triggerOnEvent);
-    
+    this.attachEventsForListen(_.filter((this as any).component?.triggerOnEvents, obj => obj.event !== ''));
+
     super.attach(element);
   }
 
@@ -179,12 +213,19 @@ export class fetchComponent extends Component {
     this.abortRequest();
   }
 
-}
+  checkRefresh(refreshData: any, changed: any, flags: any) {
+    const changePath = _.get(changed, 'instance.path', false);
+    // Don't let components change themselves.
+    if ((changePath && (this as any).path === changePath)) {
+      return;
+    }
 
-const getNestedValue = (obj: any, key: string) => {
-  const splitCondition = key.includes("?") ? "?." : ".";
-  console.log(obj, 'form submission')
-  return key.split(splitCondition).reduce((result, key) => {
-      return result?.[key]
-  }, obj);
-};
+    if (refreshData === 'data') {
+      (this as any).refresh((this as any).data, changed, flags);
+    }
+
+    if ((this as any).component?.refreshOn.includes(changePath)) {
+      (this as any).triggerRedraw();
+    }
+  }
+}
