@@ -17,6 +17,10 @@ export class refreshComponent extends Component {
 
   abortController = new AbortController();
 
+  abortRequest() {
+    this.abortController?.abort();
+  }
+
   static schema() {
     return Component.schema({
       type: 'refreshComponent',
@@ -25,6 +29,7 @@ export class refreshComponent extends Component {
   }
 
   render() {
+
     return super.render(`
           <div>
             <label class="col-form-label">
@@ -55,7 +60,7 @@ export class refreshComponent extends Component {
     const compiledValue = getNestedValue({ data: (this as any).root.data }, value?.substring(value.lastIndexOf("{{") + 2, value.lastIndexOf("}}")));
 
     return this.getValueWithType(compiledValue);
-};
+  };
 
   getRequestBody(requestBody: any) {
     return requestBody?.reduce((initial, current: any) => {
@@ -126,18 +131,24 @@ export class refreshComponent extends Component {
     }
   }
 
-
   attach(element) {
+
     if (!this.isFetched || !(this as any).component?.refreshOn?.includes("data") || (this as any).component.requestType === 'POST') {
       this.fetchData()
     }
+
+    (this as any)?.on('cancelFetchComponentRequest', () => {
+      this.abortRequest();
+    });
+    
     super.attach(element);
   }
 
   destroy() {
-    this.abortController.abort();
-    return super.destroy();
+    super.destroy()
+    this.abortRequest();
   }
+
 }
 
 const getNestedValue = (obj: any, key: string) => {
