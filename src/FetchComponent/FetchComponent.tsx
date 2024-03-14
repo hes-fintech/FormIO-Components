@@ -7,7 +7,7 @@ import { REQUEST_TYPES_WITH_BODIES, REQUEST_TYPES_WITH_PARAMS } from './FetchCom
 export class refreshComponent extends Component {
   static get builderInfo() {
     return {
-      title: 'Fetch Component (New)',
+      title: 'Fetch (New)',
       group: 'data',
       icon: 'refresh',
       schema: refreshComponent.schema(),
@@ -39,7 +39,7 @@ export class refreshComponent extends Component {
     return super.render(`
             <div>
               <label class="col-form-label">
-                Fetch component
+                ${(this as any).component.label}
               </label>
               <div class="drag-container">
                   <p>
@@ -186,7 +186,8 @@ export class refreshComponent extends Component {
   }
 
   attach(element: any) {
-    if ((this as any).component.triggerOnAttach) {
+    if ((this as any).component.triggerOnAttach 
+    && (this as any).component?.refreshOn === "") {
       this.getData();
     }
 
@@ -194,6 +195,7 @@ export class refreshComponent extends Component {
       this.getData();
     }
 
+    // Old logic support
     if ((this as any).component?.refreshOn === "data" &&
       !Array.isArray((this as any).component?.refreshOn)) {
       this.getDataAfterSubmissionSet();
@@ -216,7 +218,8 @@ export class refreshComponent extends Component {
   checkRefresh(refreshData: any, changed: any, flags: any) {
     const changePath = _.get(changed, 'instance.path', false);
     // Don't let components change themselves.
-    if ((changePath && (this as any).path === changePath)) {
+    if ((changePath && (this as any).path === changePath) 
+    || changed?.component?.type === "datagrid") {
       return;
     }
 

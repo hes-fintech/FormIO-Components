@@ -1,14 +1,29 @@
 export declare const fetchComponentEditDisplay: ({
     key: string;
     ignore: boolean;
-    weight?: undefined;
     type?: undefined;
-    label?: undefined;
-    defaultValue?: undefined;
-    tooltip?: undefined;
     input?: undefined;
-    customClass?: undefined;
+    label?: undefined;
+    weight?: undefined;
+    defaultValue?: undefined;
     validate?: undefined;
+    tooltip?: undefined;
+    customClass?: undefined;
+    components?: undefined;
+    data?: undefined;
+} | {
+    type: string;
+    input: boolean;
+    label: string;
+    key: string;
+    weight: number;
+    defaultValue: string;
+    validate: {
+        required: boolean;
+    };
+    ignore?: undefined;
+    tooltip?: undefined;
+    customClass?: undefined;
     components?: undefined;
     data?: undefined;
 } | {
@@ -20,8 +35,8 @@ export declare const fetchComponentEditDisplay: ({
     tooltip: string;
     input: boolean;
     ignore?: undefined;
-    customClass?: undefined;
     validate?: undefined;
+    customClass?: undefined;
     components?: undefined;
     data?: undefined;
 } | {
@@ -54,8 +69,8 @@ export declare const fetchComponentEditDisplay: ({
     }[];
     ignore?: undefined;
     defaultValue?: undefined;
-    customClass?: undefined;
     validate?: undefined;
+    customClass?: undefined;
     data?: undefined;
 } | {
     type: string;
@@ -71,9 +86,9 @@ export declare const fetchComponentEditDisplay: ({
         }[];
     };
     ignore?: undefined;
+    validate?: undefined;
     tooltip?: undefined;
     customClass?: undefined;
-    validate?: undefined;
     components?: undefined;
 } | {
     type: string;
@@ -89,8 +104,8 @@ export declare const fetchComponentEditDisplay: ({
     }[];
     ignore?: undefined;
     defaultValue?: undefined;
+    validate?: undefined;
     tooltip?: undefined;
     customClass?: undefined;
-    validate?: undefined;
     data?: undefined;
 })[];

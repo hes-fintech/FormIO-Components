@@ -2,52 +2,59 @@ import { RequestTypes } from "./FetchComponent.types";
 
 export const fetchComponentEditDisplay = [
   {
-      key: 'placeholder',
-      ignore: true,
+    key: 'placeholder',
+    ignore: true,
   },
   {
-      key: 'labelPosition',
-      ignore: true,
+    key: 'labelPosition',
+    ignore: true,
   },
   {
-      key: 'tooltip',
-      ignore: true,
+    key: 'tooltip',
+    ignore: true,
   },
   {
-      key: 'tabindex',
-      ignore: true,
+    key: 'tabindex',
+    ignore: true,
   },
   {
-      key: 'autofocus',
-      ignore: true,
+    key: 'autofocus',
+    ignore: true,
   },
   {
-      key: 'hideLabel',
-      ignore: true,
+    key: 'hideLabel',
+    ignore: true,
   },
   {
-      key: 'disabled',
-      ignore: true,
+    key: 'disabled',
+    ignore: true,
   },
   {
-      key: 'hidden',
-      ignore: true,
+    key: 'hidden',
+    ignore: true,
   },
   {
-      key: 'customClass',
-      ignore: true,
+    key: 'customClass',
+    ignore: true,
   },
   {
-      key: 'tableView',
-      ignore: true,
+    key: 'tableView',
+    ignore: true,
   },
   {
-      key: 'autofocus',
-      ignore: true,
+    key: 'autofocus',
+    ignore: true,
   },
   {
-      key: 'label',
-      ignore: true,
+    type: 'textfield',
+    input: false,
+    label: 'Label',
+    key: 'label',
+    weight: 0,
+    defaultValue: 'Fetch',
+    validate: {
+      required: true,
+    },
   },
   {
     key: 'modalEdit',
@@ -85,22 +92,22 @@ export const fetchComponentEditDisplay = [
     },
   },
   {
-      type: 'textfield',
-      input: false,
-      label: 'URL',
-      key: 'url',
-      customClass: "form-group",
-      weight: 2,
-      validate: {
-          required: true,
-      },
+    type: 'textfield',
+    input: false,
+    label: 'URL',
+    key: 'url',
+    customClass: "form-group",
+    weight: 2,
+    validate: {
+      required: true,
+    },
   },
   {
     type: 'datagrid',
     input: true,
     label: 'POST Body / GET Url queries',
     tooltip:
-        'you can use this table as body for POST request and as url query string for GET requests',
+      'you can use this table as body for POST request and as url query string for GET requests',
     key: 'requestBody',
     weight: 3,
     components: [
