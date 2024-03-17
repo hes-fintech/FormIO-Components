@@ -186,12 +186,13 @@ export class refreshComponent extends Component {
   }
 
   attach(element: any) {
-    if ((this as any).component.triggerOnAttach 
-    && (this as any).component?.refreshOn === "") {
+    if ((this as any).component.triggerOnAttach
+      && (this as any).component?.refreshOn === "") {
       this.getData();
     }
 
-    if (Array.isArray((this as any).component?.refreshOn)) {
+    if (Array.isArray((this as any).component?.refreshOn) &&
+      (this as any).component.triggerOnAttach) {
       this.getData();
     }
 
@@ -215,11 +216,20 @@ export class refreshComponent extends Component {
     this.abortRequest();
   }
 
+  testIncludesRefresh(randomString: string, array: string[]) {
+    if (!Array.isArray(array)) return;
+    return array.some(element => {
+      const regex = new RegExp('\\b' + element + '\\b');
+      return regex.test(randomString);
+    });
+  }
+
+
   checkRefresh(refreshData: any, changed: any, flags: any) {
     const changePath = _.get(changed, 'instance.path', false);
     // Don't let components change themselves.
-    if ((changePath && (this as any).path === changePath) 
-    || changed?.component?.type === "datagrid") {
+    if ((changePath && (this as any).path === changePath)
+      || changed?.component?.type === "datagrid") {
       return;
     }
 
@@ -227,8 +237,15 @@ export class refreshComponent extends Component {
       (this as any).refresh((this as any).data, changed, flags);
     }
 
-    if ((this as any).component?.refreshOn.includes(changePath)) {
+    if ((this as any).testIncludesRefresh(changePath, (this as any).component?.refreshOn) &&
+      (this as any).component.triggerOnAttach) {
       (this as any).triggerRedraw();
+    }
+
+    if ((this as any).testIncludesRefresh(changePath, (this as any).component?.refreshOn) &&
+      Array.isArray((this as any).component?.refreshOn) &&
+      !(this as any).component.triggerOnAttach) {
+      this.getData();
     }
   }
 }

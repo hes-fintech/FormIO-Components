@@ -28,5 +28,6 @@ export declare class refreshComponent extends Component {
     getDataAfterSubmissionSet(): void;
     attach(element: any): void;
     destroy(): void;
+    testIncludesRefresh(randomString: string, array: string[]): boolean | undefined;
     checkRefresh(refreshData: any, changed: any, flags: any): void;
 }
