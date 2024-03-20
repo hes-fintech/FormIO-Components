@@ -82,7 +82,15 @@ export class paginationComponent extends ContainerComponent {
     }
 
     getPagesNum() {
-      const totalElementsValue = _.get((this as any).root.data, (this as any).component.totalElementsValuePath) || _.get((this as any).root.data, (this as any).component.dataSourcePath)?.length;
+      const totalElementsValueData = _.get((this as any).root.data, (this as any).component.totalElementsValuePath);
+      const totalElementsValueInterpolated = (this as any).interpolate((this as any).component.totalElementsValuePath, {
+        data: (this as any)?.root?.data,
+        row: (this as any)?.data,
+      });
+
+      const formattedTotalElementsValue = (this as any).component.totalElementsValuePath?.includes("{") ? totalElementsValueInterpolated : totalElementsValueData;
+
+      const totalElementsValue = formattedTotalElementsValue || _.get((this as any).root.data, (this as any).component.dataSourcePath)?.length;
 
       return Math.ceil(totalElementsValue / (this as any).component.itemsPerPage);
     }
