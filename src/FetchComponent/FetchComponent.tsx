@@ -67,7 +67,7 @@ export class refreshComponent extends Component {
         ...initial,
         [current.key]: (this as any).interpolate(current?.value, {
           data: (this as any)?.root?.data,
-          row: (this as any)?.root?.data,
+          row: (this as any)?.data,
         }),
       };
     }, {});
