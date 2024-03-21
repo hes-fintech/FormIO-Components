@@ -98,7 +98,7 @@ export class refreshComponent extends Component {
 
     const requestUrl = `${(this as any).interpolate((this as any).component.url, {
       data: (this as any)?.root?.data,
-      row: (this as any)?.root?.data,
+      row: (this as any)?.data,
     })}${requestParams}`
 
     const formattedHeaders = _.merge((requestOptions as any)?.headers, this.getFormatStringValueToObject(requestHeaders))

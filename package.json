@@ -1,6 +1,6 @@
 {
   "name": "hes-formio-components",
-  "version": "1.7.1",
+  "version": "1.7.2",
   "description": "hes formio components",
   "main": "./build/index.js",
   "dependencies": {
