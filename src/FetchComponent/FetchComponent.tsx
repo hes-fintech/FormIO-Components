@@ -53,22 +53,24 @@ export class refreshComponent extends Component {
 
   static editForm = settingsForm;
 
-  getValueWithType(value: any) {
-    if (typeof (value) === "object") {
-      return value;
+  formatEmptyValueToNull(value: any) {
+    const interpolatedValue = (this as any).interpolate(value, {
+      data: (this as any)?.root?.data,
+      row: (this as any)?.data,
+    });
+
+    if (typeof (interpolatedValue) === "object") {
+      return interpolatedValue;
     } else {
-      return value ? value : null;
+      return Boolean(interpolatedValue) ? interpolatedValue : null;
     };
-  };
+  }
 
   getFormatStringValueToObject(requestBody: any) {
     return requestBody?.reduce((initial: any, current: any) => {
       return {
         ...initial,
-        [current.key]: (this as any).interpolate(current?.value, {
-          data: (this as any)?.root?.data,
-          row: (this as any)?.data,
-        }),
+        [current.key]: this.formatEmptyValueToNull(current?.value || ""),
       };
     }, {});
   };
