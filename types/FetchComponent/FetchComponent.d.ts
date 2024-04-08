@@ -12,7 +12,7 @@ export declare class refreshComponent extends Component {
     static schema(): any;
     render(): any;
     static editForm: (...extend: any) => any;
-    getValueWithType(value: any): any;
+    formatEmptyValueToNull(value: any): any;
     getFormatStringValueToObject(requestBody: any): any;
     shouldSkipValidation(): boolean;
     isFetched: boolean;
