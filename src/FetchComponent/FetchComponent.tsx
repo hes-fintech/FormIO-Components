@@ -250,4 +250,19 @@ export class refreshComponent extends Component {
       this.getData();
     }
   }
+
+  checkRefreshOn(changes, flags = {} as any) {
+    changes = changes || [];
+    if (flags?.noRefresh) {
+      return;
+    }
+    if (!changes.length && flags.changed) {
+      changes = [flags.changed];
+    }
+    const refreshOn = flags.fromBlur ? (this as any).component.refreshOnBlur : (this as any).component.refreshOn || (this as any).component.redrawOn;
+    
+    if (refreshOn) {
+      changes.forEach((changed: any) => this.checkRefresh(refreshOn, changed, flags));
+    }
+  }
 }

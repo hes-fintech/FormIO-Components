@@ -30,4 +30,5 @@ export declare class refreshComponent extends Component {
     destroy(): void;
     testIncludesRefresh(randomString: string, array: string[]): boolean | undefined;
     checkRefresh(refreshData: any, changed: any, flags: any): void;
+    checkRefreshOn(changes: any, flags?: any): void;
 }
