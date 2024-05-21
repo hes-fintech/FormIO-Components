@@ -54,26 +54,33 @@ export class refreshComponent extends Component {
   static editForm = settingsForm;
 
   formatEmptyValueToNull(value: any) {
-    const interpolatedValue = (this as any).interpolate(value, {
-      data: (this as any)?.root?.data,
-      row: (this as any)?.data,
-    });
+      const interpolatedValue = getNestedValue(
+          { data: (this as any).root.data, row: (this as any).data },
+          value?.substring(
+              value.lastIndexOf('{{') + 2,
+              value.lastIndexOf('}}'),
+          ),
+      );
 
-    if (typeof (interpolatedValue) === "object") {
-      return interpolatedValue;
-    } else {
-      return Boolean(interpolatedValue) ? interpolatedValue : null;
-    };
+      if (typeof interpolatedValue === 'object') {
+          return interpolatedValue;
+      }
+
+      return interpolatedValue || null;
   }
 
   getFormatStringValueToObject(requestBody: any) {
-    return requestBody?.reduce((initial: any, current: any) => {
-      return {
-        ...initial,
-        [current.key]: this.formatEmptyValueToNull(current?.value || ""),
-      };
-    }, {});
-  };
+      return requestBody
+          ?.filter((item: any) => item.key !== '')
+          ?.reduce((initial: any, current: any) => {
+              return {
+                  ...initial,
+                  [current.key]: this.formatEmptyValueToNull(
+                      current?.value || '',
+                  ),
+              };
+          }, {});
+  }
 
   shouldSkipValidation() {
     return true;
@@ -266,3 +273,11 @@ export class refreshComponent extends Component {
     }
   }
 }
+
+const getNestedValue = (obj: any, key: string) => {
+    const splitCondition = key.includes('?') ? '?.' : '.';
+
+    return key.split(splitCondition).reduce((result, key) => {
+        return result?.[key];
+    }, obj);
+};
