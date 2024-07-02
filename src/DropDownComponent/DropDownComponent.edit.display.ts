@@ -50,10 +50,6 @@ export const dropdownComponentEditDisplay = [
       ignore: true,
   },
   {
-      key: 'customClass',
-      ignore: true,
-  },
-  {
       key: 'hidden',
       ignore: true,
   },
