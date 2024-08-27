@@ -1,7 +1,9 @@
 
-import SelectComponent from 'formiojs/components/select/select';
-import _, { set } from 'lodash';
 import { settingsForm } from './SelectComponent.settingsForm';
+import Components from 'formiojs/components/Components';
+import _, { set } from 'lodash';
+
+const SelectComponent = (Components as any).components.select;
 
 export class selectComponentExtended extends SelectComponent {
   static get builderInfo() {
