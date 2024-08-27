@@ -1,4 +1,4 @@
-import SelectComponent from 'formiojs/components/select/select';
+declare const SelectComponent: any;
 export declare class selectComponentExtended extends SelectComponent {
     static get builderInfo(): {
         title: string;
@@ -12,3 +12,4 @@ export declare class selectComponentExtended extends SelectComponent {
     get requestHeaders(): Map<any, any>;
     loadItems(url: any, search: any, headers: any, options: any, method: any): void;
 }
+export {};
