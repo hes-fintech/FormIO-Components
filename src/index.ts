@@ -6,6 +6,7 @@ import {formRendererComponent} from "./FormRendererComponent/FormRendererCompone
 import {dropDownComponent} from "./DropDownComponent/DropDownComponent";
 import {paginationComponent} from "./PaginationComponent/PaginationComponent";
 import {refreshComponent} from "./FetchComponent/FetchComponent";
+import {selectComponentExtended} from "./SelectComponent/SelectComponent";
 
 export const customComponents = {
     iframe,
@@ -16,4 +17,5 @@ export const customComponents = {
     formRendererComponent,
     dropDownComponent,
     paginationComponent,
+    selectComponentExtended,
 };
