@@ -18,10 +18,6 @@ export const settingsForm = (...extend: any) => {
                 ignore: true,
             },
             {
-                key: 'logic',
-                ignore: true,
-            },
-            {
                 key: 'layout',
                 ignore: true,
             },
