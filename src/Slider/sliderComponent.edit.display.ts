@@ -8,10 +8,6 @@ export const sliderComponentDisplay = [
         ignore: true,
     },
     {
-        key: 'tooltip',
-        ignore: true,
-    },
-    {
         key: 'tabindex',
         ignore: true,
     },
@@ -56,9 +52,16 @@ export const sliderComponentDisplay = [
         input: false,
         label: 'Slider title',
         key: 'sliderTitle',
+        weight: 0,
         validate: {
             required: true,
         },
+    },
+    {
+        type: 'textfield',
+        input: false,
+        label: 'Tooltip',
+        key: 'tooltip',
     },
     {
         type: 'textfield',
@@ -77,6 +80,7 @@ export const sliderComponentDisplay = [
         input: false,
         label: 'Min',
         key: 'min',
+        weight: 3,
         validate: {
             required: true,
         },
@@ -86,6 +90,7 @@ export const sliderComponentDisplay = [
         input: false,
         label: 'Max',
         key: 'max',
+        weight: 4,
         validate: {
             required: true,
         },
@@ -95,6 +100,7 @@ export const sliderComponentDisplay = [
         input: false,
         label: 'Initial value',
         key: 'initialValue',
+        weight: 5,
         validate: {
             required: true,
         },
@@ -104,6 +110,7 @@ export const sliderComponentDisplay = [
         input: false,
         label: 'Slider step',
         key: 'sliderStep',
+        weight: 6,
         defaultValue: 1,
         validate: {
             required: true,
@@ -122,7 +129,7 @@ export const sliderComponentDisplay = [
       input: true,
       key: 'refreshOn',
       label: 'Refresh Options On',
-      weight: 3,
+      weight: 7,
       tooltip: 'Refresh data when another field changes.',
       dataSrc: 'custom',
       valueProperty: 'value',
