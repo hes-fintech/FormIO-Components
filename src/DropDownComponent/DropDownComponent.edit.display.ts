@@ -10,6 +10,38 @@ export const dropdownComponentEditDisplay = [
       weight: 0,
   },
   {
+    type: 'datagrid',
+    input: true,
+    label: 'Start loading event',
+    tooltip: 'Event that will trigger loader.',
+    key: 'triggerEventsStartLoading',
+    weight: 1,
+    components: [
+      {
+        label: 'Events',
+        key: 'event',
+        input: true,
+        type: 'textfield',
+      },
+    ],
+  },
+  {
+    type: 'datagrid',
+    input: true,
+    label: 'Stop loading event',
+    tooltip: 'Event that will remove loader.',
+    key: 'triggerEventsStopLoading',
+    weight: 2,
+    components: [
+      {
+        label: 'Events',
+        key: 'event',
+        input: true,
+        type: 'textfield',
+      },
+    ],
+  },
+  {
       key: 'label',
       ignore: true,
   },
