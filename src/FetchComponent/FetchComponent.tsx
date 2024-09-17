@@ -269,7 +269,12 @@ export class refreshComponent extends Component {
     const refreshOn = flags.fromBlur ? (this as any).component.refreshOnBlur : (this as any).component.refreshOn || (this as any).component.redrawOn;
     
     if (refreshOn) {
-      changes.forEach((changed: any) => this.checkRefresh(refreshOn, changed, flags));
+      const filteredChanges = changes?.filter((i: any) => {
+        const changePath = _.get(i, 'instance.path', false);
+        return (this as any).testIncludesRefresh(changePath, (this as any).component?.refreshOn)
+      })?.[0] || {};
+
+      this.checkRefresh(refreshOn, filteredChanges, flags)
     }
   }
 }
