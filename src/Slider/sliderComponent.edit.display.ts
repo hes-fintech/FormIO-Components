@@ -44,10 +44,6 @@ export const sliderComponentDisplay = [
         ignore: true,
     },
     {
-        key: 'label',
-        ignore: true,
-    },
-    {
         type: 'textfield',
         input: false,
         label: 'Slider title',
@@ -128,7 +124,8 @@ export const sliderComponentDisplay = [
       type: 'select',
       input: true,
       key: 'refreshOn',
-      label: 'Refresh Options On',
+      label: 'Refresh On',
+      multiple: true,
       weight: 7,
       tooltip: 'Refresh data when another field changes.',
       dataSrc: 'custom',

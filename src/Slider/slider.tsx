@@ -1,4 +1,3 @@
-import * as i18next from 'i18next';
 import _ from 'lodash';
 import { createNumberMask } from '@formio/text-mask-addons';
 import { settingsForm } from './sliderComponent.settingsForm';
@@ -19,7 +18,7 @@ export class sliderComponent extends NumberComponent {
             schema: sliderComponent.schema(),
         };
     }
-    
+
     static schema() {
         return NumberComponent.schema({
             type: 'sliderComponent',
@@ -33,9 +32,9 @@ export class sliderComponent extends NumberComponent {
 
         return parentPrefix
             ? this.interpolate(parentPrefix, {
-                  data: this?.root?.data,
-                  row: this?.row || this?.data,
-              })
+                data: this?.root?.data,
+                row: this?.row || this?.data,
+            })
             : '';
     }
 
@@ -44,17 +43,20 @@ export class sliderComponent extends NumberComponent {
 
         return parentSuffix
             ? this.interpolate(parentSuffix, {
-                  data: this?.root?.data,
-                  row: this?.row || this?.data,
-              })
+                data: this?.root?.data,
+                row: this?.row || this?.data,
+            })
             : '';
     }
 
     get defaultValue() {
-        return this.interpolate((this as any).component?.max, {
+        return this.interpolate(
+            (this as any).component?.initialValue
+            || (this as any).component?.max, {
             data: this?.root?.data,
             row: this?.row || this?.data,
-        });
+        }
+        );
     }
 
     createNumberMask() {
@@ -189,7 +191,7 @@ export class sliderComponent extends NumberComponent {
             return `${value}${_.repeat(
                 '0',
                 this.decimalLimit -
-                    value.split(this.decimalSeparator)[1].length,
+                value.split(this.decimalSeparator)[1].length,
             )}`;
         }
 
