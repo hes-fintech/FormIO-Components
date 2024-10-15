@@ -8,6 +8,7 @@ export declare const sliderComponentDisplay: ({
     validate?: undefined;
     defaultValue?: undefined;
     tooltip?: undefined;
+    multiple?: undefined;
     dataSrc?: undefined;
     valueProperty?: undefined;
     data?: undefined;
@@ -23,6 +24,7 @@ export declare const sliderComponentDisplay: ({
     ignore?: undefined;
     defaultValue?: undefined;
     tooltip?: undefined;
+    multiple?: undefined;
     dataSrc?: undefined;
     valueProperty?: undefined;
     data?: undefined;
@@ -36,6 +38,7 @@ export declare const sliderComponentDisplay: ({
     validate?: undefined;
     defaultValue?: undefined;
     tooltip?: undefined;
+    multiple?: undefined;
     dataSrc?: undefined;
     valueProperty?: undefined;
     data?: undefined;
@@ -51,6 +54,7 @@ export declare const sliderComponentDisplay: ({
     };
     ignore?: undefined;
     tooltip?: undefined;
+    multiple?: undefined;
     dataSrc?: undefined;
     valueProperty?: undefined;
     data?: undefined;
@@ -64,6 +68,7 @@ export declare const sliderComponentDisplay: ({
     ignore?: undefined;
     validate?: undefined;
     defaultValue?: undefined;
+    multiple?: undefined;
     dataSrc?: undefined;
     valueProperty?: undefined;
     data?: undefined;
@@ -72,6 +77,7 @@ export declare const sliderComponentDisplay: ({
     input: boolean;
     key: string;
     label: string;
+    multiple: boolean;
     weight: number;
     tooltip: string;
     dataSrc: string;
