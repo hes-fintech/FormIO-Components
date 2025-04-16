@@ -8,6 +8,7 @@ export declare class refreshComponent extends Component {
     };
     init(): void;
     abortController: AbortController;
+    intervalId: any;
     abortRequest(): void;
     static schema(): any;
     render(): any;

@@ -23,6 +23,7 @@ export class refreshComponent extends Component {
   }
 
   abortController = new AbortController();
+  intervalId;
 
   abortRequest() {
     this.abortController?.abort();
@@ -204,6 +205,14 @@ export class refreshComponent extends Component {
       (this as any).component.triggerOnAttach) {
       this.getData();
     }
+    
+    // Calls with interval
+    const interval = Number((this as any).component?.refreshInterval || 0);
+    if (interval > 0) {
+      this.intervalId = setInterval(() => {
+        this.fetchData();
+      }, interval);
+    }
 
     // Old logic support
     if ((this as any).component?.refreshOn === "data" &&
@@ -223,6 +232,9 @@ export class refreshComponent extends Component {
   destroy() {
     super.destroy()
     this.abortRequest();
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   testIncludesRefresh(randomString: string, array: string[]) {

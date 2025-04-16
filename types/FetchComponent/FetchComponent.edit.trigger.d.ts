@@ -50,4 +50,18 @@ export declare const fetchComponentEditTrigger: ({
     multiple?: undefined;
     valueProperty?: undefined;
     data?: undefined;
+} | {
+    type: string;
+    input: boolean;
+    label: string;
+    tooltip: string;
+    key: string;
+    defaultValue: boolean;
+    weight: number;
+    customClass?: undefined;
+    dataSrc?: undefined;
+    multiple?: undefined;
+    valueProperty?: undefined;
+    data?: undefined;
+    components?: undefined;
 })[];
