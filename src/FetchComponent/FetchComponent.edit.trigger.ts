@@ -68,4 +68,13 @@ export const fetchComponentEditTrigger = [
       },
     ],
   },
+  {
+      type: 'input',
+      input: false,
+      label: 'Calls interval',
+      tooltip: 'Value for interval in ms',
+      key: 'refreshInterval',
+      defaultValue: false,
+      weight: 5,
+  },
 ];
