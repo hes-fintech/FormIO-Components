@@ -170,6 +170,20 @@ export class sliderComponent extends NumberComponent {
         }, 0);
 
         super.attach(elements);
+
+        if (this.refs?.input?.[0]) {
+            this.addEventListener(this.refs.input[0], 'input', (event: Event) => {
+                const inputValue = (event.target as HTMLInputElement).value;
+                const parsedValue = this.parseValue(inputValue);
+        
+                if (this.refs?.slider) {
+                    this.refs.slider.value = parsedValue;
+        
+                    const coloredPercentage = this.calculateBackgroundValue(parsedValue);
+                    this.refs.slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+                }
+            });
+        }
     }
 
     formatValue(value: string) {
