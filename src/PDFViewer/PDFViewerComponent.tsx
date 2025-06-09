@@ -1,206 +1,150 @@
-import { Button } from 'antd';
-import { Utils } from 'formiojs';
-import * as i18next from 'i18next';
-import { LoDashStatic } from 'lodash';
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
-import { Document, Page, pdfjs } from 'react-pdf';
-import { settingsForm } from './PDFViewer.settingsForm';
-import './styles/index.scss'
+import Component from 'formiojs/components/_classes/component/Component';
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
-
-type InformationComponentType = {
-    src: string;
-    withPagination?: boolean;
-    withDownload?: boolean;
-    withZoom?: boolean;
-    devLabel: string;
-};
-
-type ContextType = {
-    i18n: i18next.i18n;
-    component: InformationComponentType;
-    isBuilderMode: boolean;
-    data: any;
-    row: any;
-    _: LoDashStatic;
-};
-
-type PDFViewerComponentProps = {
-    context: ContextType;
-    onChange: () => void;
-};
-
-const INITIAL_NUM_PAGES = 0;
-const INITIAL_PAGE_NUMBER = 1;
-const INITIAL_SCALE = 100;
-
-const PDFViewerComponent = (props: PDFViewerComponentProps) => {
-    const { context } = props;
-    const { withPagination, withDownload, withZoom } = context.component;
-    const [numPages, setNumPages] = useState(INITIAL_NUM_PAGES);
-    const [pageNumber, setPageNumber] = useState(INITIAL_PAGE_NUMBER);
-    const [scale, setScale] = useState(INITIAL_SCALE);
-
-    const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
-        setNumPages(numPages);
+export class pdfViewer extends Component {
+  static get builderInfo() {
+    return {
+      title: 'PDF Viewer',
+      group: 'basic',
+      icon: 'file-pdf',
+      schema: pdfViewer.schema(),
     };
+  }
 
-    const setNextPage = () => {
-        if (pageNumber < numPages) {
-            setPageNumber((prevState) => prevState + 1);
-        } else {
-            setPageNumber(1);
-        }
+  static schema() {
+    return Component.schema({
+      type: 'pdfViewer',
+      label: 'PDF Viewer',
+      key: 'pdfViewer',
+      url: '',
+      clearOnHide: false,
+      redrawOn: 'data',
+      refreshOn: 'data',
+      refreshOnChange: true,
+    });
+  }
+
+  static editForm() {
+    return {
+      components: [
+        {
+          type: 'textfield',
+          key: 'url',
+          label: 'PDF URL',
+          input: true,
+        },
+      ],
     };
+  }
 
-    const setPrevPage = () => {
-        if (pageNumber > 1) {
-            setPageNumber((prevState) => prevState - 1);
-        }
-    };
+  render() {
+    return super.render(`
+      <div class="formio-pdf-viewer">
+        <label class="col-form-label">${(this as any).component.label}</label>
+        <div class="pdf-controls" style="margin-bottom: 10px;">
+          <button class="zoomOut" type="text" ref="zoomOut" title="Zoom Out" style="background: transparent; border: none;"><i class="fa fa-search-minus"></i></button>
+          <span ref="zoomLevel">100%</span>
+          <button class="zoomIn" type="text" ref="zoomIn" title="Zoom In" style="background: transparent; border: none;"><i class="fa fa-search-plus"></i></button>
+          <a ref="downloadBtn" class="downloadBtn" title="Download PDF" style="margin-left: 10px; text-decoration: none;" download><i class="fa fa-download"></i></a>
+        </div>
+        <div ref="pdfContainer" style="width: 100%; overflow: auto; max-height: 600px; display: flex; flex-direction: column;"></div>
+      </div>
+    `);
+  }
 
-    const zoomIn = () => {
-        if (scale < 200) {
-            setScale((prevState) => prevState + 10);
-        }
-    };
+  attach(element: HTMLElement) {
+    (this as any).loadRefs(element, {
+      pdfContainer: 'single',
+      zoomIn: 'single',
+      zoomOut: 'single',
+      zoomLevel: 'single',
+      downloadBtn: 'single',
+    });
 
-    const zoomOut = () => {
-        if (scale > 100) {
-            setScale((prevState) => prevState - 10);
-        }
-    };
+    const container = (this as any).refs.pdfContainer;
+    const zoomIn = (this as any).refs.zoomIn;
+    const zoomOut = (this as any).refs.zoomOut;
+    const zoomLevelText = (this as any).refs.zoomLevel;
+    const downloadBtn = (this as any).refs.downloadBtn;
 
-    return (
-        <>
-            {context.isBuilderMode && (
-                <label className="col-form-label">
-                    {context.component.devLabel}
-                </label>
-            )}
-            <div className={`${context.isBuilderMode ? "drag-container padding-10" : ""} formio-pdf-viewer`}>
-                {(context.isBuilderMode && context.component.src) && (
-                    <div>
-                       File from {context.component.src}
-                    </div>
-                )}
-                <div className="formio-pdf-viewer_toolbar">
-                    <div className="formio-pdf-viewer_page-container">
-                        {withPagination && (
-                            <>
-                                <Button type="text" onClick={setPrevPage}>
-                                    Previous
-                                </Button>
-                                <div className="formio-pdf-viewer_page-numbers">
-                                    Page {pageNumber} of {numPages}
-                                </div>
-                                <Button type="text" onClick={setNextPage}>
-                                    Next
-                                </Button>
-                            </>
-                        )}
-                    </div>
-                    <div className="formio-pdf-viewer_btn-group">
-                        {withDownload && (
-                            <div className="formio-pdf-viewer_download-container">
-                                <Button
-                                    type="text"
-                                    href={getTemplateString(context)}
-                                    download
-                                    className="formio-pdf-viewer_download-btn"
-                                >
-                                    Download
-                                </Button>
-                            </div>
-                        )}
-                        {withZoom && (
-                            <div className="formio-pdf-viewer_zoom-container">
-                                <Button type="text" onClick={zoomOut}>
-                                    Zoom out
-                                </Button>
-                                <div className="formio-pdf-viewer_page-numbers">
-                                    {scale}%
-                                </div>
-                                <Button type="text" onClick={zoomIn}>
-                                    Zoom in
-                                </Button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-                <Document
-                    file={getTemplateString(context)}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                >
-                    <Page pageNumber={pageNumber} scale={scale / 100} />
-                </Document>
-            </div>
-        </>
-    );
-};
-
-export class pdfViewer extends ReactComponent {
-    static get builderInfo() {
-        return {
-            title: 'PDF Viewer',
-            group: 'advanced',
-            icon: 'file',
-            schema: pdfViewer.schema(),
-        };
+    if (!container || !zoomIn || !zoomOut || !zoomLevelText || !downloadBtn) {
+      return super.attach(element);
     }
 
-    static schema() {
-        return ReactComponent.schema({
-            type: 'pdfViewer',
-        });
-    }
+    let scale = 1;
+    let currentUrl = '';
 
-    static editForm = settingsForm;
+    const updateZoomText = () => {
+      zoomLevelText.textContent = `${Math.round(scale * 100)}%`;
+    };
 
-    get className() {
-        return `${(this as any).component.customClass}`;
-    }
+    const loadPdf = async () => {
+      const url = (this as any).interpolate((this as any).component.url, {
+        data: (this as any).root?.data,
+        row: (this as any).data,
+      });
 
-    attachReact(element: HTMLElement) {
-        const context = {
-            i18n: (this as any).i18next,
-            component: (this as any).component,
-            data: (this as any).data,
-            row: (this as any).data,
-            isBuilderMode: (this as any).builderMode || (this as any).options.preview,
-            _: Utils._,
-        };
-        (this as any).component.refreshOn = 'data';
-        (this as any).component.redrawOn = 'data';
+      currentUrl = url;
+      if (downloadBtn instanceof HTMLAnchorElement) {
+        downloadBtn.href = url;
+      }
 
-        // eslint-disable-next-line react/no-render-return-value
-        return ReactDOM.render(
-            <PDFViewerComponent
-                context={context}
-                onChange={(this as any).updateValue}
-            />,
-            element,
-        );
-    }
+      if (!url) {
+        container.innerHTML = '<p style="color:red;">No PDF URL provided.</p>';
+        return;
+      }
 
-    detachReact(element: HTMLElement) {
-        if (element) {
-            ReactDOM.unmountComponentAtNode(element);
+      const pdfjsLib = (window as any).pdfjsLib;
+      if (!pdfjsLib) {
+        container.innerHTML = `<p style="color:red;">PDF.js is not loaded.</p>`;
+        return;
+      }
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+
+        const arrayBuffer = await response.arrayBuffer();
+        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+        container.innerHTML = '';
+
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+          const page = await pdf.getPage(pageNum);
+          const viewport = page.getViewport({ scale });
+
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d')!;
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          await page.render({ canvasContext: context, viewport }).promise;
+          container.appendChild(canvas);
         }
-    }
-};
 
-const getTemplateString = (context: ContextType) => {
-    const src = context.component.src ? getNestedValue(context, context.component.src.substring(context.component.src.lastIndexOf("{{") + 2, context.component.src.lastIndexOf("}}"))) : "";
-    return context.component.src?.replace(/\{{(.+?)\}}/g, `${src}`);
-};
+        updateZoomText();
+      } catch (err: any) {
+        container.innerHTML = `<p style="color:red;">Error loading PDF: ${err.message}</p>`;
+      }
+    };
 
-const getNestedValue = (obj: any, key: string) => {
-    const splitCondition = key.includes("?") ? "?." : ".";
-    return key.split(splitCondition).reduce((result, key) => {
-        return result?.[key]
-    }, obj);
-};
+    zoomIn.addEventListener('click', () => {
+      scale = Math.min(scale + 0.1, 3);
+      loadPdf();
+    });
+
+    zoomOut.addEventListener('click', () => {
+      scale = Math.max(scale - 0.1, 0.5);
+      loadPdf();
+    });
+
+    setTimeout(loadPdf, 0);
+
+    return super.attach(element);
+  }
+
+  shouldSkipValidation() {
+    return true;
+  }
+}
+
+export default pdfViewer;
