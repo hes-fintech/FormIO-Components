@@ -7,6 +7,7 @@ import { dropDownComponent } from "./DropDownComponent/DropDownComponent";
 import { paginationComponent } from "./PaginationComponent/PaginationComponent";
 import { refreshComponent } from "./FetchComponent/FetchComponent";
 import { selectComponentExtended } from "./SelectComponent/SelectComponent";
+import { dmnComponent } from "./DmnComponent/DmnComponent";
 export declare const customComponents: {
     iframe: typeof iframe;
     sliderComponent: typeof sliderComponent;
@@ -17,4 +18,5 @@ export declare const customComponents: {
     dropDownComponent: typeof dropDownComponent;
     paginationComponent: typeof paginationComponent;
     selectComponentExtended: typeof selectComponentExtended;
+    dmnComponent: typeof dmnComponent;
 };
