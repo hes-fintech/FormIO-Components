@@ -7,6 +7,7 @@ import {dropDownComponent} from "./DropDownComponent/DropDownComponent";
 import {paginationComponent} from "./PaginationComponent/PaginationComponent";
 import {refreshComponent} from "./FetchComponent/FetchComponent";
 import {selectComponentExtended} from "./SelectComponent/SelectComponent";
+import {dmnComponent} from "./DmnComponent/DmnComponent";
 
 export const customComponents = {
     iframe,
@@ -18,4 +19,5 @@ export const customComponents = {
     dropDownComponent,
     paginationComponent,
     selectComponentExtended,
+    dmnComponent
 };
