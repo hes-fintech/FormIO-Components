@@ -1,6 +1,6 @@
 {
   "name": "hes-formio-components",
-  "version": "1.8.8",
+  "version": "1.8.9",
   "description": "hes formio components",
   "main": "./build/index.js",
   "dependencies": {
@@ -8,7 +8,7 @@
     "@formio/vanilla-text-mask": "^5.1.1-formio.1",
     "antd": "^4.22.6",
     "axios": "^0.27.2",
-    "dmn-js": "^17.2.1",
+    "dmn-js": "^11.1.2",
     "gensync": "^1.0.0-beta.2",
     "mammoth": "^1.4.21",
     "pdfjs-dist": "^5.3.31",
