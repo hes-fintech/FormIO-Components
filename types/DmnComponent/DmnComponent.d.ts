@@ -19,5 +19,5 @@ export declare class dmnComponent extends Component {
     attach(el: HTMLElement): Promise<any>;
     hookInto(viewer: any): void;
     detach(): any;
-    setValue(value: string, flags: any): void;
+    setValue(value: string, flags: any, initial?: boolean): void;
 }

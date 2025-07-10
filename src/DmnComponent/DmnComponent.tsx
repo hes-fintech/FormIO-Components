@@ -68,7 +68,7 @@ export class dmnComponent extends Component {
           console.error('Could not save', err);
         } else {
           console.log(xml);
-          super.setValue(xml, false);
+          super.setValue(xml, false, false);
         }
       });
 
@@ -80,7 +80,7 @@ export class dmnComponent extends Component {
     return super.detach();
   }
 
-  setValue(value: string, flags: any) {
+  setValue(value: string, flags: any, initial: boolean = true) {
     if (typeof value !== 'string') return;
 
 
@@ -91,5 +91,9 @@ export class dmnComponent extends Component {
         return console.log(err, "Error to parse XML");
       }
     });
+
+    if(initial) {
+      super.setValue(value, flags)
+    }
   }
 }
