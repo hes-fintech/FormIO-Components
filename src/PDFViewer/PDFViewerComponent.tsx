@@ -17,7 +17,6 @@ export class pdfViewer extends Component {
       key: 'pdfViewer',
       url: '',
       clearOnHide: false,
-      refreshOnChange: true,
     });
   }
 
