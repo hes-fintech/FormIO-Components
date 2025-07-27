@@ -4,8 +4,6 @@ import { settingsForm } from './sliderComponent.settingsForm';
 import Components from 'formiojs/components/Components';
 import { NumberHelper } from '../utils/NumberHelper';
 
-
-
 const NumberComponent = (Components as any).components.number;
 
 export class sliderComponent extends NumberComponent {
@@ -116,10 +114,19 @@ export class sliderComponent extends NumberComponent {
     calculateBackgroundValue = (value: string) => {
         const min = Number(this.getSlierMinValue());
         const max = Number(this.getSlierMaxValue());
+        const numValue = Number(value);
+
+        // Handle invalid or empty values
+        if (isNaN(numValue) || value === '' || value === null || value === undefined) {
+            return 0;
+        }
 
         const sliderRangeDeltaValue = max - min;
 
-        return ((Number(value) - min) * 100) / sliderRangeDeltaValue;
+        // Ensure the value is within bounds
+        const clampedValue = Math.max(min, Math.min(max, numValue));
+
+        return ((clampedValue - min) * 100) / sliderRangeDeltaValue;
     };
 
     attach(elements: string) {
@@ -135,9 +142,16 @@ export class sliderComponent extends NumberComponent {
             const coloredPercentage =
                 this.calculateBackgroundValue(sliderValue);
 
-            (
-                event.target as HTMLInputElement
-            ).style.backgroundSize = `${coloredPercentage}% 100%`;
+            const slider = event.target as HTMLInputElement;
+            if (coloredPercentage === 0) {
+                // Make background transparent when at minimum value
+                slider.style.background = 'transparent';
+                slider.style.backgroundSize = 'auto';
+            } else {
+                // Restore normal background styling
+                slider.style.background = '';
+                slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+            }
         });
 
         this.addEventListener(this.refs?.slider, 'change', (event: Event) => {
@@ -156,7 +170,15 @@ export class sliderComponent extends NumberComponent {
             const coloredPercentage = this.calculateBackgroundValue(
                 this.getValue(),
             );
-            this.refs.slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+            if (coloredPercentage === 0) {
+                // Make background transparent when at minimum value
+                this.refs.slider.style.background = 'transparent';
+                this.refs.slider.style.backgroundSize = 'auto';
+            } else {
+                // Restore normal background styling
+                this.refs.slider.style.background = '';
+                this.refs.slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+            }
         }
 
         this.interval = setTimeout(() => {
@@ -177,10 +199,38 @@ export class sliderComponent extends NumberComponent {
                 const parsedValue = this.parseValue(inputValue);
         
                 if (this.refs?.slider) {
-                    this.refs.slider.value = parsedValue;
+                    // Only update slider if we have a valid number
+                    const numValue = Number(parsedValue);
+                    if (!isNaN(numValue) && parsedValue !== '' && parsedValue !== null && parsedValue !== undefined) {
+                        const min = Number(this.getSlierMinValue());
+                        const max = Number(this.getSlierMaxValue());
+                        
+                        // Clamp the slider value to stay within bounds
+                        if (numValue < min) {
+                            this.refs.slider.value = min.toString();
+                        } else if (numValue > max) {
+                            this.refs.slider.value = max.toString();
+                        } else {
+                            this.refs.slider.value = parsedValue;
+                        }
+                    } else {
+                        // For empty or invalid values, set slider to minimum
+                        this.refs.slider.value = this.getSlierMinValue();
+                    }
         
                     const coloredPercentage = this.calculateBackgroundValue(parsedValue);
-                    this.refs.slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+                    
+                    // If percentage is 0, ensure slider is at minimum position
+                    if (coloredPercentage === 0) {
+                        this.refs.slider.value = this.getSlierMinValue();
+                        // Make background transparent when at minimum value
+                        this.refs.slider.style.background = 'transparent';
+                        this.refs.slider.style.backgroundSize = 'auto';
+                    } else {
+                        // Restore normal background styling
+                        this.refs.slider.style.background = '';
+                        this.refs.slider.style.backgroundSize = `${coloredPercentage}% 100%`;
+                    }
                 }
             });
         }
