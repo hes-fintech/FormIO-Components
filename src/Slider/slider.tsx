@@ -134,25 +134,38 @@ export class sliderComponent extends NumberComponent {
             slider: 'single',
         });
 
+        
         this.addEventListener(this.refs?.slider, 'input', (event: Event) => {
             const sliderValue = (event.target as HTMLInputElement).value;
             const input = this.refs?.input?.[0];
-            input.value = this.getFormattedValue(sliderValue);
-
-            const coloredPercentage =
-                this.calculateBackgroundValue(sliderValue);
-
+        
+            if (input) {
+                const oldValue = input.value;
+                const cursorPos = input.selectionStart || 0;
+        
+                const unformattedOld = oldValue.replace(/\s/g, '');
+                const newFormatted = this.getFormattedValue(sliderValue);
+                const unformattedNew = newFormatted.replace(/\s/g, '');
+        
+                const diff = unformattedNew.length - unformattedOld.length;
+        
+                input.value = newFormatted;
+        
+                const newCursor = cursorPos + diff;
+                input.setSelectionRange(newCursor, newCursor);
+            }
+        
+            const coloredPercentage = this.calculateBackgroundValue(sliderValue);
             const slider = event.target as HTMLInputElement;
             if (coloredPercentage === 0) {
-                // Make background transparent when at minimum value
                 slider.style.background = 'transparent';
                 slider.style.backgroundSize = 'auto';
             } else {
-                // Restore normal background styling
                 slider.style.background = '';
                 slider.style.backgroundSize = `${coloredPercentage}% 100%`;
             }
         });
+
 
         this.addEventListener(this.refs?.slider, 'change', (event: Event) => {
             const sliderValue = (event.target as HTMLInputElement).value;
