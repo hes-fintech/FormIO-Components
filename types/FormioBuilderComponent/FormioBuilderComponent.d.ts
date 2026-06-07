@@ -1,4 +1,4 @@
-import { ReactComponent } from 'react-formio';
+import { ReactComponent } from '@formio/react';
 import './styles/index.scss';
 export declare class formioBuilderComponent extends ReactComponent {
     static get builderInfo(): {
@@ -8,7 +8,7 @@ export declare class formioBuilderComponent extends ReactComponent {
         schema: any;
     };
     static schema(): any;
-    static editForm: (...extend: any) => any;
+    static editForm: (...extend: any) => import("@formio/core").Component[];
     get className(): string;
     shouldSkipValidation(): boolean;
     attachReact(element: HTMLElement): any;

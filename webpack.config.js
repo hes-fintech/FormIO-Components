@@ -30,6 +30,12 @@ module.exports = {
     libraryTarget: 'umd',
     clean: true
   },
+  externals: [
+    'react',
+    'react-dom',
+    /^@formio\/js(\/.*)?$/,
+    /^@formio\/react(\/.*)?$/,
+  ],
 module: {
   rules: [
     {

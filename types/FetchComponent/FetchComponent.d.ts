@@ -1,4 +1,4 @@
-import Component from 'formiojs/components/_classes/component/Component';
+declare const Component: any;
 export declare class refreshComponent extends Component {
     static get builderInfo(): {
         title: string;
@@ -12,7 +12,7 @@ export declare class refreshComponent extends Component {
     abortRequest(): void;
     static schema(): any;
     render(): any;
-    static editForm: (...extend: any) => any;
+    static editForm: (...extend: any) => import("@formio/core").Component[];
     formatEmptyValueToNull(value: any): any;
     getFormatStringValueToObject(requestBody: any): any;
     shouldSkipValidation(): boolean;
@@ -33,3 +33,4 @@ export declare class refreshComponent extends Component {
     checkRefresh(refreshData: any, changed: any, flags: any): void;
     checkRefreshOn(changes: any, flags?: any): void;
 }
+export {};

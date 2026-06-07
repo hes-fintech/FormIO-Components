@@ -1,10 +1,10 @@
-import { Utils } from 'formiojs';
+import { Utils } from '@formio/js';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ReactComponent, FormBuilder } from 'react-formio';
+import { ReactComponent, FormBuilder } from '@formio/react';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
 import './styles/index.scss'
@@ -46,8 +46,8 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
             }`}
         >
             <FormBuilder
-                onChange={(scheme) => addComponentsToForm(scheme.components)}
-                form={{
+                onChange={(scheme: any) => addComponentsToForm(scheme.components)}
+                initialForm={{
                     display: 'form',
                     components: context?.dataForSetting,
                 }}
@@ -93,7 +93,7 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                     },
                     // Controls for specific component
                     editForm: componentsSettings,
-                }}
+                } as any}
             />
         </div>
     );
@@ -110,7 +110,7 @@ export class formioBuilderComponent extends ReactComponent {
     }
 
     static schema() {
-        return ReactComponent.schema({
+        return (ReactComponent as any).schema({
             type: 'formioBuilderComponent',
         });
     }

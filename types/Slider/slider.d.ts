@@ -7,7 +7,7 @@ export declare class sliderComponent extends NumberComponent {
         schema: any;
     };
     static schema(): any;
-    static editForm: (...extend: any) => any;
+    static editForm: (...extend: any) => import("@formio/core").Component[];
     get prefix(): any;
     get suffix(): any;
     get defaultValue(): any;

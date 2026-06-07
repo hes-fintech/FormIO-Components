@@ -1,5 +1,7 @@
-import ContainerComponent from 'formiojs/components/container/Container';
+import { Components } from '@formio/js';
 import { settingsForm } from './FormRendererComponent.settingsForm';
+
+const ContainerComponent = (Components as any).components.container;
 
 export class formRendererComponent extends ContainerComponent {
     static get builderInfo() {

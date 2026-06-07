@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { createNumberMask } from '@formio/text-mask-addons';
 import { settingsForm } from './sliderComponent.settingsForm';
-import Components from 'formiojs/components/Components';
+import { Components } from '@formio/js';
 import { NumberHelper } from '../utils/NumberHelper';
 
 const NumberComponent = (Components as any).components.number;

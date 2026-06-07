@@ -1,5 +1,7 @@
-import NestedComponent from 'formiojs/components/_classes/nested/NestedComponent';
+import { Components } from '@formio/js';
 import { settingsForm } from './DropDownComponent.settingsForm';
+
+const NestedComponent = (Components as any).components.nested;
 
 export class dropDownComponent extends NestedComponent {
     static get builderInfo() {

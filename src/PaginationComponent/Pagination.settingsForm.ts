@@ -1,4 +1,4 @@
-import baseEditForm from 'formiojs/components/_classes/component/Component.form';
+import baseEditForm from '@formio/js/lib/cjs/components/_classes/component/Component.form';
 
 import { paginationComponentEditDisplay } from './PaginationComponent.edit.display';
 import { paginationComponentApiEditDisplay } from './PaginationComponentApi.edit.display';

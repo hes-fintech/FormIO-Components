@@ -1,8 +1,10 @@
 
-import Component from 'formiojs/components/_classes/component/Component';
+import { Components } from '@formio/js';
 import _ from 'lodash';
 import { settingsForm } from './FetchComponent.settingsForm';
 import { REQUEST_TYPES_WITH_BODIES, REQUEST_TYPES_WITH_PARAMS } from './FetchComponent.const';
+
+const Component = (Components as any).components.component;
 
 export class refreshComponent extends Component {
   static get builderInfo() {

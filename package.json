@@ -1,10 +1,11 @@
 {
   "name": "hes-formio-components",
-  "version": "1.9.4",
+  "version": "2.0.0",
   "description": "hes formio components",
   "main": "./build/index.js",
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
+    "@formio/text-mask-addons": "^3.8.0-formio.4",
     "@formio/vanilla-text-mask": "^5.1.1-formio.1",
     "antd": "^4.22.6",
     "axios": "^0.27.2",
@@ -14,6 +15,12 @@
     "pdfjs-dist": "^5.3.31",
     "react-dropzone": "^14.2.2",
     "react-pdf": "^5.7.2"
+  },
+  "peerDependencies": {
+    "@formio/js": "^5.4.0",
+    "@formio/react": "^6.2.1",
+    "react": ">=17",
+    "react-dom": ">=17"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
@@ -29,6 +36,8 @@
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@babel/types": "^7.27.0",
+    "@formio/js": "^5.4.0",
+    "@formio/react": "^6.2.1",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@types/jest": "^28.1.1",
     "@types/lodash": "^4.14.182",
@@ -42,8 +51,8 @@
     "css-loader": "^6.7.1",
     "eslint": "^7.32.0",
     "file-loader": "^6.2.0",
-    "formiojs": "^4.16.0",
     "html-webpack-plugin": "^5.5.0",
+    "i18next": "^23.16.8",
     "jest": "^28.1.1",
     "mini-css-extract-plugin": "^2.6.0",
     "node-sass": "^7.0.1",
@@ -52,7 +61,6 @@
     "prettier-webpack-plugin": "^1.2.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-formio": "^4.3.0",
     "react-refresh": "^0.17.0",
     "react-refresh-webpack-plugin": "^0.1.0",
     "sass-loader": "^13.0.2",
@@ -65,7 +73,7 @@
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.9.2"
   },
-  "types": "build/types/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "start": "webpack serve --config webpack.config.demo.js",
     "build": "webpack && tsc",

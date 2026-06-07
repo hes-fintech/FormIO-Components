@@ -1,7 +1,8 @@
-import ContainerComponent from 'formiojs/components/container/Container';
+import { Components, Utils } from '@formio/js';
 import { settingsForm } from './Pagination.settingsForm';
-import { Utils } from 'formiojs';
 import _ from 'lodash';
+
+const ContainerComponent = (Components as any).components.container;
 
 
 export class paginationComponent extends ContainerComponent {

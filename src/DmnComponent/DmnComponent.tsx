@@ -1,4 +1,4 @@
-import Component from 'formiojs/components/_classes/component/Component';
+import { Components } from '@formio/js';
 import DmnJS from "dmn-js/lib/Modeler";
 import "dmn-js/dist/assets/diagram-js.css";
 import "dmn-js/dist/assets/dmn-font/css/dmn-embedded.css";
@@ -7,6 +7,8 @@ import "dmn-js/dist/assets/dmn-js-decision-table.css";
 import "dmn-js/dist/assets/dmn-js-drd.css";
 import "dmn-js/dist/assets/dmn-js-literal-expression.css";
 import "dmn-js/dist/assets/dmn-js-shared.css";
+
+const Component = (Components as any).components.component;
 
 export class dmnComponent extends Component {
   static schema(...extend: any[]) {

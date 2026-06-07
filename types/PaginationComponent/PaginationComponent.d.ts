@@ -1,4 +1,4 @@
-import ContainerComponent from 'formiojs/components/container/Container';
+declare const ContainerComponent: any;
 export declare class paginationComponent extends ContainerComponent {
     static get builderInfo(): {
         title: string;
@@ -22,9 +22,10 @@ export declare class paginationComponent extends ContainerComponent {
     getComponentTemplate(children: any): any;
     render(children: any): any;
     get defaultSchema(): any;
-    static editForm: (...extend: any) => any;
+    static editForm: (...extend: any) => import("@formio/core").Component[];
     interval: any;
     attach(element: any): any;
     checkRefresh(refreshData: any, changed: any, flags: any): void;
     detach(): void;
 }
+export {};

@@ -1,4 +1,4 @@
-import Component from 'formiojs/components/_classes/component/Component';
+declare const Component: any;
 export declare class pdfViewer extends Component {
     static get builderInfo(): {
         title: string;
