@@ -43,8 +43,7 @@ export const iframeEditDisplay = [
         type: 'textfield',
         input: false,
         label: 'Src',
-        tooltip:
-            'you can get data from formio, use http://localhost/profile?id={{data.id}}',
+        tooltip: 'you can get data from formio, use http://localhost/profile?id={{data.id}}',
         key: 'src',
         validate: {
             required: true,
@@ -73,11 +72,11 @@ export const iframeEditDisplay = [
         },
     },
     {
-      weight: 85,
-      type: 'checkbox',
-      label: 'Refresh On Change',
-      tooltip: 'Rerender the field whenever a value on the form changes.',
-      key: 'refreshOnChange',
-      input: true
+        weight: 85,
+        type: 'checkbox',
+        label: 'Refresh On Change',
+        tooltip: 'Rerender the field whenever a value on the form changes.',
+        key: 'refreshOnChange',
+        input: true,
     },
 ];

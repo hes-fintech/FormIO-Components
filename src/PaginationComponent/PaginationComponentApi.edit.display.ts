@@ -19,5 +19,5 @@ export const paginationComponentApiEditDisplay = [
     {
         key: 'properties',
         ignore: true,
-    }
+    },
 ];

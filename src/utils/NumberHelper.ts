@@ -39,9 +39,7 @@ const getSeparatorsByLocale = (
     thousands: string;
     decimal: string;
 } => {
-    const numberFormat = new Intl.NumberFormat(
-        getLocaleForNumberFormat(locale),
-    );
+    const numberFormat = new Intl.NumberFormat(getLocaleForNumberFormat(locale));
 
     return {
         thousands: numberFormat.format(1111).replace(/1/g, ''),

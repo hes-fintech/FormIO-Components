@@ -80,5 +80,5 @@ export const paginationComponentEditDisplay = [
         key: 'showItemsPerPageDropdown',
         defaultValue: true,
         weight: 3,
-    }
+    },
 ];

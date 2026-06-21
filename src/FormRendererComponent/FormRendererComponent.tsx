@@ -20,7 +20,7 @@ export class formRendererComponent extends ContainerComponent {
     }
 
     get defaultSchema() {
-        if((this as any)?.component?.key) {
+        if ((this as any)?.component?.key) {
             (this as any).component.key = `${(this as any)?.component?.nestedKey}MainContainer`;
         }
         return formRendererComponent.schema();
@@ -35,31 +35,37 @@ export class formRendererComponent extends ContainerComponent {
     setComponents() {
         const isComponentDisabled = (this as any)?.parentDisabled || (this as any)?.disabled;
 
-        if(!(this as any).builderMode) {
-            const componentsForRender = getNestedValue((this as any).data, (this as any)?.component?.componentsKey);
-            
+        if (!(this as any).builderMode) {
+            const componentsForRender = getNestedValue(
+                (this as any).data,
+                (this as any)?.component?.componentsKey,
+            );
+
             (this as any).addComponent({
-                "label": "Container",
-                "tableView": false,
-                "key": (this as any)?.component?.nestedKey,
-                "type": "container",
-                "disabled": isComponentDisabled,
-                "input": true,
-                "components": componentNormalize(componentsForRender, isComponentDisabled),
-            })
+                label: 'Container',
+                tableView: false,
+                key: (this as any)?.component?.nestedKey,
+                type: 'container',
+                disabled: isComponentDisabled,
+                input: true,
+                components: componentNormalize(componentsForRender, isComponentDisabled),
+            });
         }
     }
 
     render(children) {
         (this as any).type = 'formRendererComponent';
         window.setTimeout(() => {
-            const componentsForRender = getNestedValue((this as any).data, (this as any)?.component?.componentsKey);
-            if(componentsForRender?.length) {
+            const componentsForRender = getNestedValue(
+                (this as any).data,
+                (this as any)?.component?.componentsKey,
+            );
+            if (componentsForRender?.length) {
                 this.setComponents();
                 (this as any).refresh();
             }
-        }, 0)
-        return super.render(children)
+        }, 0);
+        return super.render(children);
     }
 
     attach(element) {
@@ -68,9 +74,9 @@ export class formRendererComponent extends ContainerComponent {
 }
 
 const getNestedValue = (obj: any, key: string) => {
-    const splitCondition = ".";
+    const splitCondition = '.';
     return key.split(splitCondition).reduce((result, key) => {
-        return result?.[key]
+        return result?.[key];
     }, obj);
 };
 
@@ -80,7 +86,6 @@ const componentNormalize = (obj: any, isDisabledParent = false): any => {
     }
 
     if (typeof obj === 'object') {
-
         const entries = Object.entries(obj);
 
         const newEntries: [string, any][] = entries
@@ -93,13 +98,7 @@ const componentNormalize = (obj: any, isDisabledParent = false): any => {
             })
             .map(([key, value]) => {
                 if (value) {
-                    return [
-                        key,
-                        componentNormalize(
-                            value,
-                            isDisabledParent || obj.disabled,
-                        ),
-                    ];
+                    return [key, componentNormalize(value, isDisabledParent || obj.disabled)];
                 }
 
                 return [key, value];

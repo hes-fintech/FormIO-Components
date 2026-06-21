@@ -113,37 +113,40 @@ export const sliderComponentDisplay = [
         },
     },
     {
-      type: 'number',
-      input: true,
-      weight: 80,
-      key: 'decimalLimit',
-      label: 'Decimal Places',
-      tooltip: 'The maximum number of decimal places.'
+        type: 'number',
+        input: true,
+        weight: 80,
+        key: 'decimalLimit',
+        label: 'Decimal Places',
+        tooltip: 'The maximum number of decimal places.',
     },
     {
-      type: 'select',
-      input: true,
-      key: 'refreshOn',
-      label: 'Refresh On',
-      multiple: true,
-      weight: 7,
-      tooltip: 'Refresh data when another field changes.',
-      dataSrc: 'custom',
-      valueProperty: 'value',
-      data: {
-        custom(context: any) {
-          var values: {label: string, value: string}[] = [];
-          values.push({ label: 'Any Change', value: 'data' });
-          context.utils.eachComponent(context.instance.options.editForm.components, function(component: any, path: any) {
-            if (component.key !== context.data.key) {
-              values.push({
-                label: component.label || component.key,
-                value: path
-              });
-            }
-          });
-          return values;
-        }
-      },
+        type: 'select',
+        input: true,
+        key: 'refreshOn',
+        label: 'Refresh On',
+        multiple: true,
+        weight: 7,
+        tooltip: 'Refresh data when another field changes.',
+        dataSrc: 'custom',
+        valueProperty: 'value',
+        data: {
+            custom(context: any) {
+                const values: { label: string; value: string }[] = [];
+                values.push({ label: 'Any Change', value: 'data' });
+                context.utils.eachComponent(
+                    context.instance.options.editForm.components,
+                    function (component: any, path: any) {
+                        if (component.key !== context.data.key) {
+                            values.push({
+                                label: component.label || component.key,
+                                value: path,
+                            });
+                        }
+                    },
+                );
+                return values;
+            },
+        },
     },
 ];

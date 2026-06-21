@@ -1,6 +1,7 @@
-import { ReactComponent } from '@formio/react';
+import { Root } from 'react-dom/client';
 import './styles/index.scss';
-export declare class formioBuilderComponent extends ReactComponent {
+declare const Component: any;
+export declare class formioBuilderComponent extends Component {
     static get builderInfo(): {
         title: string;
         group: string;
@@ -11,6 +12,10 @@ export declare class formioBuilderComponent extends ReactComponent {
     static editForm: (...extend: any) => import("@formio/core").Component[];
     get className(): string;
     shouldSkipValidation(): boolean;
-    attachReact(element: HTMLElement): any;
-    detachReact(element: HTMLElement): void;
+    render(): any;
+    attach(element: HTMLElement): void;
+    reactRoot: Root | null;
+    detach(): void;
+    mountReact(element: HTMLElement): void;
 }
+export {};

@@ -14,19 +14,22 @@ export class dropDownComponent extends NestedComponent {
     }
 
     get templateName() {
-       return 'dropDownTemplate';
+        return 'dropDownTemplate';
     }
 
     static schema(...extend) {
-        return NestedComponent.schema({
-            type: 'dropDownComponent',
-            collapsible: true,
-            components: [],
-            clearOnHide: false,
-            input: false,
-            tableView: false,
-            persistent: false
-        }, ...extend);
+        return NestedComponent.schema(
+            {
+                type: 'dropDownComponent',
+                collapsible: true,
+                components: [],
+                clearOnHide: false,
+                input: false,
+                tableView: false,
+                persistent: false,
+            },
+            ...extend,
+        );
     }
 
     get defaultSchema() {
