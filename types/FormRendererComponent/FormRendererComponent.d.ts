@@ -1,4 +1,4 @@
-declare const ContainerComponent: any;
+import ContainerComponent from 'formiojs/components/container/Container';
 export declare class formRendererComponent extends ContainerComponent {
     static get builderInfo(): {
         title: string;
@@ -8,10 +8,9 @@ export declare class formRendererComponent extends ContainerComponent {
     };
     static schema(): any;
     get defaultSchema(): any;
-    static editForm: (...extend: any) => import("@formio/core").Component[];
+    static editForm: (...extend: any) => any;
     get className(): string;
     setComponents(): void;
     render(children: any): any;
     attach(element: any): any;
 }
-export {};

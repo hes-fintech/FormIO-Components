@@ -1,7 +1,5 @@
-import { Components } from '@formio/js';
+import NestedComponent from 'formiojs/components/_classes/nested/NestedComponent';
 import { settingsForm } from './DropDownComponent.settingsForm';
-
-const NestedComponent = (Components as any).components.nested;
 
 export class dropDownComponent extends NestedComponent {
     static get builderInfo() {
@@ -14,22 +12,19 @@ export class dropDownComponent extends NestedComponent {
     }
 
     get templateName() {
-        return 'dropDownTemplate';
+       return 'dropDownTemplate';
     }
 
     static schema(...extend) {
-        return NestedComponent.schema(
-            {
-                type: 'dropDownComponent',
-                collapsible: true,
-                components: [],
-                clearOnHide: false,
-                input: false,
-                tableView: false,
-                persistent: false,
-            },
-            ...extend,
-        );
+        return NestedComponent.schema({
+            type: 'dropDownComponent',
+            collapsible: true,
+            components: [],
+            clearOnHide: false,
+            input: false,
+            tableView: false,
+            persistent: false
+        }, ...extend);
     }
 
     get defaultSchema() {

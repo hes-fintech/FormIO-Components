@@ -1,24 +1,24 @@
-import { Components, Utils } from '@formio/js';
+import { Utils } from 'formiojs';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
+import _ from 'lodash';
 import React from 'react';
-import { createRoot, Root } from 'react-dom/client';
-import { FormBuilder } from '@formio/react';
+import ReactDOM from 'react-dom';
+import { ReactComponent, FormBuilder } from 'react-formio';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
-import './styles/index.scss';
+import './styles/index.scss'
 
-const Component = (Components as any).components.component;
+type InformationComponentType = {
+    disabled: boolean;
+};
 
 type ContextType = {
     instance: any;
     instanceCurrentForm: any;
     componentKey: string;
     i18n: i18next.i18n;
-    component: {
-        disabled: boolean;
-        customClass?: string;
-    };
+    component: InformationComponentType;
     dataForSetting: any[];
     parentDisabled: boolean;
     data: any;
@@ -32,7 +32,7 @@ type FormioBuilderComponentProps = {
     context: ContextType;
 };
 
-const FormioBuilderReact = (props: FormioBuilderComponentProps) => {
+const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     const { context } = props;
 
     const addComponentsToForm = (components: any[]) => {
@@ -42,66 +42,64 @@ const FormioBuilderReact = (props: FormioBuilderComponentProps) => {
     return (
         <div
             className={`builderComponent ${
-                context.component.disabled || context.parentDisabled
-                    ? 'disabled-formio-component'
-                    : ''
+                (context.component.disabled || context.parentDisabled) ? 'disabled-formio-component' : ''
             }`}
         >
             <FormBuilder
-                onChange={(scheme: any) => addComponentsToForm(scheme.components)}
-                initialForm={{
+                onChange={(scheme) => addComponentsToForm(scheme.components)}
+                form={{
                     display: 'form',
                     components: context?.dataForSetting,
                 }}
-                options={
-                    {
-                        noDefaultSubmitButton: true,
-                        language: context.i18n.language,
-                        i18next: context.i18n,
-                        builder: {
-                            basic: false,
-                            advanced: false,
-                            layout: false,
-                            data: false,
-                            premium: false,
-                            customBasic: {
-                                title: 'Basic Components',
-                                default: true,
-                                weight: 0,
-                                components: {
-                                    textfield: true,
-                                    textarea: true,
-                                    email: true,
-                                    number: true,
-                                    datetime: true,
-                                    panel: true,
-                                    select: true,
-                                    checkbox: true,
-                                    datagrid: true,
-                                    file: {
-                                        title: 'File',
-                                        key: 'file',
-                                        icon: 'file',
-                                        schema: {
-                                            type: 'file',
-                                            input: true,
-                                            storage: 'url',
-                                            url: '/api/file',
-                                            fileMaxSize: '20MB',
-                                        },
-                                    },
+                options={{
+                    noDefaultSubmitButton: true,
+                    language: context.i18n.language,
+                    i18next: context.i18n,
+                    // Controls for component categories
+                    builder: {
+                        basic: false,
+                        advanced: false,
+                        layout: false,
+                        data: false,
+                        premium: false,
+                        customBasic: {
+                            title: 'Basic Components',
+                            default: true,
+                            weight: 0,
+                            components: {
+                                textfield: true,
+                                textarea: true,
+                                email: true,
+                                number: true,
+                                datetime: true,
+                                panel: true,
+                                select: true,
+                                checkbox: true,
+                                datagrid: true,
+                                file: {
+                                    title: 'File',
+                                    key: 'file',
+                                    icon: 'file',
+                                    schema: {
+                                      type: 'file',
+                                      input: true,
+                                      storage: 'url',
+                                      url: '/api/file',
+                                      fileMaxSize: '20MB',
+                                    }
                                 },
                             },
                         },
-                        editForm: componentsSettings,
-                    } as any
-                }
+                    },
+                    // Controls for specific component
+                    editForm: componentsSettings,
+                }}
             />
         </div>
     );
 };
 
-export class formioBuilderComponent extends Component {
+export class formioBuilderComponent extends ReactComponent {
     static get builderInfo() {
         return {
             title: 'Form builder',
@@ -112,7 +110,7 @@ export class formioBuilderComponent extends Component {
     }
 
     static schema() {
-        return Component.schema({
+        return ReactComponent.schema({
             type: 'formioBuilderComponent',
         });
     }
@@ -127,31 +125,8 @@ export class formioBuilderComponent extends Component {
         return true;
     }
 
-    render() {
-        return super.render(`<div ref="builderContainer"></div>`);
-    }
-
-    attach(element: HTMLElement) {
-        super.attach(element);
-        this.loadRefs(element, { builderContainer: 'single' });
-        this.mountReact((this as any).refs.builderContainer);
-
-        window.setTimeout(() => {
-            (this as any).refresh();
-        }, 0);
-    }
-
-    reactRoot: Root | null = null;
-
-    detach() {
-        this.reactRoot?.unmount();
-        this.reactRoot = null;
-        super.detach();
-    }
-
-    mountReact(element: HTMLElement) {
-        if (!element) return;
-        const context: ContextType = {
+    attachReact(element: HTMLElement) {
+        const context = {
             instance: this,
             instanceCurrentForm: (this as any).currentForm,
             componentKey: (this as any).component.key,
@@ -167,7 +142,20 @@ export class formioBuilderComponent extends Component {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
-        this.reactRoot = createRoot(element);
-        this.reactRoot.render(<FormioBuilderReact context={context} />);
+
+        window.setTimeout(() => {
+            (this as any).refresh();
+        }, 0);
+
+        return ReactDOM.render(
+            <FormioBuilderComponent context={context} />,
+            element,
+        );
+    }
+
+    detachReact(element: HTMLElement) {
+        if (element) {
+            ReactDOM.unmountComponentAtNode(element);
+        }
     }
 }

@@ -4,6 +4,7 @@ export declare class pdfViewer extends Component {
         title: string;
         group: string;
         icon: string;
+        weight: number;
         schema: any;
     };
     static schema(): any;
@@ -17,6 +18,6 @@ export declare class pdfViewer extends Component {
     };
     render(): any;
     attach(element: HTMLElement): any;
+    renderPDF(url: string, container: Element): Promise<void>;
     shouldSkipValidation(): boolean;
 }
-export default pdfViewer;

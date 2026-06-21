@@ -1,12 +1,13 @@
 import _ from 'lodash';
 import { createNumberMask } from '@formio/text-mask-addons';
 import { settingsForm } from './sliderComponent.settingsForm';
-import { Components } from '@formio/js';
+import Components from 'formiojs/components/Components';
 import { NumberHelper } from '../utils/NumberHelper';
 
 const NumberComponent = (Components as any).components.number;
 
 export class sliderComponent extends NumberComponent {
+
     static get builderInfo() {
         return {
             title: 'Slider Component',
@@ -29,9 +30,9 @@ export class sliderComponent extends NumberComponent {
 
         return parentPrefix
             ? this.interpolate(parentPrefix, {
-                  data: this?.root?.data,
-                  row: this?.row || this?.data,
-              })
+                data: this?.root?.data,
+                row: this?.row || this?.data,
+            })
             : '';
     }
 
@@ -40,19 +41,19 @@ export class sliderComponent extends NumberComponent {
 
         return parentSuffix
             ? this.interpolate(parentSuffix, {
-                  data: this?.root?.data,
-                  row: this?.row || this?.data,
-              })
+                data: this?.root?.data,
+                row: this?.row || this?.data,
+            })
             : '';
     }
 
     get defaultValue() {
         return this.interpolate(
-            (this as any).component?.initialValue || (this as any).component?.max,
-            {
-                data: this?.root?.data,
-                row: this?.row || this?.data,
-            },
+            (this as any).component?.initialValue
+            || (this as any).component?.max, {
+            data: this?.root?.data,
+            row: this?.row || this?.data,
+        }
         );
     }
 
@@ -71,7 +72,11 @@ export class sliderComponent extends NumberComponent {
                 'decimalSymbol',
                 NumberHelper.getSeparatorsByLocale(this.i18next.language)?.decimal,
             ),
-            decimalLimit: _.get(this.component, 'decimalLimit', this.decimalLimit),
+            decimalLimit: _.get(
+                this.component,
+                'decimalLimit',
+                this.decimalLimit,
+            ),
             allowNegative: _.get(this.component, 'allowNegative', true),
             allowDecimal: this.isDecimalAllowed(),
         });
@@ -85,10 +90,9 @@ export class sliderComponent extends NumberComponent {
     }
 
     getFormattedValue = (value: string) => {
-        return this.getValueAsString(this.formatValue(this.parseValue(value))).replace(
-            /"/g,
-            '&quot;',
-        );
+        return this.getValueAsString(
+            this.formatValue(this.parseValue(value)),
+        ).replace(/"/g, '&quot;');
     };
 
     getSlierMaxValue = () => {
@@ -130,26 +134,27 @@ export class sliderComponent extends NumberComponent {
             slider: 'single',
         });
 
+        
         this.addEventListener(this.refs?.slider, 'input', (event: Event) => {
             const sliderValue = (event.target as HTMLInputElement).value;
             const input = this.refs?.input?.[0];
-
+        
             if (input) {
                 const oldValue = input.value;
                 const cursorPos = input.selectionStart || 0;
-
+        
                 const unformattedOld = oldValue.replace(/\s/g, '');
                 const newFormatted = this.getFormattedValue(sliderValue);
                 const unformattedNew = newFormatted.replace(/\s/g, '');
-
+        
                 const diff = unformattedNew.length - unformattedOld.length;
-
+        
                 input.value = newFormatted;
-
+        
                 const newCursor = cursorPos + diff;
                 input.setSelectionRange(newCursor, newCursor);
             }
-
+        
             const coloredPercentage = this.calculateBackgroundValue(sliderValue);
             const slider = event.target as HTMLInputElement;
             if (coloredPercentage === 0) {
@@ -161,16 +166,23 @@ export class sliderComponent extends NumberComponent {
             }
         });
 
+
         this.addEventListener(this.refs?.slider, 'change', (event: Event) => {
             const sliderValue = (event.target as HTMLInputElement).value;
             this.setValue(sliderValue);
         });
 
-        this.decimalSeparator = NumberHelper.getSeparatorsByLocale(this.i18next.language)?.decimal;
-        this.delimiter = NumberHelper.getSeparatorsByLocale(this.i18next.language)?.thousands;
+        this.decimalSeparator = NumberHelper.getSeparatorsByLocale(
+            this.i18next.language,
+        )?.decimal;
+        this.delimiter = NumberHelper.getSeparatorsByLocale(
+            this.i18next.language,
+        )?.thousands;
 
         if (this.refs?.slider) {
-            const coloredPercentage = this.calculateBackgroundValue(this.getValue());
+            const coloredPercentage = this.calculateBackgroundValue(
+                this.getValue(),
+            );
             if (coloredPercentage === 0) {
                 // Make background transparent when at minimum value
                 this.refs.slider.style.background = 'transparent';
@@ -198,19 +210,14 @@ export class sliderComponent extends NumberComponent {
             this.addEventListener(this.refs.input[0], 'input', (event: Event) => {
                 const inputValue = (event.target as HTMLInputElement).value;
                 const parsedValue = this.parseValue(inputValue);
-
+        
                 if (this.refs?.slider) {
                     // Only update slider if we have a valid number
                     const numValue = Number(parsedValue);
-                    if (
-                        !isNaN(numValue) &&
-                        parsedValue !== '' &&
-                        parsedValue !== null &&
-                        parsedValue !== undefined
-                    ) {
+                    if (!isNaN(numValue) && parsedValue !== '' && parsedValue !== null && parsedValue !== undefined) {
                         const min = Number(this.getSlierMinValue());
                         const max = Number(this.getSlierMaxValue());
-
+                        
                         // Clamp the slider value to stay within bounds
                         if (numValue < min) {
                             this.refs.slider.value = min.toString();
@@ -223,9 +230,9 @@ export class sliderComponent extends NumberComponent {
                         // For empty or invalid values, set slider to minimum
                         this.refs.slider.value = this.getSlierMinValue();
                     }
-
+        
                     const coloredPercentage = this.calculateBackgroundValue(parsedValue);
-
+                    
                     // If percentage is 0, ensure slider is at minimum position
                     if (coloredPercentage === 0) {
                         this.refs.slider.value = this.getSlierMinValue();
@@ -243,13 +250,25 @@ export class sliderComponent extends NumberComponent {
     }
 
     formatValue(value: string) {
-        if (this.component.requireDecimal && value && !value.includes(this.decimalSeparator)) {
-            return `${value}${this.decimalSeparator}${_.repeat('0', this.decimalLimit)}`;
+        if (
+            this.component.requireDecimal &&
+            value &&
+            !value.includes(this.decimalSeparator)
+        ) {
+            return `${value}${this.decimalSeparator}${_.repeat(
+                '0',
+                this.decimalLimit,
+            )}`;
         }
-        if (this.component.requireDecimal && value && value.includes(this.decimalSeparator)) {
+        if (
+            this.component.requireDecimal &&
+            value &&
+            value.includes(this.decimalSeparator)
+        ) {
             return `${value}${_.repeat(
                 '0',
-                this.decimalLimit - value.split(this.decimalSeparator)[1].length,
+                this.decimalLimit -
+                value.split(this.decimalSeparator)[1].length,
             )}`;
         }
 

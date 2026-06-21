@@ -1,1 +1,1 @@
-export declare const settingsForm: (...extend: any) => import("@formio/core").Component[];
+export declare const settingsForm: (...extend: any) => any;

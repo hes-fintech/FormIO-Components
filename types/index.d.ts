@@ -1,13 +1,13 @@
-import { iframe } from './Iframe/iframe';
-import { sliderComponent } from './Slider/slider';
-import { pdfViewer } from './PDFViewer/PDFViewerComponent';
-import { formioBuilderComponent } from './FormioBuilderComponent/FormioBuilderComponent';
-import { formRendererComponent } from './FormRendererComponent/FormRendererComponent';
-import { dropDownComponent } from './DropDownComponent/DropDownComponent';
-import { paginationComponent } from './PaginationComponent/PaginationComponent';
-import { refreshComponent } from './FetchComponent/FetchComponent';
-import { selectComponentExtended } from './SelectComponent/SelectComponent';
-import { dmnComponent } from './DmnComponent/DmnComponent';
+import { iframe } from "./Iframe/iframe";
+import { sliderComponent } from "./Slider/slider";
+import { pdfViewer } from "./PDFViewer/PDFViewerComponent";
+import { formioBuilderComponent } from "./FormioBuilderComponent/FormioBuilderComponent";
+import { formRendererComponent } from "./FormRendererComponent/FormRendererComponent";
+import { dropDownComponent } from "./DropDownComponent/DropDownComponent";
+import { paginationComponent } from "./PaginationComponent/PaginationComponent";
+import { refreshComponent } from "./FetchComponent/FetchComponent";
+import { selectComponentExtended } from "./SelectComponent/SelectComponent";
+import { dmnComponent } from "./DmnComponent/DmnComponent";
 export declare const customComponents: {
     iframe: typeof iframe;
     sliderComponent: typeof sliderComponent;

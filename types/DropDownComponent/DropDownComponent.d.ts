@@ -1,4 +1,4 @@
-declare const NestedComponent: any;
+import NestedComponent from 'formiojs/components/_classes/nested/NestedComponent';
 export declare class dropDownComponent extends NestedComponent {
     static get builderInfo(): {
         title: string;
@@ -9,6 +9,5 @@ export declare class dropDownComponent extends NestedComponent {
     get templateName(): string;
     static schema(...extend: any[]): any;
     get defaultSchema(): any;
-    static editForm: (...extend: any) => import("@formio/core").Component[];
+    static editForm: (...extend: any) => any;
 }
-export {};

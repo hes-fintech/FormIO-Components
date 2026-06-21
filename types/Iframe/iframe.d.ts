@@ -1,6 +1,5 @@
-import { Root } from 'react-dom/client';
-declare const Component: any;
-export declare class iframe extends Component {
+import { ReactComponent } from 'react-formio';
+export declare class iframe extends ReactComponent {
     static get builderInfo(): {
         title: string;
         group: string;
@@ -8,12 +7,8 @@ export declare class iframe extends Component {
         schema: any;
     };
     static schema(): any;
-    static editForm: (...extend: any) => import("@formio/core").Component[];
+    static editForm: (...extend: any) => any;
     get className(): string;
-    render(): any;
-    attach(element: HTMLElement): void;
-    reactRoot: Root | null;
-    detach(): void;
-    mountReact(element: HTMLElement): void;
+    attachReact(element: any): any;
+    detachReact(element: any): void;
 }
-export {};

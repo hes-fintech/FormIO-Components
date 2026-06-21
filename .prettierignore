@@ -1,5 +1,0 @@
-build/
-types/
-node_modules/
-*.config.js
-babel.config.js

@@ -1,4 +1,4 @@
-import baseEditForm from '@formio/js/lib/cjs/components/_classes/component/Component.form';
+import baseEditForm from 'formiojs/components/_classes/component/Component.form';
 import { formRendererComponentEditDisplay } from './FormRendererComponent.edit.display';
 import { formRendererComponentApiEditDisplay } from './FormRendererComponentApi.edit.display';
 
