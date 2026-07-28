@@ -1,10 +1,10 @@
-import { Utils } from 'formiojs';
+import { Utils } from '@formio/js';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ReactComponent, FormBuilder } from 'react-formio';
+import { ReactComponent, FormBuilder } from '@formio/react';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
 import './styles/index.scss'

@@ -1,6 +1,6 @@
 
-import Component from 'formiojs/components/_classes/component/Component';
-import { Utils } from 'formiojs';
+import Component from '@formio/js/components/_classes/component/Component';
+import { Utils } from '@formio/js';
 import _ from 'lodash';
 import { settingsForm } from './Refresh.settingsForm';
 import fetch from 'node-fetch'; // or window.fetch in the browser

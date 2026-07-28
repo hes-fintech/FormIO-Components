@@ -1,4 +1,4 @@
-import ContainerComponent from 'formiojs/components/container/Container';
+import ContainerComponent from '@formio/js/components/container/Container';
 import { settingsForm } from './FormRendererComponent.settingsForm';
 
 export class formRendererComponent extends ContainerComponent {

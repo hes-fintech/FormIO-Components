@@ -1,4 +1,4 @@
-import Component from 'formiojs/components/_classes/component/Component';
+import Component from '@formio/js/components/_classes/component/Component';
 import DmnJS from "dmn-js/lib/Modeler";
 import "dmn-js/dist/assets/diagram-js.css";
 import "dmn-js/dist/assets/dmn-font/css/dmn-embedded.css";

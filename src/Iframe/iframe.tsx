@@ -1,9 +1,9 @@
-import { Utils } from 'formiojs';
+import { Utils } from '@formio/js';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
+import { ReactComponent } from '@formio/react';
 
 import { settingsForm } from './Iframe.settingsForm';
 

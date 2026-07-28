@@ -1,4 +1,4 @@
-import baseEditForm from 'formiojs/components/_classes/component/Component.form';
+import baseEditForm from '@formio/js/components/_classes/component/Component.form';
 
 import { formioBuilderComponentEditDisplay } from './FormioBuilderComponent.edit.display';
 
