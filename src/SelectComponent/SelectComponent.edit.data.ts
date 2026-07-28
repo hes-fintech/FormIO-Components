@@ -1,4 +1,4 @@
-import { Utils } from 'formiojs';
+import { Utils } from '@formio/js';
 
 export const selectComponentEditData = [
   {

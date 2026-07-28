@@ -1,6 +1,6 @@
 
 import { settingsForm } from './SelectComponent.settingsForm';
-import Components from 'formiojs/components/Components';
+import Components from '@formio/js/components/Components';
 import _, { set } from 'lodash';
 
 const SelectComponent = (Components as any).components.select;

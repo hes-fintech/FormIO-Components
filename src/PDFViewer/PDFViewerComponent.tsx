@@ -1,4 +1,4 @@
-import Component from 'formiojs/components/_classes/component/Component';
+import Component from '@formio/js/components/_classes/component/Component';
 
 export class pdfViewer extends Component {
   static get builderInfo() {

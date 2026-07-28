@@ -1,4 +1,4 @@
-import Component from 'formiojs/components/_classes/component/Component';
+import Component from '@formio/js/components/_classes/component/Component';
 import DmnJS from "dmn-js/lib/Modeler";
 import "dmn-js/dist/assets/diagram-js.css";
 import "dmn-js/dist/assets/dmn-font/css/dmn-embedded.css";
@@ -65,9 +65,8 @@ export class dmnComponent extends Component {
     bus.on('commandStack.changed', () => {
       (this as any).modeler.saveXML({ format: true }, (err, xml) => {
         if (err) {
-          console.error('Could not save', err);
+          console.error('Could not save DMN XML:', err);
         } else {
-          console.log(xml);
           super.setValue(xml, false, false);
         }
       });
@@ -88,7 +87,8 @@ export class dmnComponent extends Component {
 
     (this as any).modeler.importXML(xml, (err) => {
       if (err) {
-        return console.log(err, "Error to parse XML");
+        console.error('Error parsing DMN XML:', err);
+        return;
       }
     });
 

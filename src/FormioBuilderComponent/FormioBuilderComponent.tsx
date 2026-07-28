@@ -1,13 +1,12 @@
-import { Utils } from 'formiojs';
+import { Components, Utils } from '@formio/js';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
-import _ from 'lodash';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { ReactComponent, FormBuilder } from 'react-formio';
+import { createRoot, Root } from 'react-dom/client';
+import { FormBuilder } from '@formio/react';
 import { settingsForm } from './FormioBuilderComponent.settingsForm';
 import { componentsSettings } from './ComponentsSettings';
-import './styles/index.scss'
+import './styles/index.scss';
 
 type InformationComponentType = {
     disabled: boolean;
@@ -32,7 +31,7 @@ type FormioBuilderComponentProps = {
     context: ContextType;
 };
 
-const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
+const FormioBuilderComponentReact = (props: FormioBuilderComponentProps) => {
     const { context } = props;
 
     const addComponentsToForm = (components: any[]) => {
@@ -42,12 +41,14 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     return (
         <div
             className={`builderComponent ${
-                (context.component.disabled || context.parentDisabled) ? 'disabled-formio-component' : ''
+                context.component.disabled || context.parentDisabled
+                    ? 'disabled-formio-component'
+                    : ''
             }`}
         >
             <FormBuilder
                 onChange={(scheme) => addComponentsToForm(scheme.components)}
-                form={{
+                initialForm={{
                     display: 'form',
                     components: context?.dataForSetting,
                 }}
@@ -55,7 +56,6 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                     noDefaultSubmitButton: true,
                     language: context.i18n.language,
                     i18next: context.i18n,
-                    // Controls for component categories
                     builder: {
                         basic: false,
                         advanced: false,
@@ -81,17 +81,16 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
                                     key: 'file',
                                     icon: 'file',
                                     schema: {
-                                      type: 'file',
-                                      input: true,
-                                      storage: 'url',
-                                      url: '/api/file',
-                                      fileMaxSize: '20MB',
-                                    }
+                                        type: 'file',
+                                        input: true,
+                                        storage: 'url',
+                                        url: '/api/file',
+                                        fileMaxSize: '20MB',
+                                    },
                                 },
                             },
                         },
                     },
-                    // Controls for specific component
                     editForm: componentsSettings,
                 }}
             />
@@ -99,7 +98,9 @@ const FormioBuilderComponent = (props: FormioBuilderComponentProps) => {
     );
 };
 
-export class formioBuilderComponent extends ReactComponent {
+const Component = (Components as any).components.component;
+
+export class formioBuilderComponent extends Component {
     static get builderInfo() {
         return {
             title: 'Form builder',
@@ -110,12 +111,14 @@ export class formioBuilderComponent extends ReactComponent {
     }
 
     static schema() {
-        return ReactComponent.schema({
+        return Component.schema({
             type: 'formioBuilderComponent',
         });
     }
 
     static editForm = settingsForm;
+
+    reactRoot: Root | null = null;
 
     get className() {
         return `${(this as any).component.customClass}`;
@@ -125,8 +128,28 @@ export class formioBuilderComponent extends ReactComponent {
         return true;
     }
 
-    attachReact(element: HTMLElement) {
-        const context = {
+    render() {
+        return super.render(`<div ref="builderContainer"></div>`);
+    }
+
+    attach(element: HTMLElement) {
+        super.attach(element);
+        (this as any).loadRefs(element, { builderContainer: 'single' });
+        this.mountReact((this as any).refs.builderContainer);
+
+        window.setTimeout(() => {
+            (this as any).refresh();
+        }, 0);
+    }
+
+    detach() {
+        this.reactRoot?.unmount();
+        this.reactRoot = null;
+        super.detach();
+    }
+
+    mountReact(element: HTMLElement) {
+        const context: ContextType = {
             instance: this,
             instanceCurrentForm: (this as any).currentForm,
             componentKey: (this as any).component.key,
@@ -142,20 +165,7 @@ export class formioBuilderComponent extends ReactComponent {
             isBuilderMode: (this as any).builderMode || (this as any).options.preview,
             _: Utils._,
         };
-
-        window.setTimeout(() => {
-            (this as any).refresh();
-        }, 0);
-
-        return ReactDOM.render(
-            <FormioBuilderComponent context={context} />,
-            element,
-        );
-    }
-
-    detachReact(element: HTMLElement) {
-        if (element) {
-            ReactDOM.unmountComponentAtNode(element);
-        }
+        this.reactRoot = createRoot(element);
+        this.reactRoot.render(<FormioBuilderComponentReact context={context} />);
     }
 }

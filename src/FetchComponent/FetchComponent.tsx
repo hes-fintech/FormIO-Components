@@ -1,5 +1,5 @@
 
-import Component from 'formiojs/components/_classes/component/Component';
+import Component from '@formio/js/components/_classes/component/Component';
 import _ from 'lodash';
 import { settingsForm } from './FetchComponent.settingsForm';
 import { REQUEST_TYPES_WITH_BODIES, REQUEST_TYPES_WITH_PARAMS } from './FetchComponent.const';

@@ -1,6 +1,6 @@
-import ContainerComponent from 'formiojs/components/container/Container';
+import ContainerComponent from '@formio/js/components/container/Container';
 import { settingsForm } from './Pagination.settingsForm';
-import { Utils } from 'formiojs';
+import { Utils } from '@formio/js';
 import _ from 'lodash';
 
 

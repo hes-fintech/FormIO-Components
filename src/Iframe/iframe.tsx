@@ -1,9 +1,8 @@
-import { Utils } from 'formiojs';
+import { Components, Utils } from '@formio/js';
 import * as i18next from 'i18next';
 import { LoDashStatic } from 'lodash';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { ReactComponent } from 'react-formio';
+import { createRoot, Root } from 'react-dom/client';
 
 import { settingsForm } from './Iframe.settingsForm';
 
@@ -27,10 +26,10 @@ type IframeComponentProps = {
 };
 
 class IframeComponent extends React.Component<any> {
-
     render() {
         const iframeRef = React.createRef<any>();
-        const getAllowValue = () => "geolocation; microphone; camera; midi; encrypted-media; accelerometer; gyroscope; deviceorientation; devicemotion;"
+        const getAllowValue = () =>
+            'geolocation; microphone; camera; midi; encrypted-media; accelerometer; gyroscope; deviceorientation; devicemotion;';
         return (
             <iframe
                 ref={iframeRef}
@@ -43,7 +42,9 @@ class IframeComponent extends React.Component<any> {
     }
 }
 
-export class iframe extends ReactComponent {
+const Component = (Components as any).components.component;
+
+export class iframe extends Component {
     static get builderInfo() {
         return {
             title: 'Iframe',
@@ -54,45 +55,53 @@ export class iframe extends ReactComponent {
     }
 
     static schema() {
-        return ReactComponent.schema({
+        return Component.schema({
             type: 'iframe',
         });
     }
 
     static editForm = settingsForm;
 
+    reactRoot: Root | null = null;
+
     get className() {
         return `${(this as any).component.customClass}`;
     }
 
-    attachReact(element) {
-        const context = {
+    render() {
+        return super.render(`<div ref="iframeContainer"></div>`);
+    }
+
+    attach(element: HTMLElement) {
+        super.attach(element);
+        (this as any).loadRefs(element, { iframeContainer: 'single' });
+        this.mountReact((this as any).refs.iframeContainer);
+    }
+
+    detach() {
+        this.reactRoot?.unmount();
+        this.reactRoot = null;
+        super.detach();
+    }
+
+    mountReact(element: HTMLElement) {
+        const context: ContextType = {
             i18n: (this as any).i18next,
             component: (this as any).component,
             data: (this as any).data,
             row: (this as any).data,
             _: Utils._,
         };
-        // eslint-disable-next-line react/no-render-return-value
-        return ReactDOM.render(
+        this.reactRoot = createRoot(element);
+        this.reactRoot.render(
             <IframeComponent context={context} onChange={(this as any).updateValue} />,
-            element,
         );
-    }
-
-    detachReact(element) {
-        if (element) {
-            ReactDOM.unmountComponentAtNode(element);
-        }
     }
 }
 
-const getTemplateString = (context) => {
-    const compiled = context._.template(
-        context.component.src,
-        // eslint-disable-next-line no-param-reassign
-        (context._.templateSettings.interpolate = /{{([\s\S]+?)}}/g),
-    );
-
+const getTemplateString = (context: ContextType) => {
+    const compiled = context._.template(context.component.src, {
+        interpolate: /{{([\s\S]+?)}}/g,
+    });
     return compiled(context);
 };

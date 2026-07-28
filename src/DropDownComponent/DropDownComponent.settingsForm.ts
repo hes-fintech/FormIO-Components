@@ -1,4 +1,4 @@
-import baseEditForm from 'formiojs/components/_classes/component/Component.form';
+import baseEditForm from '@formio/js/components/_classes/component/Component.form';
 import { dropdownComponentEditDisplay } from './DropDownComponent.edit.display';
 
 export const settingsForm = (...extend: any) => {
